@@ -166,6 +166,87 @@
       </div>
     </div>
   </header>
-  ...
+
+  <section class="hero">
+    <h1>DJ JOHN</h1>
+    <p>Música, energía y experiencias inolvidables. ¡Vive el ritmo!</p>
+    <a href="#tour" class="btn-primary">Ver próximas fechas</a>
+  </section>
+
+  <main class="container">
+    <section id="tour" class="section">
+      <h2>Próximos Eventos</h2>
+      <div class="event-list">
+        <div class="event-item">
+          <div class="event-info">
+            <strong>🗓 25 Abril 2025</strong>
+            <span>📍 Pa Vacilar, Panamá</span>
+          </div>
+          <a href="https://www.bandsintown.com/es/artist-rsvp/86889-dj-john?event_id=106769134" class="btn-primary" target="_blank">Comprar Ticket</a>
+        </div>
+        <div class="event-item">
+          <div class="event-info">
+            <strong>🗓 26 Abril 2025</strong>
+            <span>📍 Panamá, Panamá</span>
+          </div>
+          <a href="https://www.bandsintown.com/t/106769557?ticket_id=1986878706" class="btn-primary" target="_blank">Comprar Ticket</a>
+        </div>
+        <div class="event-item">
+          <div class="event-info">
+            <strong>🗓 16 Mayo 2025</strong>
+            <span>📍 Pedasí, Panamá</span>
+          </div>
+          <a href="https://www.bandsintown.com/t/106685393?ticket_id=1984269622" class="btn-primary" target="_blank">Comprar Ticket</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="bio" class="section">
+      <h2>Biografía</h2>
+      <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+        DJ John, originario de Panamá, es un ícono del reggaetón y la electrónica con más de 10 años de trayectoria. Fusiona energía, cultura y música para crear momentos únicos.
+      </p>
+    </section>
+
+    <section id="gallery" class="section">
+      <h2>Galería</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <img src="https://via.placeholder.com/300x200" alt="Evento 1" />
+        <img src="https://via.placeholder.com/300x200" alt="Evento 2" />
+        <img src="https://via.placeholder.com/300x200" alt="Evento 3" />
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contacto</h2>
+      <form action="https://formspree.io/f/your-form-id" method="POST" style="max-width: 600px; margin: 0 auto;">
+        <input type="text" name="name" placeholder="Tu nombre" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; background: #222; color: white;" />
+        <input type="email" name="email" placeholder="Tu correo" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; background: #222; color: white;" />
+        <textarea name="message" placeholder="¿En qué puedo ayudarte?" required style="width: 100%; padding: 12px; height: 150px; border: none; border-radius: 8px; background: #222; color: white;"></textarea>
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">Enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo" class="logo">
+    <p>Sígueme en:</p>
+    <a href="https://instagram.com/itsdjjohn" target="_blank">Instagram</a>
+    <a href="https://facebook.com/itsdjjohn" target="_blank">Facebook</a>
+    <p style="margin-top: 10px; font-size: 12px; color: #888;">© 2025 DJ John. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    });
+    document.querySelectorAll('.section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 </body>
 </html>
