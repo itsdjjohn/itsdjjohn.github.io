@@ -36,6 +36,7 @@
       top: 0;
       z-index: 1000;
       padding: 20px 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
     }
     .nav {
       display: flex;
@@ -179,21 +180,21 @@
       <div class="event-list">
         <div class="event-item">
           <div class="event-info">
-            <strong>🗓 25 Abril 2025</strong>
+            <strong>📅 25 Abril 2025</strong>
             <span>📍 Pa Vacilar, Panamá</span>
           </div>
           <a href="https://www.bandsintown.com/es/artist-rsvp/86889-dj-john?event_id=106769134" class="btn-primary" target="_blank">Comprar Ticket</a>
         </div>
         <div class="event-item">
           <div class="event-info">
-            <strong>🗓 26 Abril 2025</strong>
+            <strong>📅 26 Abril 2025</strong>
             <span>📍 Panamá, Panamá</span>
           </div>
           <a href="https://www.bandsintown.com/t/106769557?ticket_id=1986878706" class="btn-primary" target="_blank">Comprar Ticket</a>
         </div>
         <div class="event-item">
           <div class="event-info">
-            <strong>🗓 16 Mayo 2025</strong>
+            <strong>📅 16 Mayo 2025</strong>
             <span>📍 Pedasí, Panamá</span>
           </div>
           <a href="https://www.bandsintown.com/t/106685393?ticket_id=1984269622" class="btn-primary" target="_blank">Comprar Ticket</a>
@@ -237,6 +238,7 @@
   </footer>
 
   <script>
+    // Mostrar secciones con animación al hacer scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
