@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DJ John - Sitio Oficial</title>
   <meta name="description" content="Sitio oficial de DJ John - Eventos, música y más.">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -29,6 +30,28 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 40px 20px;
+    }
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #preloader img {
+      max-width: 150px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
     header {
       background-color: #000;
@@ -57,20 +80,20 @@
       color: #ff1a1a;
     }
     .hero {
-      text-align: center;
-      padding: 80px 20px;
-      background: linear-gradient(135deg, #111, #1a1a1a);
-      color: white;
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #111, #1a1a1a), url('https://raw.githubusercontent.com/itsdjjohn/djjohn/main/bbce7d73-f8ec-4838-b760-3e9889a87eb7.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       animation: fadeIn 1.5s ease-in-out;
     }
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
+    .hero video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
     }
     .btn-primary {
       background: #ff1a1a;
@@ -110,9 +133,8 @@
       border-radius: 10px;
       padding: 20px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 10px;
     }
     .event-info {
       display: flex;
@@ -155,30 +177,59 @@
       to { opacity: 1; transform: translateY(0); }
     }
     @media (max-width: 768px) {
-      .event-item {
+      .hero {
+        height: 50vh;
+      }
+      .nav {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 10px;
+      }
+      .nav-links a {
+        margin: 5px 10px;
+      }
+      .event-item {
+        padding: 15px;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero {
+        height: 40vh;
+      }
+      .section h2 {
+        font-size: 1.5rem;
+      }
+      .btn-primary {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+      .event-item {
+        padding: 10px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo">
+  </div>
+
   <header>
     <div class="container nav">
       <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo" />
       <div class="nav-links">
         <a href="#tour">Tour</a>
         <a href="#bio">Biografía</a>
-        <a href="#gallery">Galería</a>
         <a href="#contact">Contacto</a>
       </div>
     </div>
   </header>
 
   <section class="hero">
-    <h1>DJ JOHN</h1>
-    <p>Música, energía y experiencias inolvidables. ¡Vive el ritmo!</p>
-    <a href="#tour" class="btn-primary">Ver próximas fechas</a>
+    <video autoplay muted loop playsinline>
+      <source src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/Promo%202024_1.mp4" type="video/mp4">
+      Tu navegador no soporta el elemento de video.
+    </video>
   </section>
 
   <main class="container">
@@ -188,13 +239,15 @@
         <div class="event-item">
           <div class="event-info">
             <strong>📅 25 Abril 2025</strong>
-            <span>📍 Pa Vacilar, Panamá</span>
+            <h3>Pa Vacilar</h3>
+            <span>📍 Panamá, Panamá</span>
           </div>
           <a href="https://www.bandsintown.com/es/artist-rsvp/86889-dj-john?event_id=106769134" class="btn-primary" target="_blank">Comprar Ticket</a>
         </div>
         <div class="event-item">
           <div class="event-info">
             <strong>📅 26 Abril 2025</strong>
+            <h3>Panamá Event</h3>
             <span>📍 Panamá, Panamá</span>
           </div>
           <a href="https://www.bandsintown.com/t/106769557?ticket_id=1986878706" class="btn-primary" target="_blank">Comprar Ticket</a>
@@ -202,6 +255,7 @@
         <div class="event-item">
           <div class="event-info">
             <strong>📅 16 Mayo 2025</strong>
+            <h3>Pedasí Party</h3>
             <span>📍 Pedasí, Panamá</span>
           </div>
           <a href="https://www.bandsintown.com/t/106685393?ticket_id=1984269622" class="btn-primary" target="_blank">Comprar Ticket</a>
@@ -215,11 +269,6 @@
       <p style="text-align: center; max-width: 800px; margin: 0 auto;">
         DJ John, originario de Panamá, es un ícono del reggaetón y la electrónica con más de 10 años de trayectoria. Fusiona energía, cultura y música para crear momentos únicos.
       </p>
-    </section>
-
-    <section id="gallery" class="section">
-      <h2>Galería</h2>
-      <iframe src="https://widget.tagembed.com/149982?view" style="width:100%; height:600px; border:none; overflow:hidden;"></iframe>
     </section>
 
     <section id="contact" class="section">
@@ -243,6 +292,13 @@
   </footer>
 
   <script>
+    // Preloader
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      preloader.style.display = 'none';
+    });
+
+    // Intersection Observer for sections
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
