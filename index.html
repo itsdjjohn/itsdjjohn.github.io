@@ -70,6 +70,10 @@
     .nav img {
       max-height: 50px;
     }
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
     .nav-links a {
       margin-left: 20px;
       font-weight: 600;
@@ -78,6 +82,16 @@
     }
     .nav-links a:hover {
       color: #ff1a1a;
+    }
+    #language-select {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 8px;
+      border-radius: 5px;
+      margin-left: 20px;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
     }
     .hero {
       width: 100%;
@@ -184,8 +198,12 @@
         flex-direction: column;
         gap: 10px;
       }
-      .nav-links a {
-        margin: 5px 10px;
+      .nav-links {
+        flex-direction: column;
+        align-items: center;
+      }
+      .nav-links a, #language-select {
+        margin: 5px 0;
       }
       .event-item {
         padding: 15px;
@@ -218,9 +236,13 @@
     <div class="container nav">
       <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo" />
       <div class="nav-links">
-        <a href="#tour">Tour</a>
-        <a href="#bio">Biografía</a>
-        <a href="#contact">Contacto</a>
+        <a href="#tour" data-lang-key="nav-tour">Tour</a>
+        <a href="#bio" data-lang-key="nav-bio">Biografía</a>
+        <a href="#contact" data-lang-key="nav-contact">Contacto</a>
+        <select id="language-select" onchange="changeLanguage()">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+        </select>
       </div>
     </div>
   </header>
@@ -234,7 +256,7 @@
 
   <main class="container">
     <section id="tour" class="section">
-      <h2>Próximos Eventos</h2>
+      <h2 data-lang-key="tour-title">Próximos Eventos</h2>
       <div class="event-list">
         <div class="event-item">
           <div class="event-info">
@@ -242,7 +264,7 @@
             <h3>Pa Vacilar</h3>
             <span>📍 Panamá, Panamá</span>
           </div>
-          <a href="https://www.bandsintown.com/es/artist-rsvp/86889-dj-john?event_id=106769134" class="btn-primary" target="_blank">Comprar Ticket</a>
+          <a href="https://www.bandsintown.com/es/artist-rsvp/86889-dj-john?event_id=106769134" class="btn-primary" data-lang-key="buy-ticket">Comprar Ticket</a>
         </div>
         <div class="event-item">
           <div class="event-info">
@@ -250,7 +272,7 @@
             <h3>Panamá Event</h3>
             <span>📍 Panamá, Panamá</span>
           </div>
-          <a href="https://www.bandsintown.com/t/106769557?ticket_id=1986878706" class="btn-primary" target="_blank">Comprar Ticket</a>
+          <a href="https://www.bandsintown.com/t/106769557?ticket_id=1986878706" class="btn-primary" data-lang-key="buy-ticket">Comprar Ticket</a>
         </div>
         <div class="event-item">
           <div class="event-info">
@@ -258,40 +280,91 @@
             <h3>Pedasí Party</h3>
             <span>📍 Pedasí, Panamá</span>
           </div>
-          <a href="https://www.bandsintown.com/t/106685393?ticket_id=1984269622" class="btn-primary" target="_blank">Comprar Ticket</a>
+          <a href="https://www.bandsintown.com/t/106685393?ticket_id=1984269622" class="btn-primary" data-lang-key="buy-ticket">Comprar Ticket</a>
         </div>
       </div>
     </section>
 
     <section id="bio" class="section">
-      <h2>Biografía</h2>
+      <h2 data-lang-key="bio-title">Biografía</h2>
       <img src="https://github.com/itsdjjohn/djjohn/blob/main/DSC09235.jpg?raw=true" alt="DJ John" style="max-width: 300px; border-radius: 12px; display: block; margin: 0 auto 20px;" />
-      <p style="text-align: center; max-width: 800px; margin: 0 auto;">
-        DJ John, originario de Panamá, es un ícono del reggaetón y la electrónica con más de 10 años de trayectoria. Fusiona energía, cultura y música para crear momentos únicos.
+      <p style="text-align: center; max-width: 800px; margin: 0 auto;" data-lang-key="bio-text">
+        DJ John is a DJ and producer, born in Panama City. He is known for his unique style and ability to mix different genres. He began his career in the electronic music scene at age 13, playing at local parties and events. Eventually, his talent and dedication led him to play in nationally renowned clubs. He has played some of the biggest festivals in Panama like PARADISE 507 and PARADISE PESKITO (Carnivals).
       </p>
     </section>
 
     <section id="contact" class="section">
-      <h2>Contacto</h2>
+      <h2 data-lang-key="contact-title">Contacto</h2>
       <form action="https://formspree.io/f/your-form-id" method="POST" style="max-width: 600px; margin: 0 auto;">
-        <input type="text" name="name" placeholder="Tu nombre" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; background: #222; color: white;" />
-        <input type="email" name="email" placeholder="Tu correo" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; background: #222; color: white;" />
-        <textarea name="message" placeholder="¿En qué puedo ayudarte?" required style="width: 100%; padding: 12px; height: 150px; border: none; border-radius: 8px; background: #222; color: white;"></textarea>
-        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">Enviar</button>
+        <input type="text" name="name" placeholder="Tu nombre" data-lang-placeholder="contact-name" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; background: #222; color: white;" />
+        <input type="email" name="email" placeholder="Tu correo" data-lang-placeholder="contact-email" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; background: #222; color: white;" />
+        <textarea name="message" placeholder="¿En qué puedo ayudarte?" data-lang-placeholder="contact-message" required style="width: 100%; padding: 12px; height: 150px; border: none; border-radius: 8px; background: #222; color: white;"></textarea>
+        <button type="submit" class="btn-primary" data-lang-key="contact-submit">Enviar</button>
       </form>
+      <p style="text-align: center; margin-top: 20px;">
+        <a href="mailto:esquiveljohn2@gmail.com" data-lang-key="contact-bookings">Bookings: esquiveljohn2@gmail.com</a>
+      </p>
       <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1574.473128038129!2d-79.5218426!3d8.9823791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8faca9c8153543df%3A0x9463f51b929d55b4!2sPanam%C3%A1!5e0!3m2!1ses!2spa!4v1713884010016!5m2!1ses!2spa" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
   </main>
 
   <footer>
     <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo" class="logo">
-    <p>Sígueme en:</p>
+    <p data-lang-key="footer-follow">Sígueme en:</p>
     <a href="https://instagram.com/itsdjjohn" target="_blank">Instagram</a>
     <a href="https://facebook.com/itsdjjohn" target="_blank">Facebook</a>
-    <p style="margin-top: 10px; font-size: 12px; color: #888;">© 2025 DJ John. Todos los derechos reservados.</p>
+    <p style="margin-top: 10px; font-size: 12px; color: #888;" data-lang-key="footer-copyright">© 2025 DJ John. Todos los derechos reservados.</p>
   </footer>
 
   <script>
+    // Language switcher
+    const translations = {
+      es: {
+        'nav-tour': 'Tour',
+        'nav-bio': 'Biografía',
+        'nav-contact': 'Contacto',
+        'tour-title': 'Próximos Eventos',
+        'buy-ticket': 'Comprar Ticket',
+        'bio-title': 'Biografía',
+        'bio-text': 'DJ John es un DJ y productor, nacido en la Ciudad de Panamá. Es conocido por su estilo único y su habilidad para mezclar diferentes géneros. Comenzó su carrera en la escena de la música electrónica a los 13 años, tocando en fiestas y eventos locales. Eventualmente, su talento y dedicación lo llevaron a presentarse en clubes de renombre nacional. Ha tocado en algunos de los festivales más grandes de Panamá como PARADISE 507 y PARADISE PESKITO (Carnavales).',
+        'contact-title': 'Contacto',
+        'contact-name': 'Tu nombre',
+        'contact-email': 'Tu correo',
+        'contact-message': '¿En qué puedo ayudarte?',
+        'contact-submit': 'Enviar',
+        'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
+        'footer-follow': 'Sígueme en:',
+        'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.'
+      },
+      en: {
+        'nav-tour': 'Tour',
+        'nav-bio': 'Biography',
+        'nav-contact': 'Contact',
+        'tour-title': 'Upcoming Events',
+        'buy-ticket': 'Buy Ticket',
+        'bio-title': 'Biography',
+        'bio-text': 'DJ John is a DJ and producer, born in Panama City. He is known for his unique style and ability to mix different genres. He began his career in the electronic music scene at age 13, playing at local parties and events. Eventually, his talent and dedication led him to play in nationally renowned clubs. He has played some of the biggest festivals in Panama like PARADISE 507 and PARADISE PESKITO (Carnivals).',
+        'contact-title': 'Contact',
+        'contact-name': 'Your name',
+        'contact-email': 'Your email',
+        'contact-message': 'How can I help you?',
+        'contact-submit': 'Send',
+        'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
+        'footer-follow': 'Follow me on:',
+        'footer-copyright': '© 2025 DJ John. All rights reserved.'
+      }
+    };
+
+    function changeLanguage() {
+      const lang = document.getElementById('language-select').value;
+      document.querySelectorAll('[data-lang-key]').forEach(element => {
+        element.textContent = translations[lang][element.getAttribute('data-lang-key')];
+      });
+      document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
+        element.placeholder = translations[lang][element.getAttribute('data-lang-placeholder')];
+      });
+    }
+
     // Preloader
     window.addEventListener('load', function() {
       const preloader = document.getElementById('preloader');
