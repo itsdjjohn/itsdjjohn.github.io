@@ -46,10 +46,15 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
+      transition: opacity 0.5s ease;
     }
     #preloader img {
       max-width: 150px;
       animation: pulse 1.5s infinite;
+    }
+    #preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
     }
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -173,7 +178,7 @@
       opacity: 1;
     }
     .section h2 {
-      sprang: 2rem;
+      font-size: 2rem;
       color: #ff1a1a;
       margin-bottom: 30px;
       text-align: center;
@@ -396,7 +401,7 @@
   </header>
 
   <section class="hero" id="home">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline preload="auto">
       <source src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/Promo%202024_1.mp4" type="video/mp4">
       Tu navegador no soporta el elemento de video.
     </video>
@@ -412,7 +417,7 @@
 
     <section id="bio" class="section">
       <h2 data-lang-key="bio-title">Biografía</h2>
-      <img src="https://github.com/itsdjjohn/djjohn/blob/main/DSC09235.jpg?raw=true" alt="DJ John" style="max-width: 300px; border-radius: 12px; display: block; margin: 0 auto 20px;" />
+      <img src="https://github.com/itsdjjohn/djjohn/blob/main/DSC09235.jpg?raw=true" alt="DJ John" style="max-width: 300px; border-radius: 12px; display: block; margin: 0 auto 20px;" loading="lazy" />
       <p style="text-align: center; max-width: 800px; margin: 0 auto;" data-lang-key="bio-text">
         DJ John is a DJ and producer, born in Panama City. He is known for his unique style and ability to mix different genres. He began his career in the electronic music scene at age 13, playing at local parties and events. Eventually, his talent and dedication led him to play in nationally renowned clubs. He has played some of the biggest festivals in Panama like PARADISE 507 and PARADISE PESKITO (Carnivals).
       </p>
@@ -437,7 +442,7 @@
     <div class="product-container">
       <a href="#" class="back-btn" id="back-btn" data-lang-key="back-btn">Volver</a>
       <div class="product-image">
-        <img id="product-image" src="" alt="Evento">
+        <img id="product-image" src="" alt="Evento" loading="lazy">
       </div>
       <div class="product-details">
         <h1 id="product-title"></h1>
@@ -450,7 +455,7 @@
   </section>
 
   <footer>
-    <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo" class="logo">
+    <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo" class="logo" loading="lazy">
     <p data-lang-key="footer-follow">Sígueme en:</p>
     <a href="https://instagram.com/itsdjjohn" target="_blank">Instagram</a>
     <a href="https://facebook.com/itsdjjohn" target="_blank">Facebook</a>
@@ -564,13 +569,14 @@
                 showProductPage(event, lang);
               }
             } catch (error) {
-              console.error('Error al mostrar la página de producto:',.ConcurrentHashMap error);
+              console.error('Error al mostrar la página de producto:', error);
             } finally {
               button.classList.remove('loading');
             }
           });
         });
       } catch (error) {
+        console.error('Error al cargar eventos:', error);
         eventList.innerHTML = `<p class="event-error">${lang === 'es' ? 'Error al cargar los eventos.' : 'Error loading events.'}</p>`;
       }
     }
@@ -633,13 +639,28 @@
       navLinks.classList.remove('nav-active');
     });
 
-    // Preloader
-    window.addEventListener('load', function() {
+    // Manejo del preloader
+    function hidePreloader() {
       const preloader = document.getElementById('preloader');
-      preloader.style.display = 'none';
-      // Cargar eventos al iniciar
+      preloader.classList.add('hidden');
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 500); // Esperar a que termine la transición de opacidad
+      // Cargar eventos después de ocultar el preloader
       loadEvents();
+    }
+
+    // Ocultar preloader cuando la página esté cargada
+    window.addEventListener('load', () => {
+      console.log('Evento load disparado');
+      hidePreloader();
     });
+
+    // Timeout de respaldo para ocultar el preloader después de 5 segundos
+    setTimeout(() => {
+      console.log('Timeout de respaldo para preloader');
+      hidePreloader();
+    }, 5000);
 
     // Intersection Observer para secciones
     const observer = new IntersectionObserver((entries) => {
