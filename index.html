@@ -128,6 +128,7 @@
       position: relative;
       overflow: hidden;
       will-change: transform;
+      margin: 5px;
     }
     .btn-primary:hover {
       background: #ff4d4d;
@@ -205,32 +206,37 @@
       color: #ff4d4d;
       font-size: 1.1rem;
     }
-    /* Product Page Styles */
-    #product-page, #bio-page {
+    .event-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    /* Bio Page Styles */
+    #bio-page {
       display: none;
       background: #1a1a1a;
       padding: 40px 20px;
       min-height: 100vh;
       animation: fadeIn 0.5s ease;
     }
-    #product-page.show, #bio-page.show {
+    #bio-page.show {
       display: block;
     }
-    .product-container, .bio-container {
+    .bio-container {
       max-width: 800px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
-    .product-image img, .bio-container img {
+    .bio-container img {
       width: 100%;
       max-height: 400px;
       object-fit: cover;
       border-radius: 10px;
       animation: slideUp 0.5s ease;
     }
-    .product-details, .bio-details {
+    .bio-details {
       display: flex;
       flex-direction: column;
       gap: 15px;
@@ -238,16 +244,12 @@
       opacity: 0;
       animation-fill-mode: forwards;
     }
-    .product-details h1, .bio-details h1 {
+    .bio-details h1 {
       font-size: 2rem;
       color: #ff1a1a;
     }
-    .product-details p, .bio-details p {
+    .bio-details p {
       color: #ccc;
-    }
-    .product-details .btn-primary {
-      align-self: center;
-      width: fit-content;
     }
     .back-btn {
       background: #333;
@@ -323,13 +325,13 @@
       .menu-toggle {
         display: block;
       }
-      .product-container, .bio-container {
+      .bio-container {
         flex-direction: column;
       }
-      .product-image img, .bio-container img {
+      .bio-container img {
         max-height: 300px;
       }
-      .product-details h1, .bio-details h1 {
+      .bio-details h1 {
         font-size: 1.5rem;
       }
     }
@@ -344,7 +346,7 @@
       .event-item {
         padding: 10px;
       }
-      .product-image img, .bio-container img {
+      .bio-container img {
         max-height: 200px;
       }
     }
@@ -358,7 +360,7 @@
 
   <header>
     <div class="container nav">
-      <a href="#" id="logo-link">
+      <a href="#main-content" id="logo-link">
         <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo" />
       </a>
       <button class="menu-toggle" aria-label="Toggle menu">
@@ -403,30 +405,13 @@
   <!-- Bio Page -->
   <section id="bio-page">
     <div class="bio-container">
-      <a href="#" class="back-btn" id="bio-back-btn" data-lang-key="back-btn">Volver</a>
+      <a href="#main-content" class="back-btn" id="bio-back-btn" data-lang-key="back-btn">Volver</a>
       <div class="bio-details">
         <h1 data-lang-key="bio-title">Biografía</h1>
         <img src="https://github.com/itsdjjohn/djjohn/blob/main/DSC09235.jpg?raw=true" alt="DJ John" style="max-width: 300px; border-radius: 12px; display: block; margin: 0 auto 20px;" loading="lazy" />
         <p style="text-align: center; max-width: 800px; margin: 0 auto;" data-lang-key="bio-text">
           DJ John es un DJ y productor, nacido en la Ciudad de Panamá. Es conocido por su estilo único y su habilidad para mezclar diferentes géneros. Comenzó su carrera en la escena de la música electrónica a los 13 años, tocando en fiestas y eventos locales. Eventualmente, su talento y dedicación lo llevaron a presentarse en clubes de renombre nacional. Ha tocado en algunos de los festivales más grandes de Panamá como PARADISE 507 y PARADISE PESKITO (Carnavales).
         </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Product Page Template -->
-  <section id="product-page">
-    <div class="product-container">
-      <a href="#" class="back-btn" id="product-back-btn" data-lang-key="back-btn">Volver</a>
-      <div class="product-image">
-        <img id="product-image" src="" alt="Evento" loading="lazy">
-      </div>
-      <div class="product-details">
-        <h1 id="product-title"></h1>
-        <p id="product-date"></p>
-        <p id="product-location"></p>
-        <p id="product-description"></p>
-        <a id="product-buy-btn" href="#" class="btn-primary" target="_blank" data-lang-key="buy-ticket">Comprar Entradas</a>
       </div>
     </div>
   </section>
@@ -448,6 +433,8 @@
         'nav-contact': 'Contacto',
         'tour-title': 'Próximos Eventos',
         'buy-ticket': 'Comprar Entradas',
+        'notify-me': 'Notificarme',
+        'guest-list': 'Lista de Invitados',
         'bio-title': 'Biografía',
         'bio-text': 'DJ John es un DJ y productor, nacido en la Ciudad de Panamá. Es conocido por su estilo único y su habilidad para mezclar diferentes géneros. Comenzó su carrera en la escena de la música electrónica a los 13 años, tocando en fiestas y eventos locales. Eventualmente, su talento y dedicación lo llevaron a presentarse en clubes de renombre nacional. Ha tocado en algunos de los festivales más grandes de Panamá como PARADISE 507 y PARADISE PESKITO (Carnavales).',
         'contact-title': 'Contacto',
@@ -466,6 +453,8 @@
         'nav-contact': 'Contact',
         'tour-title': 'Upcoming Events',
         'buy-ticket': 'Buy Tickets',
+        'notify-me': 'Notify Me',
+        'guest-list': 'Guest List',
         'bio-title': 'Biography',
         'bio-text': 'DJ John is a DJ and producer, born in Panama City. He is known for his unique style and ability to mix different genres. He began his career in the electronic music scene at age 13, playing at local parties and events. Eventually, his talent and dedication led him to play in nationally renowned clubs. He has played some of the biggest festivals in Panama like PARADISE 507 and PARADISE PESKITO (Carnivals).',
         'contact-title': 'Contact',
@@ -488,7 +477,7 @@
       document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
         element.placeholder = translations[lang][element.getAttribute('data-lang-placeholder')];
       });
-      // Recargar eventos para actualizar formato de fechas
+      // Recargar eventos para actualizar formato de fechas y textos de botones
       loadEvents();
     }
 
@@ -521,36 +510,57 @@
 
           const eventItem = document.createElement('div');
           eventItem.className = 'event-item';
+          let buttonsHTML = '';
+
+          // Verificar si hay enlaces de venta
+          const hasTicketUrl = event.ticket_url && event.ticket_url.trim() !== '';
+          const offers = event.offers || [];
+          const validOffers = offers.filter(offer => offer.url && offer.url.trim() !== '');
+          const hasTwoOffers = validOffers.length === 2;
+
+          if (hasTicketUrl) {
+            // Botón Comprar Entradas si hay ticket_url
+            buttonsHTML += `
+              <a href="${event.ticket_url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket">
+                ${translations[lang]['buy-ticket']}
+              </a>
+            `;
+          } else if (validOffers.length > 0) {
+            // Botón Comprar Entradas si hay al menos un offer
+            buttonsHTML += `
+              <a href="${validOffers[0].url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket">
+                ${translations[lang]['buy-ticket']}
+              </a>
+            `;
+          } else {
+            // Botón Notificarme si no hay ticket_url ni offers
+            buttonsHTML += `
+              <a href="${event.url}" class="btn-primary" target="_blank" data-lang-key="notify-me">
+                ${translations[lang]['notify-me']}
+              </a>
+            `;
+          }
+
+          // Botón Lista de Invitados solo si hay exactamente dos offers
+          if (hasTwoOffers) {
+            buttonsHTML += `
+              <a href="${validOffers[1].url}" class="btn-primary" target="_blank" data-lang-key="guest-list">
+                ${translations[lang]['guest-list']}
+              </a>
+            `;
+          }
+
           eventItem.innerHTML = `
             <div class="event-info">
               <strong>📅 ${formattedDate}</strong>
               <h3>${event.title}</h3>
               <span>📍 ${event.venue.city}, ${event.venue.country}</span>
             </div>
-            <a href="#" class="btn-primary buy-ticket" data-event-id="${event.id}" data-lang-key="buy-ticket">
-              ${translations[lang]['buy-ticket']}
-            </a>
+            <div class="event-buttons">
+              ${buttonsHTML}
+            </div>
           `;
           eventList.appendChild(eventItem);
-        });
-
-        // Añadir eventos de clic para los botones de compra
-        document.querySelectorAll('.buy-ticket').forEach(button => {
-          button.addEventListener('click', async (e) => {
-            e.preventDefault();
-            button.classList.add('loading');
-            const eventId = button.getAttribute('data-event-id');
-            try {
-              const event = futureEvents.find(ev => ev.id === eventId);
-              if (event) {
-                showProductPage(event, lang);
-              }
-            } catch (error) {
-              console.error('Error al mostrar la página de producto:', error);
-            } finally {
-              button.classList.remove('loading');
-            }
-          });
         });
       } catch (error) {
         console.error('Error al cargar eventos:', error);
@@ -558,55 +568,13 @@
       }
     }
 
-    // Mostrar página de producto
-    function showProductPage(event, lang) {
-      const mainContent = document.getElementById('main-content');
-      const productPage = document.getElementById('product-page');
-      const bioPage = document.getElementById('bio-page');
-      const productImage = document.getElementById('product-image');
-      const productTitle = document.getElementById('product-title');
-      const productDate = document.getElementById('product-date');
-      const productLocation = document.getElementById('product-location');
-      const productDescription = document.getElementById('product-description');
-      const productBuyBtn = document.getElementById('product-buy-btn');
-
-      // Ocultar contenido principal y página de biografía, mostrar página de producto
-      mainContent.style.display = 'none';
-      bioPage.classList.remove('show');
-      productPage.classList.add('show');
-
-      // Rellenar datos
-      productImage.src = event.image_url || 'https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DSC09235.jpg';
-      productTitle.textContent = event.title;
-      const date = new Date(event.datetime);
-      productDate.textContent = `${lang === 'es' ? 'Fecha:' : 'Date:'} ${new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric'
-      }).format(date)}`;
-      productLocation.textContent = `${lang === 'es' ? 'Ubicación:' : 'Location:'} ${event.venue.city}, ${event.venue.country}${event.venue.name ? `, ${event.venue.name}` : ''}`;
-      productDescription.textContent = event.description || (lang === 'es' ? 'No hay descripción disponible.' : 'No description available.');
-      productBuyBtn.href = event.ticket_url || event.url;
-
-      // Botón de volver
-      document.getElementById('product-back-btn').addEventListener('click', (e) => {
-        e.preventDefault();
-        productPage.classList.remove('show');
-        mainContent.style.display = 'block';
-      });
-    }
-
     // Mostrar página de biografía
     function showBioPage() {
       const mainContent = document.getElementById('main-content');
-      const productPage = document.getElementById('product-page');
       const bioPage = document.getElementById('bio-page');
 
-      // Ocultar contenido principal y página de producto, mostrar página de biografía
+      // Ocultar contenido principal, mostrar página de biografía
       mainContent.style.display = 'none';
-      productPage.classList.remove('show');
       bioPage.classList.add('show');
 
       // Botón de volver
@@ -615,6 +583,16 @@
         bioPage.classList.remove('show');
         mainContent.style.display = 'block';
       });
+    }
+
+    // Mostrar página principal
+    function showMainPage() {
+      const mainContent = document.getElementById('main-content');
+      const bioPage = document.getElementById('bio-page');
+
+      // Mostrar contenido principal, ocultar página de biografía
+      mainContent.style.display = 'block';
+      bioPage.classList.remove('show');
     }
 
     // Toggle menú en móviles
@@ -646,7 +624,7 @@
     // Manejo de clic en el logo
     document.getElementById('logo-link').addEventListener('click', (e) => {
       e.preventDefault();
-      showBioPage();
+      showMainPage();
     });
 
     // Manejo del preloader
