@@ -136,10 +136,33 @@
       font-weight: 600;
       font-size: 16px;
       transition: transform 0.3s ease, background 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      will-change: transform;
     }
     .btn-primary:hover {
       background: #ff4d4d;
       transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);
+    }
+    .btn-primary:active {
+      transform: scale(0.95);
+    }
+    .btn-primary.loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
     }
     .section {
       padding: 60px 0;
@@ -150,7 +173,7 @@
       opacity: 1;
     }
     .section h2 {
-      font-size: 2rem;
+      sprang: 2rem;
       color: #ff1a1a;
       margin-bottom: 30px;
       text-align: center;
@@ -168,6 +191,17 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      will-change: transform, box-shadow;
+      opacity: 0;
+      animation: fadeInUp 0.5s ease forwards;
+    }
+    .event-item:nth-child(2) { animation-delay: 0.1s; }
+    .event-item:nth-child(3) { animation-delay: 0.2s; }
+    .event-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(255, 77, 77, 0.2);
+      background: #222;
     }
     .event-info {
       display: flex;
@@ -181,6 +215,62 @@
       text-align: center;
       color: #ff4d4d;
       font-size: 1.1rem;
+    }
+    /* Product Page Styles */
+    #product-page {
+      display: none;
+      background: #1a1a1a;
+      padding: 40px 20px;
+      min-height: 100vh;
+      animation: fadeIn 0.5s ease;
+    }
+    #product-page.show {
+      display: block;
+    }
+    .product-container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .product-image img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      animation: slideUp 0.5s ease;
+    }
+    .product-details {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      animation: slideUp 0.5s ease 0.2s;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+    .product-details h1 {
+      font-size: 2rem;
+      color: #ff1a1a;
+    }
+    .product-details p {
+      color: #ccc;
+    }
+    .product-details .btn-primary {
+      align-self: center;
+      width: fit-content;
+    }
+    .back-btn {
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      text-align: center;
+    }
+    .back-btn:hover {
+      background: #555;
     }
     footer {
       background: #000;
@@ -204,7 +294,11 @@
       to { opacity: 1; }
     }
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(50px); }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes slideDown {
@@ -243,6 +337,15 @@
       .menu-toggle {
         display: block;
       }
+      .product-container {
+        flex-direction: column;
+      }
+      .product-image img {
+        max-height: 300px;
+      }
+      .product-details h1 {
+        font-size: 1.5rem;
+      }
     }
     @media (max-width: 480px) {
       .hero {
@@ -257,6 +360,9 @@
       }
       .event-item {
         padding: 10px;
+      }
+      .product-image img {
+        max-height: 200px;
       }
     }
   </style>
@@ -296,7 +402,7 @@
     </video>
   </section>
 
-  <main class="container">
+  <main class="container" id="main-content">
     <section id="tour" class="section">
       <h2 data-lang-key="tour-title">Próximos Eventos</h2>
       <div class="event-list" id="event-list">
@@ -326,6 +432,23 @@
     </section>
   </main>
 
+  <!-- Product Page Template -->
+  <section id="product-page">
+    <div class="product-container">
+      <a href="#" class="back-btn" id="back-btn" data-lang-key="back-btn">Volver</a>
+      <div class="product-image">
+        <img id="product-image" src="" alt="Evento">
+      </div>
+      <div class="product-details">
+        <h1 id="product-title"></h1>
+        <p id="product-date"></p>
+        <p id="product-location"></p>
+        <p id="product-description"></p>
+        <a id="product-buy-btn" href="#" class="btn-primary" target="_blank" data-lang-key="buy-ticket">Comprar Entradas</a>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <img src="https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DJ%20JOHN%20LOGO%20BLANCO.png" alt="DJ John Logo" class="logo">
     <p data-lang-key="footer-follow">Sígueme en:</p>
@@ -352,7 +475,8 @@
         'contact-submit': 'Enviar',
         'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
         'footer-follow': 'Sígueme en:',
-        'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.'
+        'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.',
+        'back-btn': 'Volver'
       },
       en: {
         'nav-tour': 'Tour',
@@ -369,7 +493,8 @@
         'contact-submit': 'Send',
         'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
         'footer-follow': 'Follow me on:',
-        'footer-copyright': '© 2025 DJ John. All rights reserved.'
+        'footer-copyright': '© 2025 DJ John. All rights reserved.',
+        'back-btn': 'Back'
       }
     };
 
@@ -420,15 +545,72 @@
               <h3>${event.title}</h3>
               <span>📍 ${event.venue.city}, ${event.venue.country}</span>
             </div>
-            <a href="${event.ticket_url || event.url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket">
+            <a href="#" class="btn-primary buy-ticket" data-event-id="${event.id}" data-lang-key="buy-ticket">
               ${translations[lang]['buy-ticket']}
             </a>
           `;
           eventList.appendChild(eventItem);
         });
+
+        // Añadir eventos de clic para los botones de compra
+        document.querySelectorAll('.buy-ticket').forEach(button => {
+          button.addEventListener('click', async (e) => {
+            e.preventDefault();
+            button.classList.add('loading');
+            const eventId = button.getAttribute('data-event-id');
+            try {
+              const event = futureEvents.find(ev => ev.id === eventId);
+              if (event) {
+                showProductPage(event, lang);
+              }
+            } catch (error) {
+              console.error('Error al mostrar la página de producto:',.ConcurrentHashMap error);
+            } finally {
+              button.classList.remove('loading');
+            }
+          });
+        });
       } catch (error) {
         eventList.innerHTML = `<p class="event-error">${lang === 'es' ? 'Error al cargar los eventos.' : 'Error loading events.'}</p>`;
       }
+    }
+
+    // Mostrar página de producto
+    function showProductPage(event, lang) {
+      const mainContent = document.getElementById('main-content');
+      const productPage = document.getElementById('product-page');
+      const productImage = document.getElementById('product-image');
+      const productTitle = document.getElementById('product-title');
+      const productDate = document.getElementById('product-date');
+      const productLocation = document.getElementById('product-location');
+      const productDescription = document.getElementById('product-description');
+      const productBuyBtn = document.getElementById('product-buy-btn');
+
+      // Ocultar contenido principal y mostrar página de producto
+      mainContent.style.display = 'none';
+      productPage.classList.add('show');
+
+      // Rellenar datos
+      productImage.src = event.image_url || 'https://raw.githubusercontent.com/itsdjjohn/djjohn/main/DSC09235.jpg';
+      productTitle.textContent = event.title;
+      const date = new Date(event.datetime);
+      productDate.textContent = `${lang === 'es' ? 'Fecha:' : 'Date:'} ${new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      }).format(date)}`;
+      productLocation.textContent = `${lang === 'es' ? 'Ubicación:' : 'Location:'} ${event.venue.city}, ${event.venue.country}${event.venue.name ? `, ${event.venue.name}` : ''}`;
+      productDescription.textContent = event.description || (lang === 'es' ? 'No hay descripción disponible.' : 'No description available.');
+      productBuyBtn.href = event.ticket_url || event.url;
+
+      // Botón de volver
+      document.getElementById('back-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        productPage.classList.remove('show');
+        mainContent.style.display = 'block';
+      });
     }
 
     // Toggle menú en móviles
