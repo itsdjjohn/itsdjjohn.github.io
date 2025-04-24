@@ -197,7 +197,7 @@ header {
   font-size: 1.5rem;
   color: #f0f0f0;
   margin-bottom: 30px;
-  min-height: 2em; /* Ensure space for typing effect */
+  min-height: 2em;
 }
 .hero-cta {
   padding: 15px 40px;
@@ -290,22 +290,51 @@ form input, form textarea {
 form textarea {
   height: 150px;
 }
-footer {
-  background: #000;
+.footer {
+  background: linear-gradient(180deg, #000, #1a1a1a);
   color: #ccc;
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
   margin-top: 40px;
 }
-footer .logo {
-  max-width: 120px;
-  margin-bottom: 20px;
+.footer-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  align-items: center;
 }
-footer a {
-  color: #ff4d4d;
-  font-weight: 600;
-  display: inline-block;
-  margin: 0 10px;
+.footer-logo {
+  max-width: 150px;
+  animation: fadeInUp 1s ease forwards;
+}
+.footer-follow {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.social-icon {
+  width: 40px;
+  height: 40px;
+  fill: #ccc;
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+.social-icon:hover {
+  fill: #ff1a1a;
+  transform: scale(1.2);
+}
+.footer-copyright {
+  font-size: 0.9rem;
+  color: #999;
+  background: rgba(255, 26, 26, 0.1);
+  padding: 10px;
+  border-radius: 5px;
 }
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -376,6 +405,13 @@ footer a {
     padding: 12px 30px;
     font-size: 1rem;
   }
+  .footer-logo {
+    max-width: 120px;
+  }
+  .social-icon {
+    width: 30px;
+    height: 30px;
+  }
 }
 @media (max-width: 480px) {
   .section h2 {
@@ -396,5 +432,14 @@ footer a {
   }
   .hero-text {
     font-size: 1rem;
+  }
+  .footer-logo {
+    max-width: 100px;
+  }
+  .footer-follow {
+    font-size: 1rem;
+  }
+  .footer-copyright {
+    font-size: 0.8rem;
   }
 }
