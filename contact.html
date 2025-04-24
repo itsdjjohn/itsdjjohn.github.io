@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DJ John - Contacto</title>
-  <meta name="description" content="Contáctame para bookings y más.">
+  <meta name="description" content="Contacta a DJ John para bookings, eventos o consultas.">
+  <meta name="keywords" content="DJ John, contacto, bookings, Panamá">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
@@ -40,9 +41,12 @@
       <section class="section">
         <h2 data-lang-key="contact-title">Contacto</h2>
         <form action="https://formspree.io/f/mgvkeyrd" method="POST" style="max-width: 600px; margin: 0 auto;">
-          <input type="text" name="name" data-lang-placeholder="contact-name" required />
-          <input type="email" name="email" data-lang-placeholder="contact-email" required />
-          <textarea name="message" data-lang-placeholder="contact-message" required></textarea>
+          <label for="name" data-lang-key="contact-name">Nombre</label>
+          <input type="text" id="name" name="name" data-lang-placeholder="contact-name" required />
+          <label for="email" data-lang-key="contact-email">Correo</label>
+          <input type="email" id="email" name="email" data-lang-placeholder="contact-email" required />
+          <label for="message" data-lang-key="contact-message">Mensaje</label>
+          <textarea id="message" name="message" data-lang-placeholder="contact-message" required></textarea>
           <button type="submit" class="btn-primary" data-lang-key="contact-submit">Enviar</button>
         </form>
         <p>
@@ -52,7 +56,7 @@
     </main>
     <footer class="footer">
       <div class="footer-container">
-        <img src="images/logo.png" alt="DJ John Logo" class="footer-logo" loading="lazy">
+        <img src="images/logo.png" alt="DJ John Footer Logo" class="footer-logo" loading="lazy">
         <p class="footer-follow" data-lang-key="footer-follow">Sígueme en:</p>
         <div class="footer-socials">
           <a href="https://instagram.com/itsdjjohn" target="_blank" aria-label="Instagram">
