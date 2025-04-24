@@ -8,12 +8,16 @@ html {
 }
 body {
   font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../images/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background: linear-gradient(45deg, #ff1a1a, #1a1a1a, #000, #ff4d4d);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
   color: #f0f0f0;
   line-height: 1.6;
+}
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 a {
   color: inherit;
