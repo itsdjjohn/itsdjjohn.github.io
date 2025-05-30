@@ -109,12 +109,10 @@
         }
         eventList.innerHTML = events.map((event, index) => `
           <div class="event-item" style="animation-delay: ${index * 0.1}s">
-            <img src="${event.image_url || 'images/default-event.jpg'}" alt="${event.title}">
             <div class="event-info">
               <h3>${event.title}</h3>
               <p><strong>Fecha:</strong> ${new Date(event.datetime).toLocaleDateString('es-ES', { dateStyle: 'medium' })}</p>
               <p><strong>Lugar:</strong> ${event.venue.location || 'Ubicación no disponible'}</p>
-              <p>${event.description ? event.description.substring(0, 100) + '...' : 'No hay descripción disponible.'}</p>
             </div>
             <div class="event-buttons">
               <a href="#" class="btn-primary" data-event-id="${event.id}">Ver Detalles</a>
@@ -160,13 +158,6 @@
                 border-radius: 10px;
                 animation: fadeInUp 0.5s ease forwards;
               }
-              .event-details img {
-                width: 100%;
-                max-height: 400px;
-                object-fit: cover;
-                border-radius: 10px;
-                margin-bottom: 20px;
-              }
               .event-details h1 {
                 font-size: 2rem;
                 color: #ff1a1a;
@@ -192,12 +183,10 @@
             <div class="container">
               <div class="event-details">
                 <h1>${event.title}</h1>
-                <img src="${event.image_url || 'images/default-event.jpg'}" alt="${event.title}">
                 <p><strong>Fecha:</strong> ${new Date(event.datetime).toLocaleDateString('es-ES', { dateStyle: 'medium', timeStyle: 'short' })}</p>
                 <p><strong>Lugar:</strong> ${event.venue.location || 'Ubicación no disponible'}</p>
-                <p><strong>Descripción:</strong> ${event.description || 'No hay descripción disponible.'}</p>
                 ${event.offers && event.offers.length > 0 ? `
-                  <a href="${event.offers[0].url}" target="_blank" class="btn-primary">Comprar Tickets</a>
+                  <a href="${event.offers[0].url}" target="_blank" class="btn-primary">Adquirir Entradas</a>
                 ` : `
                   <a href="${event.url}&trigger=notify_me" target="_blank" class="btn-primary">Notificarme</a>
                 `}
