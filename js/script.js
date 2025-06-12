@@ -9,16 +9,14 @@ const translations = {
     'hero-cta': 'Ver Fechas de Tour',
     'tour-title': 'Próximos Eventos',
     'buy-ticket': 'Adquirir Entradas',
-    'notify-me': 'Notificarme',
-    'guest-list': 'Lista de Invitados',
     'bio-title': 'Biografía',
-    'bio-text': 'DJ John es un DJ y productor, nacido en la Ciudad de Panamá. Es conocido por su estilo único y su habilidad para mezclar diferentes géneros. Comenzó su carrera en la escena de la música electrónica a los 13 años, tocando en fiestas y eventos locales. Eventualmente, su talento y dedicación lo llevaron a presentarse en clubes de renombre nacional. Ha tocado en algunos de los festivales más grandes de Panamá como PARADISE 507 y PARADISE PESKITO (Carnavales).',
+    'bio-text': 'DJ John es un DJ y productor, nacido en la Ciudad de Panamá. Es conocido por su estilo único y su habilidad para mezclar diferentes géneros. Comenzó su carrera en la escena de los eventos a los 18 años, tocando en fiestas y eventos locales. Actualmente, su talento y dedicación lo han llevado a presentarse en eventos de renombre nacional. Ha participado en algunos de los eventos más grandes de Panamá como el Carnaval de Panamá.',
     'contact-title': 'Contacto',
-    'contact-name': 'Tu nombre',
-    'contact-email': 'Tu correo',
+    'contact-name': 'Tu Nombre',
+    'contact-email': 'Tu Email',
     'contact-message': '¿En qué puedo ayudarte?',
     'contact-submit': 'Enviar',
-    'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
+    'contact-bookings': 'Bookings: info@itsdjjohn.com',
     'footer-follow': 'Sígueme en:',
     'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.',
     'form-success': '¡Mensaje enviado con éxito!',
@@ -37,16 +35,14 @@ const translations = {
     'hero-cta': 'Check Tour Dates',
     'tour-title': 'Upcoming Events',
     'buy-ticket': 'Buy Tickets',
-    'notify-me': 'Notify Me',
-    'guest-list': 'Guest List',
     'bio-title': 'Biography',
-    'bio-text': 'DJ John is a DJ and producer, born in Panama City. He is known for his unique style and ability to mix different genres. He began his career in the electronic music scene at age 13, playing at local parties and events. Eventually, his talent and dedication led him to play in nationally renowned clubs. He has played some of the biggest festivals in Panama like PARADISE 507 and PARADISE PESKITO (Carnivals).',
+    'bio-text': 'DJ John is a DJ and producer, born in Panama City. He is known for his unique style and ability to mix different genres. He began his career in the electronic music scene at age 18, performing at local parties and events. Eventually, his talent and charisma led him to perform at nationally renowned events. He has played at major Panama events like the Panama Carnival.',
     'contact-title': 'Contact',
-    'contact-name': 'Your name',
-    'contact-email': 'Your email',
-    'contact-message': 'How can I help you?',
+    'contact-name': 'Your Name',
+    'contact-email': 'Your Email',
+    'contact-message': 'How can I assist you?',
     'contact-submit': 'Send',
-    'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
+    'contact-bookings': 'Bookings: info@itsdjjohn.com',
     'footer-follow': 'Follow me on:',
     'footer-copyright': '© 2025 DJ John. All rights reserved.',
     'form-success': 'Message sent successfully!',
@@ -63,13 +59,13 @@ function changeLanguage() {
   document.querySelectorAll('[data-lang-key]').forEach(element => {
     element.textContent = translations[lang][element.getAttribute('data-lang-key')];
   });
-  document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
-    element.placeholder = translations[lang][element.getAttribute('data-lang-placeholder')];
+  document.querySelectorAll('[data-placeholder-key]').forEach(element => {
+    element.placeholder = translations[lang][element.getAttribute('data-placeholder-key')];
   });
   if (document.getElementById('hero-text')) {
     typeWriter(translations[lang]['hero-text'], 'hero-text', 50);
   }
-  if (document.getElementById('tour-js')) {
+  if (document.getElementById('event-list')) {
     loadEvents();
   }
 }
@@ -78,22 +74,28 @@ async function loadEvents() {
   const eventList = document.getElementById('event-list');
   if (!eventList) return;
   const lang = document.getElementById('language-select')?.value || 'es';
-  eventList.innerHTML = '<div class="event-info">Loading...</div>';
+  eventList.innerHTML = '<p class="event-info">Cargando...</p>';
+
+  const fallbackEvents = [
+    {
+      datetime: '2025-07-15T20:00:00',
+      title: 'Carnaval de Panamá',
+      venue: { city: 'Ciudad de Panamá', country: 'Panamá' },
+      url: 'https://www.bandsintown.com'
+    }
+  ];
 
   try {
-    const response = await fetch('https://rest.bandsintown.com/artists/id_868569/events?app_id=6bb274c027f79a0d57321c284def39a1b357');
-    if (!response.ok) throw new Error('Network response was not ok');
+    const response = await fetch('https://rest.bandsintown.com/artists/id_868569/events?app_id=6ddc274027f79a574321428def39a357');
+    if (!response.ok) throw new Error('Error en la API');
     const events = await response.json();
     const now = new Date();
     const futureEvents = events.filter(event => new Date(event.datetime) >= now);
 
     eventList.innerHTML = '';
-    if (futureEvents.length === 0) {
-      eventList.innerHTML = `<p class="event-error">${lang === 'es' ? 'No hay eventos próximos.' : 'No upcoming events.'}</p>`;
-      return;
-    }
+    const eventsToRender = futureEvents.length > 0 ? futureEvents : fallbackEvents;
 
-    futureEvents.forEach((event, index) => {
+    eventsToRender.forEach((event, i) => {
       const date = new Date(event.datetime);
       const formattedDate = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-US', {
         month: 'short',
@@ -103,42 +105,7 @@ async function loadEvents() {
 
       const eventItem = document.createElement('div');
       eventItem.className = 'event-item';
-      eventItem.style.animationDelay = `${index * 0.1}s`;
-      let buttonsHTML = '';
-
-      const hasTicketUrl = event.ticket_url && event.ticket_url.trim() !== '';
-      const offers = event.offers || [];
-      const validOffers = offers.filter(offer => offer.url && offer.url.trim() !== '');
-      const hasTwoOffers = validOffers.length === 2;
-
-      if (hasTicketUrl) {
-        buttonsHTML += `
-          <a href="${event.ticket_url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket" aria-label="${translations[lang]['buy-ticket']}">
-            ${translations[lang]['buy-ticket']}
-          </a>
-        `;
-      } else if (validOffers.length > 0) {
-        buttonsHTML += `
-          <a href="${validOffers[0].url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket" aria-label="${translations[lang]['buy-ticket']}">
-            ${translations[lang]['buy-ticket']}
-          </a>
-        `;
-      } else {
-        buttonsHTML += `
-          <a href="${event.url}" class="btn-primary" target="_blank" data-lang-key="notify-me" aria-label="${translations[lang]['notify-me']}">
-            ${translations[lang]['notify-me']}
-          </a>
-        `;
-      }
-
-      if (hasTwoOffers) {
-        buttonsHTML += `
-          <a href="${validOffers[1].url}" class="btn-primary" target="_blank" data-lang-key="guest-list" aria-label="${translations[lang]['guest-list']}">
-            ${translations[lang]['guest-list']}
-          </a>
-        `;
-      }
-
+      eventItem.style.animationDelay = `${i * 0.2}s`;
       eventItem.innerHTML = `
         <div class="event-info">
           <strong>📅 ${formattedDate}</strong>
@@ -146,7 +113,7 @@ async function loadEvents() {
           <span>📍 ${event.venue.city}, ${event.venue.country}</span>
         </div>
         <div class="event-buttons">
-          ${buttonsHTML}
+          <a href="${event.url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket" aria-label="${translations[lang]['buy-ticket']}">${translations[lang]['buy-ticket']}</a>
         </div>
       `;
       eventList.appendChild(eventItem);
@@ -220,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const message = document.getElementById('message').value.trim();
-      const lang = document.getElementById('language-select')?.value || 'es';
+      const lang = localStorage.getItem('language') || 'es';
 
       if (!name) {
         contactForm.insertAdjacentHTML('beforeend', `<p class="form-error">${translations[lang]['form-invalid-name']}</p>`);
@@ -245,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        const response = await fetch(contactForm.action, {
+        const response = await fetch('https://formspree.io/f/mgvkeyrd', {
           method: 'POST',
           headers: { 'Accept': 'application/json' },
           body: new FormData(contactForm)
@@ -255,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
           contactForm.insertAdjacentHTML('beforeend', `<p class="form-success">${translations[lang]['form-success']}</p>`);
           setTimeout(() => contactForm.querySelector('.form-success')?.remove(), 3000);
         } else {
-          throw new Error('Form submission failed');
+          throw new Error('Error al enviar el formulario');
         }
       } catch (error) {
         console.error('Error submitting form:', error);
@@ -275,6 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { threshold: 0.1 });
+
   document.querySelectorAll('.section').forEach(section => {
     observer.observe(section);
   });
@@ -293,6 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
     window.addEventListener('load', hidePreloader);
-    setTimeout(hidePreloader, 5000);
+    setTimeout(hidePreloader, 3000);
   }
 });
