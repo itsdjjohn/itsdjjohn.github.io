@@ -23,7 +23,9 @@ const translations = {
     'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.',
     'form-success': '¡Mensaje enviado con éxito!',
     'form-error': 'Error al enviar el mensaje. Por favor, intenta de nuevo.',
-    'form-invalid-email': 'Correo inválido.'
+    'form-invalid-email': 'Correo inválido.',
+    'form-invalid-name': 'El nombre es requerido.',
+    'form-invalid-message': 'El mensaje es requerido.'
   },
   en: {
     'nav-home': 'Home',
@@ -49,12 +51,14 @@ const translations = {
     'footer-copyright': '© 2025 DJ John. All rights reserved.',
     'form-success': 'Message sent successfully!',
     'form-error': 'Error sending message. Please try again.',
-    'form-invalid-email': 'Invalid email.'
+    'form-invalid-email': 'Invalid email.',
+    'form-invalid-name': 'Name is required.',
+    'form-invalid-message': 'Message is required.'
   }
 };
 
 function changeLanguage() {
-  const lang = document.getElementById('language-select').value;
+  const lang = document.getElementById('language-select')?.value || 'es';
   localStorage.setItem('language', lang);
   document.querySelectorAll('[data-lang-key]').forEach(element => {
     element.textContent = translations[lang][element.getAttribute('data-lang-key')];
@@ -65,7 +69,7 @@ function changeLanguage() {
   if (document.getElementById('hero-text')) {
     typeWriter(translations[lang]['hero-text'], 'hero-text', 50);
   }
-  if (document.getElementById('event-list')) {
+  if (document.getElementById('tour-js')) {
     loadEvents();
   }
 }
@@ -73,11 +77,12 @@ function changeLanguage() {
 async function loadEvents() {
   const eventList = document.getElementById('event-list');
   if (!eventList) return;
-  const lang = document.getElementById('language-select').value;
-  eventList.innerHTML = '<div class="event-error">Cargando eventos...</div>';
+  const lang = document.getElementById('language-select')?.value || 'es';
+  eventList.innerHTML = '<div class="event-info">Loading...</div>';
 
   try {
-    const response = await fetch('https://rest.bandsintown.com/artists/id_86889/events?app_id=6ddc274027f79a574321428def39a357');
+    const response = await fetch('https://rest.bandsintown.com/artists/id_868569/events?app_id=6bb274c027f79a0d57321c284def39a1b357');
+    if (!response.ok) throw new Error('Network response was not ok');
     const events = await response.json();
     const now = new Date();
     const futureEvents = events.filter(event => new Date(event.datetime) >= now);
@@ -137,7 +142,7 @@ async function loadEvents() {
       eventItem.innerHTML = `
         <div class="event-info">
           <strong>📅 ${formattedDate}</strong>
-          <h3>${event.title}</h3>
+          <h3>${event.title || 'Evento sin título'}</h3>
           <span>📍 ${event.venue.city}, ${event.venue.country}</span>
         </div>
         <div class="event-buttons">
@@ -147,7 +152,7 @@ async function loadEvents() {
       eventList.appendChild(eventItem);
     });
   } catch (error) {
-    console.error('Error al cargar eventos:', error);
+    console.error('Error fetching events:', error);
     eventList.innerHTML = `<p class="event-error">${lang === 'es' ? 'Error al cargar los eventos.' : 'Error loading events.'}</p>`;
   }
 }
@@ -171,28 +176,38 @@ function typeWriter(text, elementId, speed = 50) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('language') || 'es';
-  document.getElementById('language-select').value = savedLang;
+  if (document.getElementById('language-select')) {
+    document.getElementById('language-select').value = savedLang;
+  }
   changeLanguage();
 
   const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
-  menuToggle.addEventListener('click', () => {
-    const isActive = navLinks.classList.toggle('nav-active');
-    menuToggle.setAttribute('aria-expanded', isActive);
-  });
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      const isActive = navLinks.classList.toggle('nav-active');
+      menuToggle.setAttribute('aria-expanded', isActive.toString());
+    });
+  }
 
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-      navLinks.classList.remove('nav-active');
-      menuToggle.setAttribute('aria-expanded', 'false');
+      if (navLinks) {
+        navLinks.classList.remove('nav-active');
+        if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+      }
     });
   });
 
-  document.getElementById('language-select').addEventListener('change', () => {
-    navLinks.classList.remove('nav-active');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    changeLanguage();
-  });
+  if (document.getElementById('language-select')) {
+    document.getElementById('language-select').addEventListener('change', () => {
+      if (navLinks) {
+        navLinks.classList.remove('nav-active');
+        if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+      }
+      changeLanguage();
+    });
+  }
 
   const contactForm = document.querySelector('form');
   if (contactForm) {
@@ -202,13 +217,27 @@ document.addEventListener('DOMContentLoaded', () => {
       submitButton.classList.add('loading');
       submitButton.disabled = true;
 
-      const name = contactForm.querySelector('#name').value;
-      const email = contactForm.querySelector('#email').value;
-      const message = contactForm.querySelector('#message').value;
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const lang = document.getElementById('language-select')?.value || 'es';
 
+      if (!name) {
+        contactForm.insertAdjacentHTML('beforeend', `<p class="form-error">${translations[lang]['form-invalid-name']}</p>`);
+        submitButton.classList.remove('loading');
+        submitButton.disabled = false;
+        setTimeout(() => contactForm.querySelector('.form-error')?.remove(), 3000);
+        return;
+      }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        const lang = document.getElementById('language-select').value;
         contactForm.insertAdjacentHTML('beforeend', `<p class="form-error">${translations[lang]['form-invalid-email']}</p>`);
+        submitButton.classList.remove('loading');
+        submitButton.disabled = false;
+        setTimeout(() => contactForm.querySelector('.form-error')?.remove(), 3000);
+        return;
+      }
+      if (!message) {
+        contactForm.insertAdjacentHTML('beforeend', `<p class="form-error">${translations[lang]['form-invalid-message']}</p>`);
         submitButton.classList.remove('loading');
         submitButton.disabled = false;
         setTimeout(() => contactForm.querySelector('.form-error')?.remove(), 3000);
@@ -222,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
           body: new FormData(contactForm)
         });
         if (response.ok) {
-          const lang = document.getElementById('language-select').value;
           contactForm.reset();
           contactForm.insertAdjacentHTML('beforeend', `<p class="form-success">${translations[lang]['form-success']}</p>`);
           setTimeout(() => contactForm.querySelector('.form-success')?.remove(), 3000);
@@ -230,8 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
           throw new Error('Form submission failed');
         }
       } catch (error) {
-        console.error('Error al enviar el formulario:', error);
-        const lang = document.getElementById('language-select').value;
+        console.error('Error submitting form:', error);
         contactForm.insertAdjacentHTML('beforeend', `<p class="form-error">${translations[lang]['form-error']}</p>`);
         setTimeout(() => contactForm.querySelector('.form-error')?.remove(), 3000);
       } finally {
@@ -254,16 +281,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const preloader = document.getElementById('preloader');
   const content = document.getElementById('content');
-  const hidePreloader = () => {
-    preloader.classList.add('hidden');
-    setTimeout(() => {
-      preloader.style.display = 'none';
-      content.style.display = 'block';
-    }, 500);
-    if (document.getElementById('event-list')) {
-      loadEvents();
-    }
-  };
-  setTimeout(hidePreloader, 5000);
-  window.addEventListener('load', hidePreloader);
+  if (preloader && content) {
+    const hidePreloader = () => {
+      preloader.classList.add('hidden');
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        content.style.display = 'block';
+      }, 500);
+      if (document.getElementById('event-list')) {
+        loadEvents();
+      }
+    };
+    window.addEventListener('load', hidePreloader);
+    setTimeout(hidePreloader, 5000);
+  }
 });
