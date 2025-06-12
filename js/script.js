@@ -8,7 +8,7 @@ const translations = {
     'hero-text': '¡Llevando los ritmos a Panamá y más allá!',
     'hero-cta': 'Ver Fechas de Tour',
     'tour-title': 'Próximos Eventos',
-    'buy-ticket': 'Comprar Entradas',
+    'buy-ticket': 'Adquirir Entradas',
     'notify-me': 'Notificarme',
     'guest-list': 'Lista de Invitados',
     'bio-title': 'Biografía',
@@ -20,7 +20,10 @@ const translations = {
     'contact-submit': 'Enviar',
     'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
     'footer-follow': 'Sígueme en:',
-    'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.'
+    'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.',
+    'form-success': '¡Mensaje enviado con éxito!',
+    'form-error': 'Error al enviar el mensaje. Por favor, intenta de nuevo.',
+    'form-invalid-email': 'Correo inválido.'
   },
   en: {
     'nav-home': 'Home',
@@ -43,18 +46,25 @@ const translations = {
     'contact-submit': 'Send',
     'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
     'footer-follow': 'Follow me on:',
-    'footer-copyright': '© 2025 DJ John. All rights reserved.'
+    'footer-copyright': '© 2025 DJ John. All rights reserved.',
+    'form-success': 'Message sent successfully!',
+    'form-error': 'Error sending message. Please try again.',
+    'form-invalid-email': 'Invalid email.'
   }
 };
 
 function changeLanguage() {
   const lang = document.getElementById('language-select').value;
+  localStorage.setItem('language', lang);
   document.querySelectorAll('[data-lang-key]').forEach(element => {
     element.textContent = translations[lang][element.getAttribute('data-lang-key')];
   });
   document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
     element.placeholder = translations[lang][element.getAttribute('data-lang-placeholder')];
   });
+  if (document.getElementById('hero-text')) {
+    typeWriter(translations[lang]['hero-text'], 'hero-text', 50);
+  }
   if (document.getElementById('event-list')) {
     loadEvents();
   }
@@ -64,7 +74,7 @@ async function loadEvents() {
   const eventList = document.getElementById('event-list');
   if (!eventList) return;
   const lang = document.getElementById('language-select').value;
-  eventList.innerHTML = '';
+  eventList.innerHTML = '<div class="event-error">Cargando eventos...</div>';
 
   try {
     const response = await fetch('https://rest.bandsintown.com/artists/id_86889/events?app_id=6ddc274027f79a574321428def39a357');
@@ -72,12 +82,13 @@ async function loadEvents() {
     const now = new Date();
     const futureEvents = events.filter(event => new Date(event.datetime) >= now);
 
+    eventList.innerHTML = '';
     if (futureEvents.length === 0) {
       eventList.innerHTML = `<p class="event-error">${lang === 'es' ? 'No hay eventos próximos.' : 'No upcoming events.'}</p>`;
       return;
     }
 
-    futureEvents.forEach(event => {
+    futureEvents.forEach((event, index) => {
       const date = new Date(event.datetime);
       const formattedDate = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-US', {
         month: 'short',
@@ -87,6 +98,7 @@ async function loadEvents() {
 
       const eventItem = document.createElement('div');
       eventItem.className = 'event-item';
+      eventItem.style.animationDelay = `${index * 0.1}s`;
       let buttonsHTML = '';
 
       const hasTicketUrl = event.ticket_url && event.ticket_url.trim() !== '';
@@ -96,19 +108,19 @@ async function loadEvents() {
 
       if (hasTicketUrl) {
         buttonsHTML += `
-          <a href="${event.ticket_url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket">
+          <a href="${event.ticket_url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket" aria-label="${translations[lang]['buy-ticket']}">
             ${translations[lang]['buy-ticket']}
           </a>
         `;
       } else if (validOffers.length > 0) {
         buttonsHTML += `
-          <a href="${validOffers[0].url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket">
+          <a href="${validOffers[0].url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket" aria-label="${translations[lang]['buy-ticket']}">
             ${translations[lang]['buy-ticket']}
           </a>
         `;
       } else {
         buttonsHTML += `
-          <a href="${event.url}" class="btn-primary" target="_blank" data-lang-key="notify-me">
+          <a href="${event.url}" class="btn-primary" target="_blank" data-lang-key="notify-me" aria-label="${translations[lang]['notify-me']}">
             ${translations[lang]['notify-me']}
           </a>
         `;
@@ -116,7 +128,7 @@ async function loadEvents() {
 
       if (hasTwoOffers) {
         buttonsHTML += `
-          <a href="${validOffers[1].url}" class="btn-primary" target="_blank" data-lang-key="guest-list">
+          <a href="${validOffers[1].url}" class="btn-primary" target="_blank" data-lang-key="guest-list" aria-label="${translations[lang]['guest-list']}">
             ${translations[lang]['guest-list']}
           </a>
         `;
@@ -140,51 +152,118 @@ async function loadEvents() {
   }
 }
 
-document.querySelector('.menu-toggle').addEventListener('click', () => {
-  const navLinks = document.querySelector('.nav-links');
-  navLinks.classList.toggle('nav-active');
-});
-
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    const navLinks = document.querySelector('.nav-links');
-    navLinks.classList.remove('nav-active');
-  });
-});
-
-document.getElementById('language-select').addEventListener('change', () => {
-  const navLinks = document.querySelector('.nav-links');
-  navLinks.classList.remove('nav-active');
-});
-
-function hidePreloader() {
-  const preloader = document.getElementById('preloader');
-  const content = document.getElementById('content');
-  preloader.classList.add('hidden');
-  setTimeout(() => {
-    preloader.style.display = 'none';
-    content.style.display = 'block';
-  }, 500);
-  if (document.getElementById('event-list')) {
-    loadEvents();
+function typeWriter(text, elementId, speed = 50) {
+  const element = document.getElementById(elementId);
+  if (!element) return;
+  element.textContent = '';
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    } else {
+      setTimeout(() => typeWriter(text, elementId, speed), 3000);
+    }
   }
+  type();
 }
 
-window.addEventListener('load', () => {
-  hidePreloader();
-});
+document.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('language') || 'es';
+  document.getElementById('language-select').value = savedLang;
+  changeLanguage();
 
-setTimeout(() => {
-  hidePreloader();
-}, 5000);
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    }
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  menuToggle.addEventListener('click', () => {
+    const isActive = navLinks.classList.toggle('nav-active');
+    menuToggle.setAttribute('aria-expanded', isActive);
   });
-});
-document.querySelectorAll('.section').forEach(section => {
-  observer.observe(section);
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('nav-active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.getElementById('language-select').addEventListener('change', () => {
+    navLinks.classList.remove('nav-active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    changeLanguage();
+  });
+
+  const contactForm = document.querySelector('form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      submitButton.classList.add('loading');
+      submitButton.disabled = true;
+
+      const name = contactForm.querySelector('#name').value;
+      const email = contactForm.querySelector('#email').value;
+      const message = contactForm.querySelector('#message').value;
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        const lang = document.getElementById('language-select').value;
+        contactForm.insertAdjacentHTML('beforeend', `<p class="form-error">${translations[lang]['form-invalid-email']}</p>`);
+        submitButton.classList.remove('loading');
+        submitButton.disabled = false;
+        setTimeout(() => contactForm.querySelector('.form-error')?.remove(), 3000);
+        return;
+      }
+
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(contactForm)
+        });
+        if (response.ok) {
+          const lang = document.getElementById('language-select').value;
+          contactForm.reset();
+          contactForm.insertAdjacentHTML('beforeend', `<p class="form-success">${translations[lang]['form-success']}</p>`);
+          setTimeout(() => contactForm.querySelector('.form-success')?.remove(), 3000);
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+        const lang = document.getElementById('language-select').value;
+        contactForm.insertAdjacentHTML('beforeend', `<p class="form-error">${translations[lang]['form-error']}</p>`);
+        setTimeout(() => contactForm.querySelector('.form-error')?.remove(), 3000);
+      } finally {
+        submitButton.classList.remove('loading');
+        submitButton.disabled = false;
+      }
+    });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.section').forEach(section => {
+    observer.observe(section);
+  });
+
+  const preloader = document.getElementById('preloader');
+  const content = document.getElementById('content');
+  const hidePreloader = () => {
+    preloader.classList.add('hidden');
+    setTimeout(() => {
+      preloader.style.display = 'none';
+      content.style.display = 'block';
+    }, 500);
+    if (document.getElementById('event-list')) {
+      loadEvents();
+    }
+  };
+  setTimeout(hidePreloader, 5000);
+  window.addEventListener('load', hidePreloader);
 });
