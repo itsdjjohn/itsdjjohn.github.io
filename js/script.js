@@ -26,7 +26,8 @@ const translations = {
     'form-invalid-email': 'Correo inválido.',
     'form-invalid-name': 'El nombre es requerido.',
     'form-invalid-message': 'El mensaje es requerido.',
-    'event-error': 'No se pudieron cargar los eventos. Verifica tu conexión o intenta de nuevo más tarde.'
+    'event-error': 'No se pudieron cargar los eventos. Verifica tu conexión o intenta de nuevo más tarde.',
+    'event-no-events': 'No hay eventos programados en este momento.'
   },
   en: {
     'nav-home': 'Home',
@@ -55,7 +56,8 @@ const translations = {
     'form-invalid-email': 'Invalid email.',
     'form-invalid-name': 'Name is required.',
     'form-invalid-message': 'Message is required.',
-    'event-error': 'Could not load events. Check your connection or try again later.'
+    'event-error': 'Could not load events. Check your connection or try again later.',
+    'event-no-events': 'No events scheduled at this time.'
   }
 };
 
@@ -94,17 +96,35 @@ async function loadEvents() {
   try {
     const response = await fetch('https://rest.bandsintown.com/artists/id_86889/events?app_id=6ddc274027f79a574321428def39a357');
     if (!response.ok) {
-      throw new Error(`Error ${response.status}: ${response.statusText}`);
+      if (response.status === 401) {
+        throw new Error('401: Clave API no autorizada. Verifica en artists.bandsintown.com.');
+      } else if (response.status === 404) {
+        throw new Error('404: Artista no encontrado. Confirma el ID 86889.');
+      } else {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
     }
     const events = await response.json();
     if (!Array.isArray(events)) {
-      throw new Error('Respuesta inválida de la API');
+      throw new Error('Respuesta inválida de la API: no es un array.');
     }
+
     const now = new Date();
-    const futureEvents = events.filter(event => event.datetime && new Date(event.datetime) >= now);
+    const futureEvents = events.filter(event => {
+      try {
+        return event.datetime && new Date(event.datetime) >= now;
+      } catch (e) {
+        console.warn('Evento con datetime inválido:', event);
+        return false;
+      }
+    });
 
     eventList.innerHTML = '';
     const eventsToRender = futureEvents.length > 0 ? futureEvents : fallbackEvents;
+
+    if (futureEvents.length === 0 && eventsToRender === fallbackEvents) {
+      eventList.innerHTML = `<p class="event-info">${translations[lang]['event-no-events']}</p>`;
+    }
 
     eventsToRender.forEach((event, i) => {
       const date = new Date(event.datetime);
@@ -130,8 +150,32 @@ async function loadEvents() {
       eventList.appendChild(eventItem);
     });
   } catch (error) {
-    console.error('Error fetching events:', error);
+    console.error('Error fetching events:', error.message);
     eventList.innerHTML = `<p class="event-error">${translations[lang]['event-error']}</p>`;
+    // Mostrar evento de respaldo en caso de error
+    fallbackEvents.forEach((event, i) => {
+      const date = new Date(event.datetime);
+      const formattedDate = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      }).format(date).replace(/^./, str => str.toUpperCase());
+
+      const eventItem = document.createElement('div');
+      eventItem.className = 'event-item';
+      eventItem.style.animationDelay = `${i * 0.2}s`;
+      eventItem.innerHTML = `
+        <div class="event-info">
+          <strong>📅 ${formattedDate}</strong>
+          <h3>${event.title}</h3>
+          <span>📍 ${event.venue.city}, ${event.venue.country}</span>
+        </div>
+        <div class="event-buttons">
+          <a href="${event.url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket" aria-label="${translations[lang]['buy-ticket']}">${translations[lang]['buy-ticket']}</a>
+        </div>
+      `;
+      eventList.appendChild(eventItem);
+    });
   }
 }
 
