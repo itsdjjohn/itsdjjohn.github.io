@@ -9,6 +9,8 @@ const translations = {
     'hero-cta': 'Ver Fechas de Tour',
     'tour-title': 'Próximos Eventos',
     'buy-ticket': 'Adquirir Entradas',
+    'notify-me': 'Notificarme',
+    'guest-list': 'Lista de Invitados',
     'bio-title': 'Biografía',
     'bio-text': 'DJ John es un DJ y productor, nacido en la Ciudad de Panamá. Es conocido por su estilo único y su habilidad para mezclar diferentes géneros. Comenzó su carrera en la escena de los eventos a los 18 años, tocando en fiestas y eventos locales. Actualmente, su talento y dedicación lo han llevado a presentarse en eventos de renombre nacional. Ha participado en algunos de los eventos más grandes de Panamá como el Carnaval de Panamá.',
     'contact-title': 'Contacto',
@@ -16,14 +18,15 @@ const translations = {
     'contact-email': 'Tu Email',
     'contact-message': '¿En qué puedo ayudarte?',
     'contact-submit': 'Enviar',
-    'contact-bookings': 'Bookings: info@itsdjjohn.com',
+    'contact-bookings': 'Bookings: contacto@itsdjjohn.com',
     'footer-follow': 'Sígueme en:',
     'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.',
     'form-success': '¡Mensaje enviado con éxito!',
     'form-error': 'Error al enviar el mensaje. Por favor, intenta de nuevo.',
     'form-invalid-email': 'Correo inválido.',
     'form-invalid-name': 'El nombre es requerido.',
-    'form-invalid-message': 'El mensaje es requerido.'
+    'form-invalid-message': 'El mensaje es requerido.',
+    'event-error': 'No se pudieron cargar los eventos. Verifica tu conexión o intenta de nuevo más tarde.'
   },
   en: {
     'nav-home': 'Home',
@@ -35,6 +38,8 @@ const translations = {
     'hero-cta': 'Check Tour Dates',
     'tour-title': 'Upcoming Events',
     'buy-ticket': 'Buy Tickets',
+    'notify-me': 'Notify Me',
+    'guest-list': 'Guest List',
     'bio-title': 'Biography',
     'bio-text': 'DJ John is a DJ and producer, born in Panama City. He is known for his unique style and ability to mix different genres. He began his career in the electronic music scene at age 18, performing at local parties and events. Eventually, his talent and charisma led him to perform at nationally renowned events. He has played at major Panama events like the Panama Carnival.',
     'contact-title': 'Contact',
@@ -42,14 +47,15 @@ const translations = {
     'contact-email': 'Your Email',
     'contact-message': 'How can I assist you?',
     'contact-submit': 'Send',
-    'contact-bookings': 'Bookings: info@itsdjjohn.com',
+    'contact-bookings': 'Bookings: contacto@itsdjjohn.com',
     'footer-follow': 'Follow me on:',
     'footer-copyright': '© 2025 DJ John. All rights reserved.',
     'form-success': 'Message sent successfully!',
     'form-error': 'Error sending message. Please try again.',
     'form-invalid-email': 'Invalid email.',
     'form-invalid-name': 'Name is required.',
-    'form-invalid-message': 'Message is required.'
+    'form-invalid-message': 'Message is required.',
+    'event-error': 'Could not load events. Check your connection or try again later.'
   }
 };
 
@@ -86,11 +92,16 @@ async function loadEvents() {
   ];
 
   try {
-    const response = await fetch('https://rest.bandsintown.com/artists/id_868569/events?app_id=6ddc274027f79a574321428def39a357');
-    if (!response.ok) throw new Error('Error en la API');
+    const response = await fetch('https://rest.bandsintown.com/artists/id_86889/events?app_id=6ddc274027f79a574321428def39a357');
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
     const events = await response.json();
+    if (!Array.isArray(events)) {
+      throw new Error('Respuesta inválida de la API');
+    }
     const now = new Date();
-    const futureEvents = events.filter(event => new Date(event.datetime) >= now);
+    const futureEvents = events.filter(event => event.datetime && new Date(event.datetime) >= now);
 
     eventList.innerHTML = '';
     const eventsToRender = futureEvents.length > 0 ? futureEvents : fallbackEvents;
@@ -110,17 +121,17 @@ async function loadEvents() {
         <div class="event-info">
           <strong>📅 ${formattedDate}</strong>
           <h3>${event.title || 'Evento sin título'}</h3>
-          <span>📍 ${event.venue.city}, ${event.venue.country}</span>
+          <span>📍 ${event.venue?.city || 'Ciudad no especificada'}, ${event.venue?.country || 'País no especificado'}</span>
         </div>
         <div class="event-buttons">
-          <a href="${event.url}" class="btn-primary" target="_blank" data-lang-key="buy-ticket" aria-label="${translations[lang]['buy-ticket']}">${translations[lang]['buy-ticket']}</a>
+          <a href="${event.url || 'https://www.bandsintown.com'}" class="btn-primary" target="_blank" data-lang-key="buy-ticket" aria-label="${translations[lang]['buy-ticket']}">${translations[lang]['buy-ticket']}</a>
         </div>
       `;
       eventList.appendChild(eventItem);
     });
   } catch (error) {
     console.error('Error fetching events:', error);
-    eventList.innerHTML = `<p class="event-error">${lang === 'es' ? 'Error al cargar los eventos.' : 'Error loading events.'}</p>`;
+    eventList.innerHTML = `<p class="event-error">${translations[lang]['event-error']}</p>`;
   }
 }
 
