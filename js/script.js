@@ -20,8 +20,7 @@ const translations = {
     'contact-submit': 'Enviar',
     'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
     'footer-follow': 'Sígueme en:',
-    'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.',
-    'form-success': '¡Mensaje enviado con éxito!'
+    'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.'
   },
   en: {
     'nav-home': 'Home',
@@ -44,8 +43,7 @@ const translations = {
     'contact-submit': 'Send',
     'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
     'footer-follow': 'Follow me on:',
-    'footer-copyright': '© 2025 DJ John. All rights reserved.',
-    'form-success': 'Message sent successfully!'
+    'footer-copyright': '© 2025 DJ John. All rights reserved.'
   }
 };
 
@@ -87,10 +85,10 @@ async function loadEvents() {
         year: 'numeric'
       }).format(date).replace(/^./, str => str.toUpperCase());
 
-      const imageUrl = event.image_url || 'https://images.unsplash.com/photo-1492684223066-81342da8d948?q=80&w=1080&h=1080&fit=crop';
-
-      // Botones
+      const eventItem = document.createElement('div');
+      eventItem.className = 'event-item';
       let buttonsHTML = '';
+
       const hasTicketUrl = event.ticket_url && event.ticket_url.trim() !== '';
       const offers = event.offers || [];
       const validOffers = offers.filter(offer => offer.url && offer.url.trim() !== '');
@@ -124,20 +122,14 @@ async function loadEvents() {
         `;
       }
 
-      // Estructura cuadrada 1080x1080 con info abajo
-      const eventItem = document.createElement('div');
-      eventItem.className = 'event-square';
       eventItem.innerHTML = `
-        <div class="event-square-img-container">
-          <img src="${imageUrl}" alt="${event.title}" class="event-square-img">
+        <div class="event-info">
+          <strong>📅 ${formattedDate}</strong>
+          <h3>${event.title}</h3>
+          <span>📍 ${event.venue.city}, ${event.venue.country}</span>
         </div>
-        <div class="event-square-info">
-          <div class="event-square-date">${formattedDate}</div>
-          <h3 class="event-square-title">${event.title}</h3>
-          <div class="event-square-location">📍 ${event.venue.city}, ${event.venue.country}</div>
-          <div class="event-buttons">
-            ${buttonsHTML}
-          </div>
+        <div class="event-buttons">
+          ${buttonsHTML}
         </div>
       `;
       eventList.appendChild(eventItem);
@@ -148,59 +140,22 @@ async function loadEvents() {
   }
 }
 
-// Menú responsive: toggle y cierre seguro
-const menuToggle = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.nav-links');
+document.querySelector('.menu-toggle').addEventListener('click', () => {
+  const navLinks = document.querySelector('.nav-links');
+  navLinks.classList.toggle('nav-active');
+});
 
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('nav-active');
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.remove('nav-active');
   });
-
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('nav-active');
-    });
-  });
-}
-
-// Cambio de idioma y cierre de menú en móvil
-const languageSelect = document.getElementById('language-select');
-if (languageSelect) {
-  languageSelect.addEventListener('change', () => {
-    if (navLinks) navLinks.classList.remove('nav-active');
-    if (document.getElementById('hero-text')) {
-      const lang = languageSelect.value;
-      const heroText = translations[lang]['hero-text'];
-      typeWriter(heroText, 'hero-text', 50);
-    }
-  });
-}
+});
 
 document.getElementById('language-select').addEventListener('change', () => {
   const navLinks = document.querySelector('.nav-links');
   navLinks.classList.remove('nav-active');
-  if (document.getElementById('hero-text')) {
-    const lang = document.getElementById('language-select').value;
-    const heroText = translations[lang]['hero-text'];
-    typeWriter(heroText, 'hero-text', 50);
-  }
 });
-
-function typeWriter(text, elementId, speed = 50) {
-  const element = document.getElementById(elementId);
-  if (!element) return;
-  element.textContent = '';
-  let i = 0;
-  function type() {
-    if (i < text.length) {
-      element.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    }
-  }
-  type();
-}
 
 function hidePreloader() {
   const preloader = document.getElementById('preloader');
@@ -210,58 +165,26 @@ function hidePreloader() {
     preloader.style.display = 'none';
     content.style.display = 'block';
   }, 500);
+  if (document.getElementById('event-list')) {
+    loadEvents();
+  }
 }
 
 window.addEventListener('load', () => {
   hidePreloader();
-  if (document.getElementById('hero-text')) {
-    const lang = document.getElementById('language-select').value;
-    const heroText = translations[lang]['hero-text'];
-    typeWriter(heroText, 'hero-text', 50);
-  }
 });
 
 setTimeout(() => {
   hidePreloader();
-}, 3000); // Reducido para mejor UX
+}, 5000);
 
-// IntersectionObserver para animar secciones (solo si existen)
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.section').forEach(section => {
-    observer.observe(section);
-  });
-}
-
-// Formspree success message
-const form = document.querySelector('form');
-if (form) {
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const successMessage = form.nextElementSibling;
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-      if (response.ok) {
-        form.reset();
-        successMessage.style.display = 'block';
-        successMessage.textContent = translations[document.getElementById('language-select').value]['form-success'];
-        setTimeout(() => {
-          successMessage.style.display = 'none';
-        }, 3000);
-      }
-    } catch (error) {
-      console.error('Error al enviar el formulario:', error);
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
     }
   });
-}
+});
+document.querySelectorAll('.section').forEach(section => {
+  observer.observe(section);
+});
