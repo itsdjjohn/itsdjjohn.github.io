@@ -1,3 +1,4 @@
+
 const translations = {
   es: {
     'nav-home': 'Inicio',
@@ -20,7 +21,8 @@ const translations = {
     'contact-submit': 'Enviar',
     'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
     'footer-follow': 'Sígueme en:',
-    'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.'
+    'footer-copyright': '© 2025 DJ John. Todos los derechos reservados.',
+    'form-success': '¡Mensaje enviado con éxito!'
   },
   en: {
     'nav-home': 'Home',
@@ -43,7 +45,8 @@ const translations = {
     'contact-submit': 'Send',
     'contact-bookings': 'Bookings: esquiveljohn2@gmail.com',
     'footer-follow': 'Follow me on:',
-    'footer-copyright': '© 2025 DJ John. All rights reserved.'
+    'footer-copyright': '© 2025 DJ John. All rights reserved.',
+    'form-success': 'Message sent successfully!'
   }
 };
 
@@ -88,6 +91,7 @@ async function loadEvents() {
       const eventItem = document.createElement('div');
       eventItem.className = 'event-item';
       let buttonsHTML = '';
+      const imageUrl = event.image_url || 'https://images.unsplash.com/photo-1492684223066-81342da8d948?q=80&w=300'; // Imagen por defecto
 
       const hasTicketUrl = event.ticket_url && event.ticket_url.trim() !== '';
       const offers = event.offers || [];
@@ -123,6 +127,7 @@ async function loadEvents() {
       }
 
       eventItem.innerHTML = `
+        <img src="${imageUrl}" alt="${event.title}">
         <div class="event-info">
           <strong>📅 ${formattedDate}</strong>
           <h3>${event.title}</h3>
@@ -155,7 +160,27 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 document.getElementById('language-select').addEventListener('change', () => {
   const navLinks = document.querySelector('.nav-links');
   navLinks.classList.remove('nav-active');
+  if (document.getElementById('hero-text')) {
+    const lang = document.getElementById('language-select').value;
+    const heroText = translations[lang]['hero-text'];
+    typeWriter(heroText, 'hero-text', 50);
+  }
 });
+
+function typeWriter(text, elementId, speed = 50) {
+  const element = document.getElementById(elementId);
+  if (!element) return;
+  element.textContent = '';
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
 
 function hidePreloader() {
   const preloader = document.getElementById('preloader');
@@ -165,18 +190,20 @@ function hidePreloader() {
     preloader.style.display = 'none';
     content.style.display = 'block';
   }, 500);
-  if (document.getElementById('event-list')) {
-    loadEvents();
-  }
 }
 
 window.addEventListener('load', () => {
   hidePreloader();
+  if (document.getElementById('hero-text')) {
+    const lang = document.getElementById('language-select').value;
+    const heroText = translations[lang]['hero-text'];
+    typeWriter(heroText, 'hero-text', 50);
+  }
 });
 
 setTimeout(() => {
   hidePreloader();
-}, 5000);
+}, 3000); // Reducido para mejor UX
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -184,7 +211,34 @@ const observer = new IntersectionObserver((entries) => {
       entry.target.classList.add('show');
     }
   });
-});
+}, { threshold: 0.1 });
 document.querySelectorAll('.section').forEach(section => {
   observer.observe(section);
 });
+
+// Formspree success message
+const form = document.querySelector('form');
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const successMessage = form.nextElementSibling;
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        form.reset();
+        successMessage.style.display = 'block';
+        successMessage.textContent = translations[document.getElementById('language-select').value]['form-success'];
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 3000);
+      }
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error);
+    }
+  });
+}

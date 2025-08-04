@@ -22,7 +22,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4); /* Reducido para mejor legibilidad */
   z-index: -1;
 }
 @keyframes gradientMove {
@@ -53,7 +53,7 @@ a {
   transition: opacity 0.5s ease;
 }
 #preloader img {
-  max-width: 150px;
+  max-height: 50px; /* Ajustado para consistencia con el encabezado */
   animation: pulse 1.5s infinite;
 }
 #preloader.hidden {
@@ -62,7 +62,7 @@ a {
 }
 @keyframes pulse {
   0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  50% { transform: scale(1.1); } /* Reducido para mejor rendimiento */
   100% { transform: scale(1); }
 }
 header {
@@ -70,7 +70,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 20px 0;
+  padding: 15px 0; /* Reducido para un encabezado más compacto */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 .nav {
@@ -131,7 +131,6 @@ header {
   transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-  will-change: transform;
   margin: 5px;
 }
 .btn-primary:hover {
@@ -159,8 +158,8 @@ header {
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 .section {
-  padding: 60px 0;
-  animation: slideUp 1s ease forwards;
+  padding: 40px 0; /* Reducido para mejor espaciado */
+  animation: slideUp 0.8s ease forwards; /* Más rápido */
   opacity: 0;
 }
 .section.show {
@@ -169,7 +168,7 @@ header {
 .section h2 {
   font-size: 2rem;
   color: #ff1a1a;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   text-align: center;
 }
 .hero {
@@ -179,40 +178,24 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(45deg, rgba(255, 26, 26, 0.2), rgba(0, 0, 0, 0.8));
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1920');
+  background-size: cover;
+  background-position: center;
   border-radius: 15px;
   padding: 40px;
   position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255, 77, 77, 0.3) 0%, transparent 70%);
-  animation: glow 5s infinite ease-in-out;
-  z-index: -1;
-}
-@keyframes glow {
-  0% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 0.5; }
 }
 .hero-title {
-  font-size: 4.5rem;
+  font-size: 4rem; /* Reducido para mejor legibilidad */
   color: #fff;
   text-shadow: 0 4px 10px rgba(255, 26, 26, 0.5);
-  animation: fadeInDown 1.5s ease forwards;
+  animation: fadeInDown 1.2s ease forwards;
   margin-bottom: 20px;
 }
 .hero-text {
   font-size: 1.5rem;
   color: #f0f0f0;
   margin-bottom: 30px;
-  min-height: 2em;
 }
 .hero-cta {
   padding: 15px 40px;
@@ -223,11 +206,10 @@ header {
 .hero-cta:hover {
   background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 26, 26, 0.7);
 }
 .event-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 .event-item {
@@ -235,20 +217,20 @@ header {
   border: 1px solid #333;
   border-radius: 10px;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  will-change: transform, box-shadow;
-  opacity: 0;
-  animation: fadeInUp 0.5s ease forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
-.event-item:nth-child(2) { animation-delay: 0.1s; }
-.event-item:nth-child(3) { animation-delay: 0.2s; }
+.event-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
 .event-item:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 20px rgba(255, 77, 77, 0.2);
-  background: #222;
 }
 .event-info {
   display: flex;
@@ -293,6 +275,10 @@ header {
 .bio-details p {
   color: #ccc;
 }
+form {
+  max-width: 600px;
+  margin: 0 auto;
+}
 form input, form textarea {
   width: 100%;
   padding: 12px;
@@ -311,11 +297,17 @@ form label {
   font-weight: 600;
   color: #fff;
 }
+form .success-message {
+  display: none;
+  text-align: center;
+  color: #ff1a1a;
+  margin-top: 10px;
+}
 .footer {
   background: #000;
   color: #ccc;
   text-align: center;
-  padding: 40px 20px;
+  padding: 30px 20px;
   margin-top: 40px;
 }
 .footer-container {
@@ -327,8 +319,7 @@ form label {
   gap: 20px;
 }
 .footer-logo {
-  max-width: 100px;
-  transition: opacity 0.3s ease;
+  max-width: 80px; /* Reducido para mejor proporción */
 }
 .footer-logo:hover {
   opacity: 0.8;
@@ -348,11 +339,10 @@ form label {
   width: 24px;
   height: 24px;
   fill: #ccc;
-  transition: fill 0.3s ease, opacity 0.3s ease;
+  transition: fill 0.3s ease;
 }
 .social-icon:hover {
   fill: #ff1a1a;
-  opacity: 0.9;
 }
 .footer-copyright {
   font-size: 0.85rem;
@@ -382,15 +372,11 @@ form label {
 }
 @media (max-width: 768px) {
   .nav {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
     padding: 0 20px;
   }
   .nav-links {
     display: none;
     flex-direction: column;
-    align-items: center;
     position: absolute;
     top: 80px;
     left: 0;
@@ -409,18 +395,12 @@ form label {
   .menu-toggle {
     display: block;
   }
-  .bio-container {
-    flex-direction: column;
-  }
-  .bio-container img {
-    max-height: 300px;
-  }
   .hero {
     min-height: 60vh;
     padding: 20px;
   }
   .hero-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
   .hero-text {
     font-size: 1.2rem;
@@ -429,16 +409,11 @@ form label {
     padding: 12px 30px;
     font-size: 1rem;
   }
-  .footer-container {
+  .bio-container {
     flex-direction: column;
-    gap: 15px;
   }
-  .footer-logo {
-    max-width: 80px;
-  }
-  .social-icon {
-    width: 20px;
-    height: 20px;
+  .bio-container img {
+    max-height: 300px;
   }
 }
 @media (max-width: 480px) {
@@ -450,19 +425,19 @@ form label {
     font-size: 14px;
   }
   .event-item {
-    padding: 10px;
+    padding: 15px;
   }
   .bio-container img {
     max-height: 200px;
   }
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   .hero-text {
     font-size: 1rem;
   }
   .footer-logo {
-    max-width: 70px;
+    max-width: 60px;
   }
   .footer-follow {
     font-size: 0.9rem;
