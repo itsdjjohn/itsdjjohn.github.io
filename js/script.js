@@ -1,4 +1,3 @@
-
 const translations = {
   es: {
     'nav-home': 'Inicio',
@@ -145,17 +144,34 @@ async function loadEvents() {
   }
 }
 
-document.querySelector('.menu-toggle').addEventListener('click', () => {
-  const navLinks = document.querySelector('.nav-links');
-  navLinks.classList.toggle('nav-active');
-});
+// Menú responsive: toggle y cierre seguro
+const menuToggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    const navLinks = document.querySelector('.nav-links');
-    navLinks.classList.remove('nav-active');
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('nav-active');
   });
-});
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('nav-active');
+    });
+  });
+}
+
+// Cambio de idioma y cierre de menú en móvil
+const languageSelect = document.getElementById('language-select');
+if (languageSelect) {
+  languageSelect.addEventListener('change', () => {
+    if (navLinks) navLinks.classList.remove('nav-active');
+    if (document.getElementById('hero-text')) {
+      const lang = languageSelect.value;
+      const heroText = translations[lang]['hero-text'];
+      typeWriter(heroText, 'hero-text', 50);
+    }
+  });
+}
 
 document.getElementById('language-select').addEventListener('change', () => {
   const navLinks = document.querySelector('.nav-links');
@@ -205,16 +221,19 @@ setTimeout(() => {
   hidePreloader();
 }, 3000); // Reducido para mejor UX
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    }
+// IntersectionObserver para animar secciones (solo si existen)
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.section').forEach(section => {
+    observer.observe(section);
   });
-}, { threshold: 0.1 });
-document.querySelectorAll('.section').forEach(section => {
-  observer.observe(section);
-});
+}
 
 // Formspree success message
 const form = document.querySelector('form');
