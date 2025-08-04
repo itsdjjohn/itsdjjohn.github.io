@@ -49,10 +49,28 @@
       </div>
     </header>
     <main class="container">
-      <section class="section">
-        <h2 data-lang-key="tour-title">Próximos Eventos</h2>
-        <div class="event-list" id="event-list">
-          <p class="event-loading" data-lang-key="event-loading">Cargando eventos...</p>
+      <section class="section" style="max-width:700px;margin:0 auto;text-align:center;">
+        <h2 data-lang-key="tour-title" style="margin-bottom:32px;">Próximos Eventos</h2>
+        <div 
+          class="event-list" 
+          id="event-list" 
+          style="
+            background:rgba(20,20,20,0.95);
+            border:2px solid #ff1a1a;
+            border-radius:18px;
+            box-shadow:0 4px 32px #ff1a1a22;
+            padding:32px 18px;
+            min-height:220px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:32px;
+          ">
+          <p 
+            class="event-loading" 
+            data-lang-key="event-loading"
+            style="color:#ff1a1a;font-size:1.2rem;font-weight:600;text-align:center;margin:0 auto;"
+          >Cargando eventos...</p>
         </div>
       </section>
     </main>
