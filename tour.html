@@ -37,7 +37,7 @@
           </svg>
         </button>
         <div class="nav-links">
-          <a href="index.html" data-lang-key="nav-home">Inicio</a>
+          <a href="index.html" data-lang-key="nav-home">Home</a>
           <a href="tour.html" data-lang-key="nav-tour">Tour</a>
           <a href="about.html" data-lang-key="nav-bio">Biografía</a>
           <a href="contact.html" data-lang-key="nav-contact">Contacto</a>
@@ -49,49 +49,9 @@
       </div>
     </header>
     <main class="container">
-      <section class="section" style="max-width:700px;margin:0 auto;">
-        <h2 data-lang-key="tour-title" style="margin-bottom:32px;text-align:center;">Próximos Eventos</h2>
-        <div 
-          class="event-timeline" 
-          id="event-list"
-          style="
-            position:relative;
-            padding:32px 0;
-            background:rgba(20,20,20,0.95);
-            border:2px solid #ff1a1a;
-            border-radius:18px;
-            box-shadow:0 4px 32px #ff1a1a22;
-            min-height:220px;
-            display:flex;
-            flex-direction:column;
-            gap:48px;
-            align-items:center;
-          ">
-          <p 
-            class="event-loading" 
-            data-lang-key="event-loading"
-            style="color:#ff1a1a;font-size:1.2rem;font-weight:600;text-align:center;margin:0 auto;"
-          >Cargando eventos...</p>
-          <!--
-            El JS debe generar bloques así para cada evento:
-            <div class="timeline-event" style="display:flex;flex-direction:column;align-items:center;gap:10px;max-width:400px;">
-              <div style="display:flex;flex-direction:column;align-items:center;">
-                <div style="background:#ff1a1a;color:#fff;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;box-shadow:0 2px 8px #ff1a1a44;margin-bottom:10px;">
-                  12 Jul 2024
-                </div>
-                <img src="..." alt="..." style="width:90px;height:90px;object-fit:cover;border-radius:50%;border:3px solid #ff1a1a;box-shadow:0 2px 8px #ff1a1a33;">
-              </div>
-              <div style="margin-top:10px;">
-                <h3 style="color:#fff;font-size:1.15rem;margin-bottom:6px;">Nombre del Evento</h3>
-                <div style="color:#ccc;font-size:0.98rem;margin-bottom:10px;">📍 Ciudad, País</div>
-                <div style="display:flex;gap:10px;justify-content:center;">
-                  <a href="#" class="btn-primary">Comprar Entradas</a>
-                  <!-- ...otros botones... -->
-                </div>
-              </div>
-            </div>
-          -->
-        </div>
+      <section class="section">
+        <h2 data-lang-key="tour-title">Próximos Eventos</h2>
+        <div class="event-list" id="event-list"></div>
       </section>
     </main>
     <footer class="footer">
