@@ -87,11 +87,10 @@ async function loadEvents() {
         year: 'numeric'
       }).format(date).replace(/^./, str => str.toUpperCase());
 
-      const eventItem = document.createElement('div');
-      eventItem.className = 'event-item';
-      let buttonsHTML = '';
-      const imageUrl = event.image_url || 'https://images.unsplash.com/photo-1492684223066-81342da8d948?q=80&w=300'; // Imagen por defecto
+      const imageUrl = event.image_url || 'https://images.unsplash.com/photo-1492684223066-81342da8d948?q=80&w=1080&h=1080&fit=crop';
 
+      // Botones
+      let buttonsHTML = '';
       const hasTicketUrl = event.ticket_url && event.ticket_url.trim() !== '';
       const offers = event.offers || [];
       const validOffers = offers.filter(offer => offer.url && offer.url.trim() !== '');
@@ -125,15 +124,20 @@ async function loadEvents() {
         `;
       }
 
+      // Estructura cuadrada 1080x1080 con info abajo
+      const eventItem = document.createElement('div');
+      eventItem.className = 'event-square';
       eventItem.innerHTML = `
-        <img src="${imageUrl}" alt="${event.title}">
-        <div class="event-info">
-          <strong>📅 ${formattedDate}</strong>
-          <h3>${event.title}</h3>
-          <span>📍 ${event.venue.city}, ${event.venue.country}</span>
+        <div class="event-square-img-container">
+          <img src="${imageUrl}" alt="${event.title}" class="event-square-img">
         </div>
-        <div class="event-buttons">
-          ${buttonsHTML}
+        <div class="event-square-info">
+          <div class="event-square-date">${formattedDate}</div>
+          <h3 class="event-square-title">${event.title}</h3>
+          <div class="event-square-location">📍 ${event.venue.city}, ${event.venue.country}</div>
+          <div class="event-buttons">
+            ${buttonsHTML}
+          </div>
         </div>
       `;
       eventList.appendChild(eventItem);
