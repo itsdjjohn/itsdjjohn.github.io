@@ -4,68 +4,226 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ITS DJ JOHN</title>
+  <meta name="description" content="DJ John - Panamá | Bookings: esquiveljohn2@gmail.com">
   <link rel="icon" href="images/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <link href="output.css" rel="stylesheet">
+  <style>
+    :root{--c:#00f0ff;--p:#8b5cf6;--b:#000;--w:#fff}
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{font-family:"Space Grotesk",sans-serif;scroll-behavior:smooth}
+    body{background:var(--b);color:var(--w);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+    main{flex:1}
+
+    /* Preloader */
+    #preloader{position:fixed;inset:0;background:var(--b);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .8s}
+    #preloader img{max-width:120px;animation:p 2s infinite}
+    @keyframes p{0%,100%{opacity:1}50%{opacity:.4}}
+    .pointer-events-none{pointer-events:none!important}
+
+    /* Header */
+    header{position:fixed;top:0;width:100%;z-index:999;background:rgba(0,0,0,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.1)}
+    .nav{max-width:1400px;margin:0 auto;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+    .nav img{height:50px}
+    .nav-links{display:flex;gap:3rem;align-items:center}
+    .nav-links a{color:var(--w);font-weight:600;transition:.3s;text-decoration:none}
+    .nav-links a:hover{color:var(--c)}
+    .menu-toggle{display:none;background:none;border:none;color:var(--w);font-size:2rem;cursor:pointer}
+
+    /* Hero */
+    #home{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
+    #home::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(0,240,255,.15),transparent 70%);z-index:-1}
+    #home h1{font-size:4.5rem;line-height:1;font-weight:900}
+    @media(min-width:768px){#home h1{font-size:8.5rem}}
+    .g{background:linear-gradient(90deg,var(--c),var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    #home p{font-size:1.4rem;color:#aaa;margin:2rem 0}
+    .btn{display:inline-block;background:var(--c);color:#000;padding:1.2rem 3rem;border-radius:9999px;font-weight:900;transition:.3s;text-decoration:none}
+    .btn:hover{transform:scale(1.1)}
+
+    /* Ticker */
+    .ticker{background:var(--w);color:#000;padding:1rem 0;overflow:hidden;font-weight:900;text-transform:uppercase;font-size:1.1rem}
+    .ticker-inner{display:inline-block;white-space:nowrap;animation:m 20s linear infinite}
+    @keyframes m{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .ticker span{margin-right:5rem}
+
+    /* Sections */
+    section{padding:100px 2rem;text-align:center}
+    h2{font-size:4.5rem;font-weight:900;margin-bottom:4rem}
+    .grid{max-width:1200px;margin:0 auto;display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+
+    .event{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:2rem;transition:.4s}
+    .event:hover{border-color:var(--c);transform:translateY(-10px)}
+
+    .about{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .about img{border-radius:30px;width:100%;box-shadow:0 0 50px rgba(0,240,255,.3)}
+
+    .form{max-width:600px;margin:0 auto;display:grid;gap:1.5rem}
+    .form input,.form textarea{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);padding:1rem;border-radius:12px;color:var(--w);font-size:1.1rem}
+    .form input:focus,.form textarea:focus{border-color:var(--c);outline:none}
+    .form button{background:var(--c);color:#000;padding:1.2rem;border:none;border-radius:9999px;font-weight:900;cursor:pointer}
+
+    footer{background:#111;padding:4rem 2rem;text-align:center;margin-top:auto}
+    footer img{height:40px;margin-bottom:1rem}
+    .social{display:flex;gap:2rem;justify-content:center;margin:1.5rem 0;font-size:1.6rem}
+    .social a{color:#aaa;transition:.3s;text-decoration:none}
+    .social a:hover{color:var(--c)}
+
+    @media(max-width:768px){
+      .menu-toggle{display:block}
+      .nav-links{position:fixed;top:80px;left:0;width:100%;background:var(--b);flex-direction:column;padding:2rem;display:none}
+      .nav-links.show{display:flex;gap:2rem}
+      #home h1{font-size:4rem}
+      .about{grid-template-columns:1fr;text-align:center}
+    }
+  </style>
 </head>
 <body>
-  <div id="preloader" class="pointer-events-auto"><img src="images/logo.png" alt="DJ John"></div>
 
-  <div id="content" class="hidden">
+  <div id="preloader" class="pointer-events-auto">
+    <img src="images/logo.png" alt="DJ John">
+  </div>
+
+  <div id="content" style="opacity:0;transition:opacity .8s">
+
     <header>
       <div class="nav">
         <img src="images/logo.png" alt="DJ John">
         <nav class="nav-links">
-          <a href="index.html">HOME</a>
-          <a href="tour.html">TOUR</a>
-          <a href="about.html">ABOUT</a>
-          <a href="contact.html">CONTACT</a>
+          <a href="#home">HOME</a>
+          <a href="#tour">TOUR</a>
+          <a href="#about">ABOUT</a>
+          <a href="#contact">CONTACT</a>
         </nav>
         <button class="menu-toggle">☰</button>
       </div>
     </header>
 
     <main>
-      <section class="hero">
+
+      <!-- HERO -->
+      <section id="home">
         <div>
-          <h1>COME FOR THE MUSIC,<br><span class="gradient-text">STAY FOR THE VIBES</span></h1>
+          <h1>COME FOR THE MUSIC,<br><span class="g">STAY FOR THE VIBES</span></h1>
           <p>Panama's Electronic Architect</p>
-          <a href="tour.html" class="btn">VIEW TOUR DATES</a>
+          <a href="#tour" class="btn">TOUR DATES</a>
         </div>
       </section>
 
+      <!-- TICKER -->
       <div class="ticker">
         <div class="ticker-inner">
           <span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span>
         </div>
       </div>
+
+      <!-- TOUR -->
+      <section id="tour">
+        <h2 class="g">TOUR DATES</h2>
+        <div class="grid" id="events">Cargando eventos...</div>
+        <p id="no-events" style="display:none;color:#666;font-size:1.5rem">No hay eventos próximos por ahora</p>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about">
+        <h2 class="g">ABOUT ME</h2>
+        <div class="about">
+          <img src="images/dj-photo.jpg" alt="DJ John">
+          <div>
+            <h3 class="g" style="font-size:3.5rem;margin-bottom:1.5rem">John Esquivel</h3>
+            <p style="font-size:1.2rem;line-height:1.8;color:#ccc">
+              DJ y productor nacido en Ciudad de Panamá.<br><br>
+              Sets de alta energía que fusionan techno, house y sonidos latinos.<br><br>
+              He tocado en Paradise 507, Peskito, Casa Jagermeister y los mejores clubes del país.<br><br>
+              Mi misión: crear noches que nadie olvide.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <h2 class="g">GET IN TOUCH</h2>
+        <form class="form" id="form">
+          <input type="text" name="name" placeholder="Nombre" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea name="message" rows="6" placeholder="Mensaje / Detalles del booking" required></textarea>
+          <button type="submit">ENVIAR</button>
+        </form>
+        <p style="margin-top:3rem;font-size:1.3rem">
+          O escribe directo:<br>
+          <a href="mailto:esquiveljohn2@gmail.com" style="color:var(--c);font-size:2.2rem;font-weight:900">esquiveljohn2@gmail.com</a>
+        </p>
+      </section>
+
     </main>
 
     <footer>
       <img src="images/logo.png" alt="DJ John">
-      <div class="socials">
+      <div class="social">
         <a href="https://instagram.com/itsdjjohn" target="_blank">Instagram</a>
         <a href="https://facebook.com/itsdjjohn" target="_blank">Facebook</a>
       </div>
       <p>© 2025 ITS DJ JOHN</p>
     </footer>
+
   </div>
 
   <script>
     window.onload = () => {
-      const preloader = document.getElementById('preloader');
-      const content = document.getElementById('content');
       setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.classList.remove('pointer-events-auto');
-        preloader.classList.add('pointer-events-none');
-        content.classList.remove('hidden');
-        content.classList.add('show');
+        document.getElementById('preloader').style.opacity = '0';
+        document.getElementById('preloader').classList.add('pointer-events-none');
+        document.getElementById('content').style.opacity = '1';
+        loadEvents();
       }, 800);
     };
-    document.querySelector('.menu-toggle').onclick = () => {
-      document.querySelector('.nav-links').classList.toggle('show');
+
+    document.addEventListener('click', e => {
+      if (e.target.closest('.menu-toggle')) document.querySelector('.nav-links').classList.toggle('show');
+      if (e.target.matches('.nav-links a')) document.querySelector('.nav-links').classList.remove('show');
+    });
+
+    function loadEvents() {
+      fetch('https://rest.bandsintown.com/artists/itsdjjohn/events?app_id=js_itsdjjohn.com')
+        .then(r => r.json())
+        .then(d => {
+          const c = document.getElementById('events');
+          c.innerHTML = '';
+          if (!d || d.length === 0) { 
+            document.getElementById('no-events').style.display = 'block'; 
+            return; 
+          }
+
+          d.forEach(e => {
+            const date = new Date(e.datetime).toLocaleDateString('es-PA', {
+              weekday:'short', day:'numeric', month:'short'
+            }).toUpperCase();
+
+            c.innerHTML += `
+              <div class="event">
+                <div style="font-size:2rem;font-weight:900;margin-bottom:1rem">${date}</div>
+                <h3 style="font-size:1.8rem;margin-bottom:1rem">${e.venue.name}</h3>
+                <p style="opacity:.8">${e.venue.location}</p>
+                <a href="${e.url}" target="_blank" class="btn" style="margin-top:1.5rem;display:inline-block">TICKETS</a>
+              </div>`;
+          });
+        })
+        .catch(() => document.getElementById('no-events').style.display = 'block');
+    }
+
+    document.getElementById('form').onsubmit = async e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+
+      await fetch('https://formspree.io/f/xdovwvrp', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(data)
+      });
+
+      alert('¡Mensaje enviado!');
+      e.target.reset();
     };
   </script>
+
 </body>
 </html>
