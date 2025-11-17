@@ -1,224 +1,235 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ JOHN | Official</title>
 
-  <title>DJ JOHN | Official Website</title>
-  <meta name="description" content="DJ John - DJ & Producer from Panama. Bookings: esquiveljohn2@gmail.com">
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
 
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="images/logo.png">
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-  <!-- ============= PRELOADER ============= -->
-  <div id="preloader" class="pointer-events-auto">
-    <img src="images/logo.png" alt="DJ John Logo">
-  </div>
-
-  <!-- ============= CONTENT WRAPPER ============= -->
-  <div id="content">
-
-    <!--================ HEADER ===================-->
-    <header>
-      <div class="nav">
-        <img src="images/logo.png" alt="DJ John">
-
-        <nav class="nav-links">
-          <a href="#home" data-es="INICIO" data-en="HOME">INICIO</a>
-          <a href="#tour" data-es="EVENTOS" data-en="TOUR">EVENTOS</a>
-          <a href="#about" data-es="BIOGRAFÍA" data-en="ABOUT">BIOGRAFÍA</a>
-          <a href="#contact" data-es="CONTACTO" data-en="CONTACT">CONTACTO</a>
-        </nav>
-
-        <button class="menu-toggle">☰</button>
-
-        <!-- LANGUAGE SELECTOR -->
-        <select id="langSelect" style="margin-left:1rem;padding:.4rem;border-radius:8px;background:#111;color:#fff;border:1px solid #ff003c;">
-          <option value="es">ES</option>
-          <option value="en">EN</option>
-        </select>
-
-      </div>
-    </header>
-
-    <!--================ HERO ===================-->
-    <section id="home" class="hero">
-      <div>
-        <h1>
-          <span class="gradient-text" data-es="VIVE LA MÚSICA" data-en="LIVE THE MUSIC">VIVE LA MÚSICA</span><br>
-          <span data-es="Siente la vibra" data-en="Feel the vibe">Siente la vibra</span>
-        </h1>
-
-        <p data-es="Panamá • DJ & Productor" data-en="Panama • DJ & Producer">Panamá • DJ & Productor</p>
-
-        <a href="#tour" class="btn" data-es="VER EVENTOS" data-en="VIEW TOUR DATES">VER EVENTOS</a>
-      </div>
-    </section>
-
-    <!--================ TICKER ===================-->
-    <div class="ticker">
-      <div class="ticker-inner">
-        <span>@ITS DJ JOHN</span>
-        <span>@ITS DJ JOHN</span>
-        <span>@ITS DJ JOHN</span>
-        <span>@ITS DJ JOHN</span>
-      </div>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <img src="images/logo.png" alt="DJ John Logo">
     </div>
 
-    <!--================ TOUR ===================-->
-    <section id="tour">
-      <h2 class="gradient-title" data-es="EVENTOS" data-en="TOUR DATES">EVENTOS</h2>
+    <div id="content">
 
-      <div class="tour-grid" id="events">Cargando...</div>
+        <!-- NAVIGATION -->
+        <header>
+            <div class="nav">
+                <img src="images/logo.png" alt="DJ John Logo">
 
-      <p id="no-events" style="display:none; color:#777; font-size:1.4rem;"
-         data-es="No hay eventos próximos"
-         data-en="No upcoming events">
-        No hay eventos próximos
-      </p>
-    </section>
+                <nav class="nav-links">
+                    <a href="#hero">Inicio</a>
+                    <a href="#events-section">Eventos</a>
+                    <a href="#about-section">Bio</a>
+                    <a href="#contact-section">Contacto</a>
 
-    <!--================ ABOUT ===================-->
-    <section id="about">
-      <h2 class="gradient-title" data-es="BIOGRAFÍA" data-en="ABOUT ME">BIOGRAFÍA</h2>
+                    <select id="lang" class="lang-select">
+                        <option value="es">ES</option>
+                        <option value="en">EN</option>
+                    </select>
+                </nav>
 
-      <div class="about">
-        <img src="images/dj-photo.jpg" alt="DJ John Photo">
+                <button class="menu-toggle">☰</button>
+            </div>
+        </header>
 
-        <div>
-          <p id="bioText">
-            <!-- Default ES -->
-            DJ John es un DJ y productor nacido en la Ciudad de Panamá, reconocido por su estilo único y su capacidad para mezclar diferentes géneros con una fluidez distintiva. Comenzó su carrera en la escena electrónica a los 13 años, presentándose en eventos y fiestas locales. Con el tiempo, su talento y dedicación lo llevaron a tocar en algunos de los lugares y festivales más importantes del país.
+        <!-- HERO -->
+        <section id="hero" class="hero">
+            <div>
+                <h1 class="gradient-text">DJ JOHN</h1>
+                <p id="hero-text">Música, energía y vibra única.</p>
+                <a href="#events-section" class="btn">Ver Eventos</a>
+            </div>
+        </section>
 
-            Ha formado parte de lineups destacados como Paradise Music Festival, Paradise Mixology, Valle Bash, Paradise Peskito, Boom Hospitality, SZN, Casablanca, y ha sido invitado para aperturas especiales como Guaynaa Opening by BAMBOO y el concierto de Boza.
+        <!-- TICKER -->
+        <section class="ticker">
+            <div class="ticker-inner">
+                <span>@ITS DJ JOHN</span>
+                <span>@ITS DJ JOHN</span>
+                <span>@ITS DJ JOHN</span>
+            </div>
+        </section>
 
-            Su presencia en discotecas ha resonado en clubes como El Viejo Santana, Furia, Chupitos 507, Chill Out, The Venue at Soho, Teatro Amador, Selina Casco Viejo, Enigma, Diablo, Euforia, Rush, Wao, B Birra Mía, La Tana, Casa Jaguar y Kaos, entre muchos otros.
+        <!-- EVENTS -->
+        <section id="events-section" class="events">
+            <h2 id="events-title" class="section-title gradient-title">EVENTOS</h2>
 
-            Conocido por sets energéticos e innovadores, DJ John continúa elevando la experiencia del público en cada presentación.
-          </p>
-        </div>
-      </div>
-    </section>
+            <div id="events" class="tour-grid"></div>
 
-    <!--================ CONTACT ===================-->
-    <section id="contact">
-      <h2 class="gradient-title" data-es="CONTACTO" data-en="CONTACT">CONTACTO</h2>
+            <p id="no-events" class="no-events">No hay eventos próximos</p>
+        </section>
 
-      <form class="contact-form" id="contactForm">
-        <input type="text" name="name" data-es="Nombre" data-en="Name" placeholder="Nombre" required>
-        <input type="email" name="email" data-es="Correo" data-en="Email" placeholder="Correo" required>
-        <textarea name="message" rows="6" data-es="Mensaje / Detalles" data-en="Message / Details" placeholder="Mensaje / Detalles" required></textarea>
+        <!-- ABOUT -->
+        <section id="about-section" class="about">
+            <img src="images/about.jpg" alt="DJ John">
 
-        <button type="submit" data-es="ENVIAR" data-en="SEND">ENVIAR</button>
-      </form>
+            <div class="about-text">
+                <h2 id="about-title" class="gradient-title">Quién Soy</h2>
 
-      <p style="margin-top:2rem;">
-        <a href="mailto:esquiveljohn2@gmail.com" style="color:#ff003c;font-weight:900;font-size:1.6rem;">
-          esquiveljohn2@gmail.com
-        </a>
-      </p>
-    </section>
+                <p id="bio-text">
+                    DJ John es un DJ y productor, nacido en la Ciudad de Panamá.  
+                    Es conocido por su estilo único y su capacidad para mezclar 
+                    diferentes géneros. Comenzó su carrera en la música electrónica 
+                    a los 13 años tocando en eventos locales.
 
-    <!--================ FOOTER ===================-->
-    <footer>
-      <img src="images/logo.png" alt="DJ John Logo">
+                    Ha tocado en los festivales más grandes de Panamá:
+                    <br><br>
+                    • Paradise 507  
+                    • Paradise Peskito (Carnavales)  
+                    • Boom Hospitality  
+                    • SZN  
+                    • Opening DJ de Guaynaa (por Bamboo)
+                    • DJ invitado en el concierto de Boza  
+                </p>
+            </div>
+        </section>
 
-      <div class="socials">
-        <a href="https://instagram.com/itsdjjohn" target="_blank">Instagram</a>
-        <a href="https://facebook.com/itsdjjohn" target="_blank">Facebook</a>
-      </div>
+        <!-- CONTACT -->
+        <section id="contact-section" class="contact">
+            <h2 id="contact-title" class="gradient-title">Contacto</h2>
 
-      <p>© 2025 DJ JOHN</p>
-    </footer>
+            <form id="contactForm">
+                <input type="text" name="name" placeholder="Tu nombre" required>
+                <input type="email" name="email" placeholder="Tu correo" required>
+                <textarea name="message" placeholder="Mensaje" required></textarea>
 
-  </div>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
 
-  <!--================ SCRIPTS ===================-->
-  <script>
-    /* PRELOADER */
-    window.onload = () => {
-      setTimeout(() => {
-        document.getElementById("preloader").style.opacity = "0";
-        document.getElementById("preloader").classList.add("pointer-events-none");
+        <!-- FOOTER -->
+        <footer>
+            <img src="images/logo.png" alt="logo">
 
-        document.getElementById("content").classList.add("show");
+            <div class="socials">
+                <a href="https://instagram.com/itsdjjohn" target="_blank">Instagram</a>
+                <a href="https://www.tiktok.com/@itsdjjohn" target="_blank">TikTok</a>
+                <a href="https://open.spotify.com" target="_blank">Spotify</a>
+            </div>
 
-        loadEvents();
-      }, 900);
-    };
+            <p>© 2025 DJ John — Todos los derechos reservados.</p>
+        </footer>
 
-    /* MOBILE MENU */
-    document.querySelector(".menu-toggle").onclick = () =>
-      document.querySelector(".nav-links").classList.toggle("show");
+    </div>
 
-    /* BANDSINTOWN */
-    function loadEvents() {
-      fetch("https://rest.bandsintown.com/artists/itsdjjohn/events?app_id=6ddc274027f79a574321428def39a357")
-        .then(res => res.json())
-        .then(events => {
-          const c = document.getElementById("events");
-          c.innerHTML = "";
+<!-- SCRIPT (TODO CENTRALIZADO) -->
+<script>
+const $ = id => document.getElementById(id);
 
-          if (!events || events.length === 0) {
-            document.getElementById("no-events").style.display = "block";
-            return;
-          }
+/* PRELOADER */
+window.addEventListener("load", () => {
+    const pre = $("preloader");
+    const content = $("content");
 
-          events.forEach(e => {
-            const date = new Date(e.datetime).toLocaleDateString("es-PA", {
-              weekday: "short", day: "numeric", month: "short"
-            }).toUpperCase();
-
-            c.innerHTML += `
-              <div class="event-card">
-                <div style="font-size:2rem;font-weight:900;margin-bottom:1rem">${date}</div>
-                <h3>${e.venue.name}</h3>
-                <p>${e.venue.location}</p>
-                <a class="btn" href="${e.url}" target="_blank">Tickets</a>
-              </div>
-            `;
-          });
-        })
-        .catch(() => {
-          document.getElementById("no-events").style.display = "block";
-        });
+    if (pre) {
+        pre.style.opacity = "0";
+        setTimeout(() => pre.style.display = "none", 800);
     }
+    content?.classList.add("show");
+    loadEvents();
+});
 
-    /* LANGUAGE SWITCHER */
-    const langSelect = document.getElementById("langSelect");
+/* MOBILE MENU */
+document.querySelector(".menu-toggle")
+    .addEventListener("click", () =>
+        document.querySelector(".nav-links").classList.toggle("show")
+);
 
-    const bioES = document.getElementById("bioText").innerHTML;
-    const bioEN = `
-      DJ John is a DJ and producer born in Panama City, known for his unique style and his ability to blend multiple genres with seamless precision. 
-      He began his career in the electronic music scene at just 13 years old, performing at local parties and events. Over time, his talent and dedication led him to perform at some of the most important venues and festivals in the country.
+/* BANDSINTOWN */
+async function loadEvents() {
+    const container = $("events");
+    const noEvents = $("no-events");
 
-      He has appeared at major events such as Paradise Music Festival, Paradise Mixology, Valle Bash, Paradise Peskito, Boom Hospitality, SZN, Casablanca, and he has also opened shows like Guaynaa Opening by BAMBOO and the Boza concert.
+    try {
+        const res = await fetch("https://rest.bandsintown.com/artists/id_86889/events?app_id=itsdjjohn.com");
+        const events = await res.json();
 
-      His club presence includes performances at El Viejo Santana, Furia, Chupitos 507, Chill Out, The Venue at Soho, Teatro Amador, Selina Casco Viejo, Enigma, Diablo, Euforia, Rush, Wao, B Birra Mía, La Tana, Casa Jaguar, Kaos, and many more.
+        if (!Array.isArray(events) || events.length === 0) {
+            noEvents.style.display = "block";
+            return;
+        }
 
-      Known for delivering high-energy, innovative and rhythm-driven sets, DJ John continues to elevate the experience of every crowd he performs for.
-    `;
+        container.innerHTML = "";
+        const now = new Date();
 
-    langSelect.addEventListener("change", () => {
-      const lang = langSelect.value;
+        events.forEach(e => {
+            if (new Date(e.datetime) < now) return;
 
-      document.querySelectorAll("[data-es]").forEach(el => {
-        el.textContent = lang === "es" ? el.getAttribute("data-es") : el.getAttribute("data-en");
-      });
+            const date = new Date(e.datetime)
+                .toLocaleDateString("es-PA", { weekday:"short", day:"numeric", month:"short" })
+                .toUpperCase();
 
-      document.getElementById("bioText").innerHTML = lang === "es" ? bioES : bioEN;
+            const ticketUrl = e.url || "#";
+
+            container.innerHTML += `
+                <div class="event-card">
+                    <div class="event-date">${date}</div>
+                    <h3>${e.venue.name}</h3>
+                    <p>${e.venue.city}, ${e.venue.country}</p>
+                    <a href="${ticketUrl}" class="btn" target="_blank">Tickets</a>
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        console.error("Bandsintown Error:", err);
+        noEvents.style.display = "block";
+    }
+}
+
+/* LANGUAGE SELECTOR */
+const translations = {
+    es: {
+        hero: "Música, energía y vibra única.",
+        events: "EVENTOS",
+        about: "Quién Soy",
+        contact: "Contacto",
+        noEvents: "No hay eventos próximos"
+    },
+    en: {
+        hero: "Music, energy and unique vibes.",
+        events: "EVENTS",
+        about: "About Me",
+        contact: "Contact",
+        noEvents: "No upcoming events"
+    }
+};
+
+$("lang").addEventListener("change", () => {
+    const l = $("lang").value;
+
+    $("hero-text").textContent = translations[l].hero;
+    $("events-title").textContent = translations[l].events;
+    $("about-title").textContent = translations[l].about;
+    $("contact-title").textContent = translations[l].contact;
+    $("no-events").textContent = translations[l].noEvents;
+});
+
+/* CONTACT FORM */
+$("contactForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target).entries());
+
+    await fetch("https://formspree.io/f/mnqebgje", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(data)
     });
 
-    /* CONTACT FORM */
-    document.getElementById("contactForm").onsubmit = async e => {
-      e.preventDefault();
-      alert("Mensaje enviado correctamente.");
-      e.target.reset();
-    };
-  </script>
+    alert("Mensaje enviado. ¡Gracias!");
+    e.target.reset();
+});
+</script>
 
 </body>
 </html>
