@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ John - Contact & Booking</title>
+  <link rel="icon" href="/images/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <link href="/output.css" rel="stylesheet">
+</head>
+<body class="bg-black text-white">
+
+  <!-- PRELOADER -->
+  <div id="preloader" class="fixed inset-0 bg-black flex items-center justify-center z-50">
+    <img src="/images/logo.png" alt="DJ John" class="w-32 animate-pulse">
+  </div>
+
+  <div id="content" class="hidden">
+    <!-- HEADER -->
+    <header class="fixed top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10">
+      <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+        <a href="/"><img src="/images/logo.png" alt="DJ John" class="h-12"></a>
+        <nav class="hidden md:flex gap-12 text-lg font-medium">
+          <a href="/" class="hover:text-cyan-400 transition">Home</a>
+          <a href="/tour.html" class="hover:text-cyan-400 transition">Tour</a>
+          <a href="/about.html" class="hover:text-cyan-400 transition">About</a>
+          <a href="/contact.html" class="hover:text-cyan-400 transition">Contact</a>
+        </nav>
+        <button class="md:hidden text-4xl">☰</button>
+      </div>
+    </header>
+
+    <!-- CONTACT HERO -->
+    <section class="pt-40 pb-20 text-center">
+      <h1 class="text-6xl md:text-9xl font-black mb-10">
+        <span class="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+          BOOKING & CONTACT
+        </span>
+      </h1>
+    </section>
+
+    <!-- FORMULARIO -->
+    <div class="max-w-2xl mx-auto px-6 pb-40">
+      <form action="https://formspree.io/f/mgvkeyrd" method="POST" class="space-y-8">
+        <div>
+          <input type="text" name="name" placeholder="Nombre completo" required
+                 class="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-lg focus:border-cyan-400 focus:outline-none transition backdrop-blur-xl">
+        </div>
+        <div>
+          <input type="email" name="email" placeholder="Email" required
+                 class="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-lg focus:border-cyan-400 focus:outline-none transition backdrop-blur-xl">
+        </div>
+        <div>
+          <textarea name="message" rows="6" placeholder="Mensaje / Detalles del evento" required
+                    class="w-full bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-lg focus:border-cyan-400 focus:outline-none transition backdrop-blur-xl resize-none"></textarea>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="inline-block bg-cyan-400 text-black px-12 py-6 rounded-full text-xl font-bold hover:scale-110 transition-all">
+            ENVIAR MENSAJE
+          </button>
+        </div>
+      </form>
+
+      <!-- EMAIL DIRECTO -->
+      <div class="text-center mt-16">
+        <p class="text-xl text-gray-400">O escribe directo a</p>
+        <a href="mailto:esquiveljohn2@gmail.com" class="text-3xl font-black text-cyan-400 hover:underline">
+          esquiveljohn2@gmail.com
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRELOADER SCRIPT -->
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('preloader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('preloader').style.display = 'none';
+          document.getElementById('content').classList.remove('hidden');
+        }, 300);
+      }, 800);
+    });
+  </script>
+</body>
+</html>
