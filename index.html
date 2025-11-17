@@ -9,7 +9,7 @@
   <link href="output.css" rel="stylesheet">
 </head>
 <body>
-  <div id="preloader"><img src="images/logo.png" alt="DJ John"></div>
+  <div id="preloader" class="pointer-events-auto"><img src="images/logo.png" alt="DJ John"></div>
 
   <div id="content" class="hidden">
     <header>
@@ -20,48 +20,52 @@
           <a href="tour.html">TOUR</a>
           <a href="about.html">ABOUT</a>
           <a href="contact.html">CONTACT</a>
-          <select id="language-select" onchange="changeLanguage()">
-            <option value="es">ES</option>
-            <option value="en">EN</option>
-          </select>
         </nav>
         <button class="menu-toggle">☰</button>
       </div>
     </header>
 
-    <section class="hero">
-      <div>
-        <h1>COME FOR THE MUSIC,<br><span class="gradient-text">STAY FOR THE VIBES</span></h1>
-        <p>Panama's Electronic Architect</p>
-        <a href="tour.html" class="btn">VIEW TOUR DATES</a>
-      </div>
-    </section>
+    <main>
+      <section class="hero">
+        <div>
+          <h1>COME FOR THE MUSIC,<br><span class="gradient-text">STAY FOR THE VIBES</span></h1>
+          <p>Panama's Electronic Architect</p>
+          <a href="tour.html" class="btn">VIEW TOUR DATES</a>
+        </div>
+      </section>
 
-    <div class="ticker">
-      <div class="ticker-inner">
-        <span>FOLLOW @ITSDJJOHN</span>
-        <span>FOLLOW @ITSDJJOHN</span>
-        <span>FOLLOW @ITSDJJOHN</span>
-        <span>FOLLOW @ITSDJJOHN</span>
+      <div class="ticker">
+        <div class="ticker-inner">
+          <span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span>
+        </div>
       </div>
-    </div>
+    </main>
+
+    <footer>
+      <img src="images/logo.png" alt="DJ John">
+      <div class="socials">
+        <a href="https://instagram.com/itsdjjohn" target="_blank">Instagram</a>
+        <a href="https://facebook.com/itsdjjohn" target="_blank">Facebook</a>
+      </div>
+      <p>© 2025 ITS DJ JOHN</p>
+    </footer>
   </div>
 
   <script>
     window.onload = () => {
+      const preloader = document.getElementById('preloader');
+      const content = document.getElementById('content');
       setTimeout(() => {
-        document.getElementById('preloader').style.opacity = '0';
-        document.getElementById('content').classList.remove('hidden');
-        document.getElementById('content').classList.add('show');
+        preloader.style.opacity = '0';
+        preloader.classList.remove('pointer-events-auto');
+        preloader.classList.add('pointer-events-none');
+        content.classList.remove('hidden');
+        content.classList.add('show');
       }, 800);
     };
     document.querySelector('.menu-toggle').onclick = () => {
       document.querySelector('.nav-links').classList.toggle('show');
     };
-    function changeLanguage() {
-      const lang = document.getElementById('language-select').value;
-      // Aquí puedes añadir traducciones si quieres
-    }
   </script>
 </body>
 </html>

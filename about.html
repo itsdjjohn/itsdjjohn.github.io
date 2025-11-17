@@ -9,7 +9,7 @@
   <link href="output.css" rel="stylesheet">
 </head>
 <body>
-  <div id="preloader"><img src="images/logo.png" alt="DJ John"></div>
+  <div id="preloader" class="pointer-events-auto"><img src="images/logo.png" alt="DJ John"></div>
 
   <div id="content" class="hidden">
     <header>
@@ -20,33 +20,29 @@
           <a href="tour.html">TOUR</a>
           <a href="about.html">ABOUT</a>
           <a href="contact.html">CONTACT</a>
-          <select id="language-select" onchange="changeLanguage()">
-            <option value="es">ES</option>
-            <option value="en">EN</option>
-          </select>
         </nav>
         <button class="menu-toggle">☰</button>
       </div>
     </header>
 
-    <section class="pt-32 pb-20 text-center">
-      <h1 class="text-6xl md:text-9xl font-black">
-        <span class="gradient-text">ABOUT ME</span>
-      </h1>
-    </section>
+    <main>
+      <section class="pt-32 pb-20 text-center">
+        <h1 class="text-6xl md:text-9xl font-black"><span class="gradient-text">ABOUT ME</span></h1>
+      </section>
 
-    <div class="about">
-      <img src="images/dj-photo.jpg" alt="DJ John">
-      <div class="about-text">
-        <h2 class="gradient-title text-5xl md:text-7xl font-black mb-8">John Esquivel</h2>
-        <p class="text-xl leading-relaxed text-gray-300">
-          DJ y productor nacido en Ciudad de Panamá.<br><br>
-          Conocido por sets de alta energía que fusionan techno, house y sonidos latinos.<br><br>
-          He tocado en los mejores clubes y festivales de Panamá: Paradise 507, Peskito, Casa Jagermeister y muchos más.<br><br>
-          Mi misión: crear experiencias que queden grabadas en la memoria y hacer que cada noche sea inolvidable.
-        </p>
+      <div class="about">
+        <img src="images/dj-photo.jpg" alt="DJ John">
+        <div class="about-text">
+          <h2 class="gradient-title text-5xl md:text-7xl font-black mb-8">John Esquivel</h2>
+          <p class="text-xl leading-relaxed text-gray-300">
+            DJ y productor nacido en Ciudad de Panamá.<br><br>
+            Sets de alta energía que fusionan techno, house y sonidos latinos.<br><br>
+            He tocado en Paradise 507, Peskito, Casa Jagermeister y muchos más.<br><br>
+            Mi misión: crear noches inolvidables.
+          </p>
+        </div>
       </div>
-    </div>
+    </main>
 
     <footer>
       <img src="images/logo.png" alt="DJ John">
@@ -60,10 +56,14 @@
 
   <script>
     window.onload = () => {
+      const preloader = document.getElementById('preloader');
+      const content = document.getElementById('content');
       setTimeout(() => {
-        document.getElementById('preloader').style.opacity = '0';
-        document.getElementById('content').classList.remove('hidden');
-        document.getElementById('content').classList.add('show');
+        preloader.style.opacity = '0';
+        preloader.classList.remove('pointer-events-auto');
+        preloader.classList.add('pointer-events-none');
+        content.classList.remove('hidden');
+        content.classList.add('show');
       }, 800);
     };
     document.querySelector('.menu-toggle').onclick = () => {
