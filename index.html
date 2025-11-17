@@ -1,226 +1,221 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITS DJ JOHN</title>
-  <meta name="description" content="DJ John - Panamá | Bookings: esquiveljohn2@gmail.com">
-  <link rel="icon" href="images/favicon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <style>
-    :root{--c:#00f0ff;--p:#8b5cf6;--b:#000;--w:#fff}
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{font-family:"Space Grotesk",sans-serif;scroll-behavior:smooth}
-    body{background:var(--b);color:var(--w);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
-    main{flex:1}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    /* Preloader */
-    #preloader{position:fixed;inset:0;background:var(--b);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .8s}
-    #preloader img{max-width:120px;animation:p 2s infinite}
-    @keyframes p{0%,100%{opacity:1}50%{opacity:.4}}
-    .pointer-events-none{pointer-events:none!important}
+  <title>DJ JOHN | Official Website</title>
+  <meta name="description" content="DJ John - DJ & Producer from Panama. Bookings: esquiveljohn2@gmail.com">
 
-    /* Header */
-    header{position:fixed;top:0;width:100%;z-index:999;background:rgba(0,0,0,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.1)}
-    .nav{max-width:1400px;margin:0 auto;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
-    .nav img{height:50px}
-    .nav-links{display:flex;gap:3rem;align-items:center}
-    .nav-links a{color:var(--w);font-weight:600;transition:.3s;text-decoration:none}
-    .nav-links a:hover{color:var(--c)}
-    .menu-toggle{display:none;background:none;border:none;color:var(--w);font-size:2rem;cursor:pointer}
-
-    /* Hero */
-    #home{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
-    #home::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(0,240,255,.15),transparent 70%);z-index:-1}
-    #home h1{font-size:4.5rem;line-height:1;font-weight:900}
-    @media(min-width:768px){#home h1{font-size:8.5rem}}
-    .g{background:linear-gradient(90deg,var(--c),var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    #home p{font-size:1.4rem;color:#aaa;margin:2rem 0}
-    .btn{display:inline-block;background:var(--c);color:#000;padding:1.2rem 3rem;border-radius:9999px;font-weight:900;transition:.3s;text-decoration:none}
-    .btn:hover{transform:scale(1.1)}
-
-    /* Ticker */
-    .ticker{background:var(--w);color:#000;padding:1rem 0;overflow:hidden;font-weight:900;text-transform:uppercase;font-size:1.1rem}
-    .ticker-inner{display:inline-block;white-space:nowrap;animation:m 20s linear infinite}
-    @keyframes m{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-    .ticker span{margin-right:5rem}
-
-    /* Sections */
-    section{padding:100px 2rem;text-align:center}
-    h2{font-size:4.5rem;font-weight:900;margin-bottom:4rem}
-    .grid{max-width:1200px;margin:0 auto;display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-
-    .event{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:2rem;transition:.4s}
-    .event:hover{border-color:var(--c);transform:translateY(-10px)}
-
-    .about{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-    .about img{border-radius:30px;width:100%;box-shadow:0 0 50px rgba(0,240,255,.3)}
-
-    .form{max-width:600px;margin:0 auto;display:grid;gap:1.5rem}
-    .form input,.form textarea{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);padding:1rem;border-radius:12px;color:var(--w);font-size:1.1rem}
-    .form input:focus,.form textarea:focus{border-color:var(--c);outline:none}
-    .form button{background:var(--c);color:#000;padding:1.2rem;border:none;border-radius:9999px;font-weight:900;cursor:pointer}
-
-    footer{background:#111;padding:4rem 2rem;text-align:center;margin-top:auto}
-    footer img{height:40px;margin-bottom:1rem}
-    .social{display:flex;gap:2rem;justify-content:center;margin:1.5rem 0;font-size:1.6rem}
-    .social a{color:#aaa;transition:.3s;text-decoration:none}
-    .social a:hover{color:var(--c)}
-
-    @media(max-width:768px){
-      .menu-toggle{display:block}
-      .nav-links{position:fixed;top:80px;left:0;width:100%;background:var(--b);flex-direction:column;padding:2rem;display:none}
-      .nav-links.show{display:flex;gap:2rem}
-      #home h1{font-size:4rem}
-      .about{grid-template-columns:1fr;text-align:center}
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="images/logo.png">
 </head>
+
 <body>
 
+  <!-- ============= PRELOADER ============= -->
   <div id="preloader" class="pointer-events-auto">
-    <img src="images/logo.png" alt="DJ John">
+    <img src="images/logo.png" alt="DJ John Logo">
   </div>
 
-  <div id="content" style="opacity:0;transition:opacity .8s">
+  <!-- ============= CONTENT WRAPPER ============= -->
+  <div id="content">
 
+    <!--================ HEADER ===================-->
     <header>
       <div class="nav">
         <img src="images/logo.png" alt="DJ John">
+
         <nav class="nav-links">
-          <a href="#home">HOME</a>
-          <a href="#tour">TOUR</a>
-          <a href="#about">ABOUT</a>
-          <a href="#contact">CONTACT</a>
+          <a href="#home" data-es="INICIO" data-en="HOME">INICIO</a>
+          <a href="#tour" data-es="EVENTOS" data-en="TOUR">EVENTOS</a>
+          <a href="#about" data-es="BIOGRAFÍA" data-en="ABOUT">BIOGRAFÍA</a>
+          <a href="#contact" data-es="CONTACTO" data-en="CONTACT">CONTACTO</a>
         </nav>
+
         <button class="menu-toggle">☰</button>
+
+        <!-- LANGUAGE SELECTOR -->
+        <select id="langSelect" style="margin-left:1rem;padding:.4rem;border-radius:8px;background:#111;color:#fff;border:1px solid #ff003c;">
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+        </select>
+
       </div>
     </header>
 
-    <main>
+    <!--================ HERO ===================-->
+    <section id="home" class="hero">
+      <div>
+        <h1>
+          <span class="gradient-text" data-es="VIVE LA MÚSICA" data-en="LIVE THE MUSIC">VIVE LA MÚSICA</span><br>
+          <span data-es="Siente la vibra" data-en="Feel the vibe">Siente la vibra</span>
+        </h1>
 
-      <!-- HERO -->
-      <section id="home">
+        <p data-es="Panamá • DJ & Productor" data-en="Panama • DJ & Producer">Panamá • DJ & Productor</p>
+
+        <a href="#tour" class="btn" data-es="VER EVENTOS" data-en="VIEW TOUR DATES">VER EVENTOS</a>
+      </div>
+    </section>
+
+    <!--================ TICKER ===================-->
+    <div class="ticker">
+      <div class="ticker-inner">
+        <span>@ITS DJ JOHN</span>
+        <span>@ITS DJ JOHN</span>
+        <span>@ITS DJ JOHN</span>
+        <span>@ITS DJ JOHN</span>
+      </div>
+    </div>
+
+    <!--================ TOUR ===================-->
+    <section id="tour">
+      <h2 class="gradient-title" data-es="EVENTOS" data-en="TOUR DATES">EVENTOS</h2>
+
+      <div class="tour-grid" id="events">Cargando...</div>
+
+      <p id="no-events" style="display:none; color:#777; font-size:1.4rem;"
+         data-es="No hay eventos próximos"
+         data-en="No upcoming events">
+        No hay eventos próximos
+      </p>
+    </section>
+
+    <!--================ ABOUT ===================-->
+    <section id="about">
+      <h2 class="gradient-title" data-es="BIOGRAFÍA" data-en="ABOUT ME">BIOGRAFÍA</h2>
+
+      <div class="about">
+        <img src="images/dj-photo.jpg" alt="DJ John Photo">
+
         <div>
-          <h1>COME FOR THE MUSIC,<br><span class="g">STAY FOR THE VIBES</span></h1>
-          <p>Panama's Electronic Architect</p>
-          <a href="#tour" class="btn">TOUR DATES</a>
-        </div>
-      </section>
+          <p id="bioText">
+            <!-- Default ES -->
+            DJ John es un DJ y productor nacido en la Ciudad de Panamá, reconocido por su estilo único y su capacidad para mezclar diferentes géneros con una fluidez distintiva. Comenzó su carrera en la escena electrónica a los 13 años, presentándose en eventos y fiestas locales. Con el tiempo, su talento y dedicación lo llevaron a tocar en algunos de los lugares y festivales más importantes del país.
 
-      <!-- TICKER -->
-      <div class="ticker">
-        <div class="ticker-inner">
-          <span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span><span>FOLLOW @ITSDJJOHN</span>
+            Ha formado parte de lineups destacados como Paradise Music Festival, Paradise Mixology, Valle Bash, Paradise Peskito, Boom Hospitality, SZN, Casablanca, y ha sido invitado para aperturas especiales como Guaynaa Opening by BAMBOO y el concierto de Boza.
+
+            Su presencia en discotecas ha resonado en clubes como El Viejo Santana, Furia, Chupitos 507, Chill Out, The Venue at Soho, Teatro Amador, Selina Casco Viejo, Enigma, Diablo, Euforia, Rush, Wao, B Birra Mía, La Tana, Casa Jaguar y Kaos, entre muchos otros.
+
+            Conocido por sets energéticos e innovadores, DJ John continúa elevando la experiencia del público en cada presentación.
+          </p>
         </div>
       </div>
+    </section>
 
-      <!-- TOUR -->
-      <section id="tour">
-        <h2 class="g">TOUR DATES</h2>
-        <div class="grid" id="events">Cargando eventos...</div>
-        <p id="no-events" style="display:none;color:#666;font-size:1.5rem">No hay eventos próximos por ahora</p>
-      </section>
+    <!--================ CONTACT ===================-->
+    <section id="contact">
+      <h2 class="gradient-title" data-es="CONTACTO" data-en="CONTACT">CONTACTO</h2>
 
-      <!-- ABOUT -->
-      <section id="about">
-        <h2 class="g">ABOUT ME</h2>
-        <div class="about">
-          <img src="images/dj-photo.jpg" alt="DJ John">
-          <div>
-            <h3 class="g" style="font-size:3.5rem;margin-bottom:1.5rem">John Esquivel</h3>
-            <p style="font-size:1.2rem;line-height:1.8;color:#ccc">
-              DJ y productor nacido en Ciudad de Panamá.<br><br>
-              Sets de alta energía que fusionan techno, house y sonidos latinos.<br><br>
-              He tocado en Paradise 507, Peskito, Casa Jagermeister y los mejores clubes del país.<br><br>
-              Mi misión: crear noches que nadie olvide.
-            </p>
-          </div>
-        </div>
-      </section>
+      <form class="contact-form" id="contactForm">
+        <input type="text" name="name" data-es="Nombre" data-en="Name" placeholder="Nombre" required>
+        <input type="email" name="email" data-es="Correo" data-en="Email" placeholder="Correo" required>
+        <textarea name="message" rows="6" data-es="Mensaje / Detalles" data-en="Message / Details" placeholder="Mensaje / Detalles" required></textarea>
 
-      <!-- CONTACT -->
-      <section id="contact">
-        <h2 class="g">GET IN TOUCH</h2>
-        <form class="form" id="form">
-          <input type="text" name="name" placeholder="Nombre" required>
-          <input type="email" name="email" placeholder="Email" required>
-          <textarea name="message" rows="6" placeholder="Mensaje / Detalles del booking" required></textarea>
-          <button type="submit">ENVIAR</button>
-        </form>
-        <p style="margin-top:3rem;font-size:1.3rem">
-          O escribe directo:<br>
-          <a href="mailto:esquiveljohn2@gmail.com" style="color:var(--c);font-size:2.2rem;font-weight:900">esquiveljohn2@gmail.com</a>
-        </p>
-      </section>
+        <button type="submit" data-es="ENVIAR" data-en="SEND">ENVIAR</button>
+      </form>
 
-    </main>
+      <p style="margin-top:2rem;">
+        <a href="mailto:esquiveljohn2@gmail.com" style="color:#ff003c;font-weight:900;font-size:1.6rem;">
+          esquiveljohn2@gmail.com
+        </a>
+      </p>
+    </section>
 
+    <!--================ FOOTER ===================-->
     <footer>
-      <img src="images/logo.png" alt="DJ John">
-      <div class="social">
+      <img src="images/logo.png" alt="DJ John Logo">
+
+      <div class="socials">
         <a href="https://instagram.com/itsdjjohn" target="_blank">Instagram</a>
         <a href="https://facebook.com/itsdjjohn" target="_blank">Facebook</a>
       </div>
-      <p>© 2025 ITS DJ JOHN</p>
+
+      <p>© 2025 DJ JOHN</p>
     </footer>
 
   </div>
 
+  <!--================ SCRIPTS ===================-->
   <script>
+    /* PRELOADER */
     window.onload = () => {
       setTimeout(() => {
-        document.getElementById('preloader').style.opacity = '0';
-        document.getElementById('preloader').classList.add('pointer-events-none');
-        document.getElementById('content').style.opacity = '1';
+        document.getElementById("preloader").style.opacity = "0";
+        document.getElementById("preloader").classList.add("pointer-events-none");
+
+        document.getElementById("content").classList.add("show");
+
         loadEvents();
-      }, 800);
+      }, 900);
     };
 
-    document.addEventListener('click', e => {
-      if (e.target.closest('.menu-toggle')) document.querySelector('.nav-links').classList.toggle('show');
-      if (e.target.matches('.nav-links a')) document.querySelector('.nav-links').classList.remove('show');
-    });
+    /* MOBILE MENU */
+    document.querySelector(".menu-toggle").onclick = () =>
+      document.querySelector(".nav-links").classList.toggle("show");
 
+    /* BANDSINTOWN */
     function loadEvents() {
-      fetch('https://rest.bandsintown.com/artists/itsdjjohn/events?app_id=js_itsdjjohn.com')
-        .then(r => r.json())
-        .then(d => {
-          const c = document.getElementById('events');
-          c.innerHTML = '';
-          if (!d || d.length === 0) { 
-            document.getElementById('no-events').style.display = 'block'; 
-            return; 
+      fetch("https://rest.bandsintown.com/artists/itsdjjohn/events?app_id=6ddc274027f79a574321428def39a357")
+        .then(res => res.json())
+        .then(events => {
+          const c = document.getElementById("events");
+          c.innerHTML = "";
+
+          if (!events || events.length === 0) {
+            document.getElementById("no-events").style.display = "block";
+            return;
           }
 
-          d.forEach(e => {
-            const date = new Date(e.datetime).toLocaleDateString('es-PA', {
-              weekday:'short', day:'numeric', month:'short'
+          events.forEach(e => {
+            const date = new Date(e.datetime).toLocaleDateString("es-PA", {
+              weekday: "short", day: "numeric", month: "short"
             }).toUpperCase();
 
             c.innerHTML += `
-              <div class="event">
+              <div class="event-card">
                 <div style="font-size:2rem;font-weight:900;margin-bottom:1rem">${date}</div>
-                <h3 style="font-size:1.8rem;margin-bottom:1rem">${e.venue.name}</h3>
-                <p style="opacity:.8">${e.venue.location}</p>
-                <a href="${e.url}" target="_blank" class="btn" style="margin-top:1.5rem;display:inline-block">TICKETS</a>
-              </div>`;
+                <h3>${e.venue.name}</h3>
+                <p>${e.venue.location}</p>
+                <a class="btn" href="${e.url}" target="_blank">Tickets</a>
+              </div>
+            `;
           });
         })
-        .catch(() => document.getElementById('no-events').style.display = 'block');
+        .catch(() => {
+          document.getElementById("no-events").style.display = "block";
+        });
     }
 
-    document.getElementById('form').onsubmit = async e => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target));
+    /* LANGUAGE SWITCHER */
+    const langSelect = document.getElementById("langSelect");
 
-      await fetch('https://formspree.io/f/xdovwvrp', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(data)
+    const bioES = document.getElementById("bioText").innerHTML;
+    const bioEN = `
+      DJ John is a DJ and producer born in Panama City, known for his unique style and his ability to blend multiple genres with seamless precision. 
+      He began his career in the electronic music scene at just 13 years old, performing at local parties and events. Over time, his talent and dedication led him to perform at some of the most important venues and festivals in the country.
+
+      He has appeared at major events such as Paradise Music Festival, Paradise Mixology, Valle Bash, Paradise Peskito, Boom Hospitality, SZN, Casablanca, and he has also opened shows like Guaynaa Opening by BAMBOO and the Boza concert.
+
+      His club presence includes performances at El Viejo Santana, Furia, Chupitos 507, Chill Out, The Venue at Soho, Teatro Amador, Selina Casco Viejo, Enigma, Diablo, Euforia, Rush, Wao, B Birra Mía, La Tana, Casa Jaguar, Kaos, and many more.
+
+      Known for delivering high-energy, innovative and rhythm-driven sets, DJ John continues to elevate the experience of every crowd he performs for.
+    `;
+
+    langSelect.addEventListener("change", () => {
+      const lang = langSelect.value;
+
+      document.querySelectorAll("[data-es]").forEach(el => {
+        el.textContent = lang === "es" ? el.getAttribute("data-es") : el.getAttribute("data-en");
       });
 
-      alert('¡Mensaje enviado!');
+      document.getElementById("bioText").innerHTML = lang === "es" ? bioES : bioEN;
+    });
+
+    /* CONTACT FORM */
+    document.getElementById("contactForm").onsubmit = async e => {
+      e.preventDefault();
+      alert("Mensaje enviado correctamente.");
       e.target.reset();
     };
   </script>
