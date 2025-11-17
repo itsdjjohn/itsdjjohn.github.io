@@ -4,68 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ITS DJ JOHN</title>
-  <link rel="icon" href="/images/favicon.png">
+  <link rel="icon" href="images/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-  <link href="/output.css" rel="stylesheet">
+  <link href="output.css" rel="stylesheet">
 </head>
-<body class="bg-black text-white">
-
-  <!-- PRELOADER -->
-  <div id="preloader" class="fixed inset-0 bg-black flex items-center justify-center z-50">
-    <img src="/images/logo.png" alt="DJ John" class="w-32 animate-pulse">
-  </div>
+<body>
+  <div id="preloader"><img src="images/logo.png" alt="DJ John"></div>
 
   <div id="content" class="hidden">
-    <!-- HEADER -->
-    <header class="fixed top-0 w-full z-50 backdrop-blur-2xl bg-black/80 border-b border-white/10">
-      <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-        <a href="/"><img src="/images/logo.png" alt="DJ John" class="h-12"></a>
-        <nav class="hidden md:flex gap-12 text-lg font-medium">
-          <a href="/" class="hover:text-cyan-400 transition">Home</a>
-          <a href="/tour.html" class="hover:text-cyan-400 transition">Tour</a>
-          <a href="/about.html" class="hover:text-cyan-400 transition">About</a>
-          <a href="/contact.html" class="hover:text-cyan-400 transition">Contact</a>
+    <header>
+      <div class="nav">
+        <img src="images/logo.png" alt="DJ John">
+        <nav class="nav-links">
+          <a href="index.html">HOME</a>
+          <a href="tour.html">TOUR</a>
+          <a href="about.html">ABOUT</a>
+          <a href="contact.html">CONTACT</a>
+          <select id="language-select" onchange="changeLanguage()">
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+          </select>
         </nav>
-        <button class="md:hidden text-4xl">☰</button>
+        <button class="menu-toggle">☰</button>
       </div>
     </header>
 
-    <!-- HERO -->
-    <section class="min-h-screen flex items-center justify-center relative">
-      <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-600/10 to-black"></div>
-      <div class="relative text-center px-6">
-        <h1 class="text-6xl md:text-9xl font-black leading-none mb-6">
-          COME FOR THE MUSIC,<br>
-          <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
-            STAY FOR THE VIBES
-          </span>
-        </h1>
-        <p class="text-2xl md:text-4xl text-gray-300 mb-12">Panama's Electronic Architect</p>
-        <a href="/tour.html" class="inline-block bg-cyan-400 text-black px-12 py-6 rounded-full text-xl font-bold hover:scale-110 transition-all">
-          VIEW TOUR DATES
-        </a>
+    <section class="hero">
+      <div>
+        <h1>COME FOR THE MUSIC,<br><span class="gradient-text">STAY FOR THE VIBES</span></h1>
+        <p>Panama's Electronic Architect</p>
+        <a href="tour.html" class="btn">VIEW TOUR DATES</a>
       </div>
     </section>
 
-    <!-- TICKER -->
-    <div class="bg-white text-black py-5 overflow-hidden font-black text-2xl">
-      <div class="inline-block animate-marquee whitespace-nowrap">
-        FOLLOW @ITSDJJOHN  •  FOLLOW @ITSDJJOHN  •  FOLLOW @ITSDJJOHN  •  FOLLOW @ITSDJJOHN
+    <div class="ticker">
+      <div class="ticker-inner">
+        <span>FOLLOW @ITSDJJOHN</span>
+        <span>FOLLOW @ITSDJJOHN</span>
+        <span>FOLLOW @ITSDJJOHN</span>
+        <span>FOLLOW @ITSDJJOHN</span>
       </div>
     </div>
   </div>
 
   <script>
-    window.addEventListener('load', () => {
+    window.onload = () => {
       setTimeout(() => {
         document.getElementById('preloader').style.opacity = '0';
-        setTimeout(() => {
-          document.getElementById('preloader').style.display = 'none';
-          document.getElementById('content').classList.remove('hidden');
-        }, 300);
+        document.getElementById('content').classList.remove('hidden');
+        document.getElementById('content').classList.add('show');
       }, 800);
-    });
+    };
+    document.querySelector('.menu-toggle').onclick = () => {
+      document.querySelector('.nav-links').classList.toggle('show');
+    };
+    function changeLanguage() {
+      const lang = document.getElementById('language-select').value;
+      // Aquí puedes añadir traducciones si quieres
+    }
   </script>
 </body>
 </html>
-<link href="output.css" rel="stylesheet">
