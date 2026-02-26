@@ -119,6 +119,7 @@
                         <ul>
                             <li>Paradise 507</li>
                             <li>Paradise Peskito (Carnavales)</li>
+                            <li>Boom Hospitality</li>
                             <li>SZN</li>
                             <li>Opening DJ de Guaynaa (por Bamboo)</li>
                             <li>DJ invitado en el concierto de Boza</li>
@@ -191,11 +192,220 @@
             </div>
             
             <div class="footer-bottom">
-                <p>© 2026 DJ John — Todos los derechos reservados.</p>
+                <p>© 2025 DJ John — Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <script src="app.js"></script>
+    <script>
+        // PRELOADER - Se oculta automáticamente después de 1.5 segundos
+        setTimeout(function() {
+            var preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                }, 600);
+            }
+        }, 1500);
+
+        // NAVIGATION
+        (function() {
+            var navbar = document.getElementById('navbar');
+            var menuToggle = document.getElementById('menuToggle');
+            var navMenu = document.getElementById('navMenu');
+            var navLinks = document.querySelectorAll('.nav-link');
+
+            // Scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile menu
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    menuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+                });
+
+                navLinks.forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                        navLinks.forEach(function(l) { l.classList.remove('active'); });
+                        this.classList.add('active');
+                    });
+                });
+            }
+        })();
+
+        // BANDSINTOWN API
+        (function() {
+            var container = document.getElementById('events');
+            var noEvents = document.getElementById('no-events');
+            
+            if (!container) return;
+
+            var appId = '6ddc274027f79a574321428def39a357';
+            var artistId = 'id_86889';
+            var apiUrl = 'https://rest.bandsintown.com/artists/' + artistId + '/events?app_id=' + appId;
+
+            fetch(apiUrl)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(events) {
+                    if (!Array.isArray(events) || events.length === 0) {
+                        showNoEvents();
+                        return;
+                    }
+
+                    var now = new Date();
+                    var hasUpcoming = false;
+                    var html = '';
+
+                    events.forEach(function(event) {
+                        var eventDate = new Date(event.datetime);
+                        if (eventDate < now) return;
+                        
+                        hasUpcoming = true;
+                        
+                        var day = eventDate.getDate();
+                        var month = eventDate.toLocaleDateString('es-PA', { month: 'short' }).toUpperCase();
+                        var venue = event.venue || {};
+                        var venueName = venue.name || 'TBA';
+                        var city = venue.city || 'TBA';
+                        var country = venue.country || '';
+                        var ticketUrl = event.url || '#';
+
+                        html += '<div class="event-card">' +
+                            '<div class="event-date">' +
+                                '<span class="event-day">' + day + '</span>' +
+                                '<span class="event-month">' + month + '</span>' +
+                            '</div>' +
+                            '<div class="event-info">' +
+                                '<h3>' + venueName + '</h3>' +
+                                '<p>' + city + (country ? ', ' + country : '') + '</p>' +
+                            '</div>' +
+                            '<a href="' + ticketUrl + '" class="btn btn-primary" target="_blank">Tickets</a>' +
+                        '</div>';
+                    });
+
+                    if (hasUpcoming) {
+                        container.innerHTML = html;
+                    } else {
+                        showNoEvents();
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Error:', error);
+                    showNoEvents();
+                });
+
+            function showNoEvents() {
+                if (noEvents) noEvents.style.display = 'block';
+                if (container) container.style.display = 'none';
+            }
+        })();
+
+        // LANGUAGE SWITCHER
+        (function() {
+            var langSelect = document.getElementById('lang');
+            if (!langSelect) return;
+
+            var translations = {
+                es: {
+                    hero: 'Música, energía y vibra única.',
+                    events: 'EVENTOS',
+                    about: 'Quién Soy',
+                    contact: 'Contacto',
+                    noEvents: 'No hay eventos próximos'
+                },
+                en: {
+                    hero: 'Music, energy and unique vibes.',
+                    events: 'EVENTS',
+                    about: 'About Me',
+                    contact: 'Contact',
+                    noEvents: 'No upcoming events'
+                }
+            };
+
+            langSelect.addEventListener('change', function() {
+                var t = translations[this.value];
+                var heroText = document.getElementById('hero-text');
+                var eventsTitle = document.getElementById('events-title');
+                var aboutTitle = document.getElementById('about-title');
+                var contactTitle = document.getElementById('contact-title');
+                var noEvents = document.getElementById('no-events');
+
+                if (heroText) heroText.textContent = t.hero;
+                if (eventsTitle) eventsTitle.textContent = t.events;
+                if (aboutTitle) aboutTitle.textContent = t.about;
+                if (contactTitle) contactTitle.textContent = t.contact;
+                if (noEvents) noEvents.textContent = t.noEvents;
+            });
+        })();
+
+        // CONTACT FORM
+        (function() {
+            var form = document.getElementById('contactForm');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                var btn = form.querySelector('button[type="submit"]');
+                var originalText = btn.textContent;
+                
+                btn.textContent = 'Enviando...';
+                btn.disabled = true;
+
+                var formData = new FormData(form);
+                var data = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    message: formData.get('message')
+                };
+
+                fetch('https://formspree.io/f/mnqebgje', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        btn.textContent = '¡Enviado!';
+                        btn.style.background = '#22c55e';
+                        form.reset();
+                        setTimeout(function() {
+                            btn.textContent = originalText;
+                            btn.style.background = '';
+                            btn.disabled = false;
+                        }, 3000);
+                    } else {
+                        throw new Error('Error');
+                    }
+                })
+                .catch(function() {
+                    btn.textContent = 'Error';
+                    btn.style.background = '#dc2626';
+                    setTimeout(function() {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 3000);
+                });
+            });
+        })();
+    </script>
+
 </body>
 </html>

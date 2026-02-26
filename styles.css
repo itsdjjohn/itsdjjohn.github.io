@@ -46,7 +46,6 @@ body {
 #preloader.hidden {
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
 }
 
 .preloader-content {
@@ -627,6 +626,11 @@ body {
     font-size: 0.9rem;
 }
 
+/* Mobile menu active state */
+.nav-menu.active {
+    right: 0 !important;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
@@ -658,10 +662,6 @@ body {
         gap: 2rem;
         transition: right 0.3s ease;
         padding: 2rem;
-    }
-
-    .nav-menu.active {
-        right: 0;
     }
 
     .hero-title-line {
