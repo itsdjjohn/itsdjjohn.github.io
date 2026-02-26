@@ -1,309 +1,275 @@
-// DJ John - Artist Website JavaScript
-// Professional template functionality
+// DJ John Website - Fixed Version
+// API Key: 6ddc274027f79a574321428def39a357
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize preloader removal
     initPreloader();
+    
+    // Initialize navigation
     initNavigation();
-    initScrollEffects();
+    
+    // Load events from Bandsintown
     loadEvents();
-    initContactForm();
+    
+    // Initialize language switcher
     initLanguageSwitcher();
+    
+    // Initialize contact form
+    initContactForm();
 });
 
-// Preloader
+// Preloader - Always hide after animation
 function initPreloader() {
-    window.addEventListener('load', () => {
-        const preloader = document.getElementById('preloader');
-        setTimeout(() => {
+    const preloader = document.getElementById('preloader');
+    
+    // Force hide after 2 seconds maximum
+    setTimeout(function() {
+        if (preloader) {
             preloader.classList.add('hidden');
-        }, 1800);
+        }
+    }, 2000);
+    
+    // Also hide when page fully loaded
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            if (preloader) {
+                preloader.classList.add('hidden');
+            }
+        }, 500);
     });
 }
 
 // Navigation
 function initNavigation() {
     const navbar = document.getElementById('navbar');
-    const navToggle = document.getElementById('navToggle');
+    const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
-
+    
     // Scroll effect
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
     });
-
-    // Mobile toggle
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        navToggle.classList.toggle('active');
-    });
-
-    // Close on link click
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            navToggle.classList.remove('active');
-            
-            // Update active state
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
+    
+    // Mobile menu toggle
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            menuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
         });
-    });
-}
-
-// Scroll reveal effects
-function initScrollEffects() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-            }
+        
+        // Close menu on link click
+        navLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                menuToggle.textContent = '☰';
+                
+                // Update active state
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
-    }, observerOptions);
-
-    // Observe sections
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.add('reveal-on-scroll');
-        observer.observe(section);
-    });
+    }
 }
 
 // Bandsintown API - Load Events
-async function loadEvents() {
-    const container = document.getElementById('eventsContainer');
-    const emptyState = document.getElementById('eventsEmpty');
+function loadEvents() {
+    const container = document.getElementById('events');
+    const noEvents = document.getElementById('no-events');
     
-    try {
-        const response = await fetch(
-            'https://rest.bandsintown.com/artists/id_86889/events?app_id=itsdjjohn.com'
-        );
-        
-        if (!response.ok) throw new Error('API Error');
-        
-        const events = await response.json();
-        const now = new Date();
-        
-        // Filter upcoming events
-        const upcomingEvents = events.filter(event => 
-            new Date(event.datetime) > now
-        ).sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
-
-        if (upcomingEvents.length === 0) {
-            emptyState.style.display = 'block';
-            return;
-        }
-
-        // Render events
-        container.innerHTML = upcomingEvents.map(event => {
-            const date = new Date(event.datetime);
-            const day = date.getDate();
-            const month = date.toLocaleDateString('es-PA', { month: 'short' }).toUpperCase();
-            const venue = event.venue;
+    // API Configuration
+    const appId = '6ddc274027f79a574321428def39a357';
+    const artistId = 'id_86889';
+    const apiUrl = 'https://rest.bandsintown.com/artists/' + artistId + '/events?app_id=' + appId;
+    
+    // Fetch events
+    fetch(apiUrl)
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error('HTTP error! status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(function(events) {
+            // Check if events is array and has items
+            if (!Array.isArray(events) || events.length === 0) {
+                showNoEvents();
+                return;
+            }
             
-            return `
-                <article class="event-card">
-                    <div class="event-date">
-                        <span class="event-day">${day}</span>
-                        <span class="event-month">${month}</span>
-                    </div>
-                    <div class="event-info">
-                        <h3>${venue.name}</h3>
-                        <p>${venue.city}${venue.region ? ', ' + venue.region : ''}, ${venue.country}</p>
-                    </div>
-                    <a href="${event.url || '#'}" class="btn btn-primary" target="_blank" rel="noopener">
-                        Tickets
-                    </a>
-                </article>
-            `;
-        }).join('');
-
-    } catch (error) {
-        console.error('Error loading events:', error);
-        emptyState.style.display = 'block';
-        emptyState.querySelector('p').textContent = 'No se pudieron cargar los eventos';
+            const now = new Date();
+            let hasUpcoming = false;
+            
+            // Clear container
+            container.innerHTML = '';
+            
+            // Process events
+            events.forEach(function(event) {
+                const eventDate = new Date(event.datetime);
+                
+                // Skip past events
+                if (eventDate < now) return;
+                
+                hasUpcoming = true;
+                
+                // Format date
+                const day = eventDate.getDate();
+                const month = eventDate.toLocaleDateString('es-PA', { month: 'short' }).toUpperCase();
+                
+                // Get venue info
+                const venue = event.venue || {};
+                const venueName = venue.name || 'TBA';
+                const city = venue.city || 'TBA';
+                const country = venue.country || '';
+                
+                // Ticket URL
+                const ticketUrl = event.url || '#';
+                
+                // Create event card
+                const card = document.createElement('div');
+                card.className = 'event-card';
+                card.innerHTML = 
+                    '<div class="event-date">' +
+                        '<span class="event-day">' + day + '</span>' +
+                        '<span class="event-month">' + month + '</span>' +
+                    '</div>' +
+                    '<div class="event-info">' +
+                        '<h3>' + venueName + '</h3>' +
+                        '<p>' + city + (country ? ', ' + country : '') + '</p>' +
+                    '</div>' +
+                    '<a href="' + ticketUrl + '" class="btn btn-primary" target="_blank">Tickets</a>';
+                
+                container.appendChild(card);
+            });
+            
+            // Show message if no upcoming events
+            if (!hasUpcoming) {
+                showNoEvents();
+            }
+        })
+        .catch(function(error) {
+            console.error('Error loading events:', error);
+            showNoEvents();
+        });
+    
+    function showNoEvents() {
+        if (noEvents) {
+            noEvents.style.display = 'block';
+        }
+        if (container) {
+            container.style.display = 'none';
+        }
     }
+}
+
+// Language Switcher
+function initLanguageSwitcher() {
+    const langSelect = document.getElementById('lang');
+    
+    if (!langSelect) return;
+    
+    const translations = {
+        es: {
+            hero: 'Música, energía y vibra única.',
+            events: 'EVENTOS',
+            about: 'Quién Soy',
+            contact: 'Contacto',
+            noEvents: 'No hay eventos próximos'
+        },
+        en: {
+            hero: 'Music, energy and unique vibes.',
+            events: 'EVENTS',
+            about: 'About Me',
+            contact: 'Contact',
+            noEvents: 'No upcoming events'
+        }
+    };
+    
+    langSelect.addEventListener('change', function() {
+        const lang = this.value;
+        const t = translations[lang];
+        
+        // Update elements
+        const heroText = document.getElementById('hero-text');
+        const eventsTitle = document.getElementById('events-title');
+        const aboutTitle = document.getElementById('about-title');
+        const contactTitle = document.getElementById('contact-title');
+        const noEvents = document.getElementById('no-events');
+        
+        if (heroText) heroText.textContent = t.hero;
+        if (eventsTitle) eventsTitle.textContent = t.events;
+        if (aboutTitle) aboutTitle.textContent = t.about;
+        if (contactTitle) contactTitle.textContent = t.contact;
+        if (noEvents) noEvents.textContent = t.noEvents;
+    });
 }
 
 // Contact Form
 function initContactForm() {
     const form = document.getElementById('contactForm');
     
-    form.addEventListener('submit', async (e) => {
+    if (!form) return;
+    
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
         
         // Loading state
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>Enviando...</span><i class="fas fa-spinner fa-spin"></i>';
+        btn.textContent = 'Enviando...';
+        btn.disabled = true;
         
-        try {
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
-            
-            const response = await fetch('https://formspree.io/f/mnqebgje', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            
+        // Get form data
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message')
+        };
+        
+        // Send to Formspree
+        fetch('https://formspree.io/f/mnqebgje', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
             if (response.ok) {
-                submitBtn.innerHTML = '<span>¡Enviado!</span><i class="fas fa-check"></i>';
-                submitBtn.style.background = '#22c55e';
+                btn.textContent = '¡Enviado!';
+                btn.style.background = '#22c55e';
                 form.reset();
                 
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.style.background = '';
-                    submitBtn.disabled = false;
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
                 }, 3000);
             } else {
                 throw new Error('Form error');
             }
+        })
+        .catch(function(error) {
+            btn.textContent = 'Error';
+            btn.style.background = '#dc2626';
             
-        } catch (error) {
-            submitBtn.innerHTML = '<span>Error</span><i class="fas fa-times"></i>';
-            submitBtn.style.background = '#dc2626';
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.background = '';
-                submitBtn.disabled = false;
+            setTimeout(function() {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                btn.disabled = false;
             }, 3000);
-        }
-    });
-}
-
-// Language Switcher
-function initLanguageSwitcher() {
-    const langSelect = document.getElementById('langSelect');
-    
-    const translations = {
-        es: {
-            'hero-subtitle': 'Panamá City',
-            'hero-desc': 'Música, energía y vibra única',
-            'btn-events': 'Ver Eventos',
-            'btn-contact': 'Contactar',
-            'events-eyebrow': 'Tour Dates',
-            'events-title': 'Próximos Eventos',
-            'no-events': 'No hay eventos programados actualmente',
-            'view-all': 'Ver todos los eventos',
-            'about-eyebrow': 'Biografía',
-            'about-title': 'Quién Soy',
-            'bio-p1': 'DJ John es un DJ y productor nacido en la Ciudad de Panamá. Es conocido por su estilo único y su capacidad para mezclar diferentes géneros musicales, creando sets inolvidables que mantienen a la pista de baile en constante movimiento.',
-            'bio-p2': 'Comenzó su carrera en la música electrónica a los 13 años tocando en eventos locales, y rápidamente escaló para convertirse en uno de los nombres más reconocidos de la escena crossover panameña.',
-            'highlights-title': 'Highlights',
-            'contact-eyebrow': 'Booking & Management',
-            'contact-title': 'Contacto',
-            'form-name': 'Nombre',
-            'form-email': 'Email',
-            'form-subject': 'Asunto',
-            'form-message': 'Mensaje',
-            'form-send': 'Enviar mensaje',
-            'stat-years': 'Años de experiencia',
-            'stat-events': 'Eventos realizados',
-            'stat-fans': 'Seguidores',
-            'footer-tagline': 'Música sin fronteras',
-            'footer-rights': 'Todos los derechos reservados',
-            'nav-home': 'Inicio',
-            'nav-events': 'Eventos',
-            'nav-about': 'Bio',
-            'nav-contact': 'Contacto'
-        },
-        en: {
-            'hero-subtitle': 'Panama City',
-            'hero-desc': 'Music, energy and unique vibes',
-            'btn-events': 'View Events',
-            'btn-contact': 'Contact',
-            'events-eyebrow': 'Tour Dates',
-            'events-title': 'Upcoming Events',
-            'no-events': 'No events scheduled at this time',
-            'view-all': 'View all events',
-            'about-eyebrow': 'Biography',
-            'about-title': 'About Me',
-            'bio-p1': 'DJ John is a DJ and producer born in Panama City. He is known for his unique style and ability to blend different musical genres, creating unforgettable sets that keep the dance floor moving.',
-            'bio-p2': 'He started his career in electronic music at age 13 playing at local events, and quickly rose to become one of the most recognized names in the Panamanian crossover scene.',
-            'highlights-title': 'Highlights',
-            'contact-eyebrow': 'Booking & Management',
-            'contact-title': 'Contact',
-            'form-name': 'Name',
-            'form-email': 'Email',
-            'form-subject': 'Subject',
-            'form-message': 'Message',
-            'form-send': 'Send message',
-            'stat-years': 'Years experience',
-            'stat-events': 'Events performed',
-            'stat-fans': 'Followers',
-            'footer-tagline': 'Music without borders',
-            'footer-rights': 'All rights reserved',
-            'nav-home': 'Home',
-            'nav-events': 'Events',
-            'nav-about': 'Bio',
-            'nav-contact': 'Contact'
-        }
-    };
-    
-    langSelect.addEventListener('change', (e) => {
-        const lang = e.target.value;
-        const t = translations[lang];
-        
-        // Update all elements with data-i18n
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (t[key]) {
-                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                    el.placeholder = t[key];
-                } else {
-                    el.textContent = t[key];
-                }
-            }
         });
-        
-        // Update HTML lang
-        document.documentElement.lang = lang;
     });
 }
 
-// Add reveal animation styles
+// Add mobile menu styles
 const style = document.createElement('style');
-style.textContent = `
-    .reveal-on-scroll {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    
-    .reveal-on-scroll.revealed {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .nav-toggle.active .hamburger {
-        background: transparent;
-    }
-    
-    .nav-toggle.active .hamburger::before {
-        top: 0;
-        transform: rotate(45deg);
-    }
-    
-    .nav-toggle.active .hamburger::after {
-        bottom: 0;
-        transform: rotate(-45deg);
-    }
-`;
+style.textContent = '.nav-menu.active { right: 0 !important; }';
 document.head.appendChild(style);

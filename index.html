@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DJ JOHN | Official Site</title>
-    <meta name="description" content="DJ John - DJ y productor de música crossover desde Ciudad de Panamá">
-    
-    <!-- Preconnect for performance -->
+    <title>DJ JOHN | Official</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://rest.bandsintown.com">
-    
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- Icons -->
@@ -25,7 +22,7 @@
     <!-- Preloader -->
     <div id="preloader">
         <div class="preloader-content">
-            <div class="preloader-text">DJ JOHN</div>
+            <img src="images/logo.png" alt="DJ John Logo">
             <div class="preloader-bar">
                 <div class="preloader-progress"></div>
             </div>
@@ -36,154 +33,95 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#hero" class="nav-logo">
-                <span class="nav-logo-text">DJ JOHN</span>
+                <img src="images/logo.png" alt="DJ John Logo">
             </a>
             
             <ul class="nav-menu" id="navMenu">
-                <li class="nav-item">
-                    <a href="#hero" class="nav-link active">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#events" class="nav-link">Eventos</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">Bio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contacto</a>
-                </li>
-                <li class="nav-item nav-item-lang">
-                    <select class="lang-select" id="langSelect">
+                <li><a href="#hero" class="nav-link active">Inicio</a></li>
+                <li><a href="#events-section" class="nav-link">Eventos</a></li>
+                <li><a href="#about-section" class="nav-link">Bio</a></li>
+                <li><a href="#contact-section" class="nav-link">Contacto</a></li>
+                <li>
+                    <select id="lang" class="lang-select">
                         <option value="es">ES</option>
                         <option value="en">EN</option>
                     </select>
                 </li>
             </ul>
 
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-                <span class="hamburger"></span>
-            </button>
+            <button class="menu-toggle" id="menuToggle">☰</button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <header class="hero" id="hero">
-        <div class="hero-bg">
-            <div class="hero-overlay"></div>
-        </div>
+        <div class="hero-bg"></div>
         <div class="hero-content">
-            <p class="hero-subtitle" data-i18n="hero-subtitle">Panamá City</p>
-            <h1 class="hero-title">
+            <p class="hero-subtitle">Panamá City</p>
+            <h1>
                 <span class="hero-title-line">DJ</span>
                 <span class="hero-title-line hero-title-accent">JOHN</span>
             </h1>
-            <p class="hero-description" data-i18n="hero-desc">Música, energía y vibra única</p>
+            <p id="hero-text" class="hero-description">Música, energía y vibra única.</p>
             <div class="hero-cta">
-                <a href="#events" class="btn btn-primary">
-                    <span data-i18n="btn-events">Ver Eventos</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-                <a href="#contact" class="btn btn-outline">
-                    <span data-i18n="btn-contact">Contactar</span>
-                </a>
+                <a href="#events-section" class="btn btn-primary">Ver Eventos</a>
+                <a href="#contact-section" class="btn btn-secondary">Contactar</a>
             </div>
-        </div>
-        <div class="hero-scroll">
-            <span class="mouse">
-                <span class="wheel"></span>
-            </span>
         </div>
     </header>
 
     <!-- Marquee -->
-    <div class="marquee">
-        <div class="marquee-content">
+    <div class="marquee-container">
+        <div class="marquee">
             <span>@ITSDJJOHN</span>
-            <span class="marquee-dot">•</span>
-            <span>PARADISE 507</span>
-            <span class="marquee-dot">•</span>
-            <span>BOOM HOSPITALITY</span>
-            <span class="marquee-dot">•</span>
-            <span>SZN FESTIVAL</span>
-            <span class="marquee-dot">•</span>
             <span>@ITSDJJOHN</span>
-            <span class="marquee-dot">•</span>
-            <span>PARADISE 507</span>
-            <span class="marquee-dot">•</span>
-            <span>BOOM HOSPITALITY</span>
-            <span class="marquee-dot">•</span>
-            <span>SZN FESTIVAL</span>
-            <span class="marquee-dot">•</span>
+            <span>@ITSDJJOHN</span>
+            <span>@ITSDJJOHN</span>
+            <span>@ITSDJJOHN</span>
+            <span>@ITSDJJOHN</span>
         </div>
     </div>
 
-    <!-- Events Section -->
-    <section class="section section-events" id="events">
+    <!-- Events -->
+    <section id="events-section" class="section section-events">
         <div class="container">
-            <header class="section-header">
-                <span class="section-eyebrow" data-i18n="events-eyebrow">Tour Dates</span>
-                <h2 class="section-title" data-i18n="events-title">Próximos Eventos</h2>
-            </header>
-            
-            <div class="events-container" id="eventsContainer">
-                <!-- Events loaded via Bandsintown API -->
+            <div class="section-header">
+                <span class="section-eyebrow">Próximas Fechas</span>
+                <h2 id="events-title" class="section-title">EVENTOS</h2>
             </div>
             
-            <div class="events-empty" id="eventsEmpty" style="display: none;">
-                <p data-i18n="no-events">No hay eventos programados actualmente</p>
-                <a href="#contact" class="btn btn-outline">Solicitar Booking</a>
-            </div>
-            
-            <div class="events-more">
-                <a href="https://www.bandsintown.com/a/86889" target="_blank" class="link-arrow">
-                    <span data-i18n="view-all">Ver todos los eventos</span>
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
+            <div id="events" class="events-grid"></div>
+            <p id="no-events" class="no-events" style="display: none;">No hay eventos próximos</p>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="section section-about" id="about">
+    <!-- About -->
+    <section id="about-section" class="section section-about">
         <div class="container">
             <div class="about-grid">
-                <div class="about-media">
-                    <div class="about-image-wrapper">
-                        <img src="images/dj-photo.jpg" alt="DJ John" class="about-image">
-                        <div class="about-image-frame"></div>
-                    </div>
+                <div class="about-image">
+                    <img src="images/dj-photo.jpg" alt="DJ John">
                 </div>
                 
                 <div class="about-content">
-                    <header class="section-header section-header-left">
-                        <span class="section-eyebrow" data-i18n="about-eyebrow">Biografía</span>
-                        <h2 class="section-title" data-i18n="about-title">Quién Soy</h2>
-                    </header>
+                    <span class="section-eyebrow">Biografía</span>
+                    <h2 id="about-title" class="section-title">Quién Soy</h2>
                     
-                    <div class="about-text">
-                        <p data-i18n="bio-p1">
-                            DJ John es un DJ y productor nacido en la Ciudad de Panamá. 
-                            Es conocido por su estilo único y su capacidad para mezclar 
-                            diferentes géneros musicales, creando sets inolvidables que 
-                            mantienen a la pista de baile en constante movimiento.
-                        </p>
-                        <p data-i18n="bio-p2">
-                            Comenzó su carrera en la música electrónica a los 13 años 
-                            tocando en eventos locales, y rápidamente escaló para 
-                            convertirse en uno de los nombres más reconocidos de la 
-                            escena crossover panameña.
-                        </p>
-                    </div>
-                    
-                    <div class="about-highlights">
-                        <h3 class="highlights-title" data-i18n="highlights-title">Highlights</h3>
-                        <ul class="highlights-list">
+                    <p id="bio-text">
+                        DJ John es un DJ y productor, nacido en la Ciudad de Panamá.  
+                        Es conocido por su estilo único y su capacidad para mezclar 
+                        diferentes géneros. Comenzó su carrera en la música electrónica 
+                        a los 13 años tocando en eventos locales.
+                    </p>
+
+                    <div class="festivals-list">
+                        <h3>Festivales & Eventos</h3>
+                        <ul>
                             <li>Paradise 507</li>
                             <li>Paradise Peskito (Carnavales)</li>
-                            <li>Boom Hospitality</li>
-                            <li>SZN Festival</li>
-                            <li>Opening DJ Guaynaa — Bamboo</li>
-                            <li>DJ Invitado Boza — Concierto</li>
+                            <li>SZN</li>
+                            <li>Opening DJ de Guaynaa (por Bamboo)</li>
+                            <li>DJ invitado en el concierto de Boza</li>
                         </ul>
                     </div>
                 </div>
@@ -191,91 +129,48 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
+    <!-- Stats -->
     <section class="section section-stats">
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item">
                     <span class="stat-number">10+</span>
-                    <span class="stat-label" data-i18n="stat-years">Años de experiencia</span>
+                    <span class="stat-label">Años de experiencia</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">500+</span>
-                    <span class="stat-label" data-i18n="stat-events">Eventos realizados</span>
+                    <span class="stat-label">Eventos realizados</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">50K+</span>
-                    <span class="stat-label" data-i18n="stat-fans">Seguidores</span>
+                    <span class="stat-label">Seguidores</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="section section-contact" id="contact">
+    <!-- Contact -->
+    <section id="contact-section" class="section section-contact">
         <div class="container">
-            <header class="section-header">
-                <span class="section-eyebrow" data-i18n="contact-eyebrow">Booking & Management</span>
-                <h2 class="section-title" data-i18n="contact-title">Contacto</h2>
-            </header>
+            <div class="section-header">
+                <span class="section-eyebrow">Booking & Management</span>
+                <h2 id="contact-title" class="section-title">Contacto</h2>
+            </div>
             
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <span class="contact-label">Email</span>
-                            <a href="mailto:booking@itsdjjohn.com">booking@itsdjjohn.com</a>
-                        </div>
+            <form id="contactForm" class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Tu nombre" required>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <span class="contact-label">Base</span>
-                            <span>Panamá City, Panamá</span>
-                        </div>
-                    </div>
-                    <div class="contact-social">
-                        <a href="https://instagram.com/itsdjjohn" target="_blank" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://tiktok.com/@itsdjjohn" target="_blank" class="social-link">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                        <a href="#" target="_blank" class="social-link">
-                            <i class="fab fa-spotify"></i>
-                        </a>
-                        <a href="#" target="_blank" class="social-link">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Tu correo" required>
                     </div>
                 </div>
-                
-                <form class="contact-form" id="contactForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" name="name" id="formName" required placeholder=" ">
-                            <label for="formName" data-i18n="form-name">Nombre</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="email" id="formEmail" required placeholder=" ">
-                            <label for="formEmail" data-i18n="form-email">Email</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="subject" id="formSubject" required placeholder=" ">
-                        <label for="formSubject" data-i18n="form-subject">Asunto</label>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="message" id="formMessage" required placeholder=" " rows="5"></textarea>
-                        <label for="formMessage" data-i18n="form-message">Mensaje</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-full">
-                        <span data-i18n="form-send">Enviar mensaje</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Mensaje" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+            </form>
         </div>
     </section>
 
@@ -283,36 +178,24 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-brand">
-                    <span class="footer-logo">DJ JOHN</span>
-                    <p class="footer-tagline" data-i18n="footer-tagline">Música sin fronteras</p>
-                </div>
+                <img src="images/logo.png" alt="DJ John" class="footer-logo">
                 
-                <nav class="footer-nav">
-                    <a href="#hero" data-i18n="nav-home">Inicio</a>
-                    <a href="#events" data-i18n="nav-events">Eventos</a>
-                    <a href="#about" data-i18n="nav-about">Bio</a>
-                    <a href="#contact" data-i18n="nav-contact">Contacto</a>
-                </nav>
-                
-                <div class="footer-social">
+                <div class="social-links">
                     <a href="https://instagram.com/itsdjjohn" target="_blank">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="https://tiktok.com/@itsdjjohn" target="_blank">
+                    <a href="https://www.tiktok.com/@itsdjjohn" target="_blank">
                         <i class="fab fa-tiktok"></i>
                     </a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 DJ John. <span data-i18n="footer-rights">Todos los derechos reservados</span>.</p>
-                <p class="footer-credit">Site by <a href="#" target="_blank">ArtistWeb Studio</a></p>
+                <p>© 2026 DJ John — Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="app.js"></script>
 </body>
 </html>
