@@ -1,13 +1,26 @@
-// Preloader
-window.addEventListener('load', () => {
-    const pre = document.getElementById('preloader');
-    if (pre) {
-        setTimeout(() => {
-            pre.classList.add('hidden');
-            setTimeout(() => { pre.style.display = 'none'; }, 800);
-        }, 1800);
+// Preloader - Se cierra en máximo 3 segundos
+(function() {
+    const preloader = document.getElementById('preloader');
+    let hidden = false;
+    
+    function hidePreloader() {
+        if (!hidden && preloader) {
+            hidden = true;
+            preloader.classList.add('hidden');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 800);
+        }
     }
-});
+    
+    // Cuando la página carga
+    window.addEventListener('load', () => {
+        setTimeout(hidePreloader, 500);
+    });
+    
+    // Forzar cierre a los 3 segundos máximo
+    setTimeout(hidePreloader, 3000);
+})();
 
 // Navigation
 (function() {
@@ -87,11 +100,9 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
                 const month = date.toLocaleDateString('es-PA', {month:'short'}).toUpperCase();
                 const v = ev.venue || {};
                 
-                // Detectar link directo de venta
                 let ticketUrl = '#';
                 let isDirectTicket = false;
                 
-                // Opción 1: Buscar en offers
                 if (ev.offers && ev.offers.length > 0) {
                     const ticketOffer = ev.offers.find(o => o.type === 'Tickets' && o.url) || ev.offers[0];
                     if (ticketOffer && ticketOffer.url) {
@@ -100,7 +111,6 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
                     }
                 }
                 
-                // Opción 2: Detectar por palabras clave en el url
                 if (ticketUrl === '#' && ev.url) {
                     const saleKeywords = ['ticket', 'entrada', 'boleta', 'eventbrite', 'ticketmaster', 'passline', 'wemusic', 'tuboleta', 'fever', 'widget'];
                     const isSaleLink = saleKeywords.some(keyword => ev.url.toLowerCase().includes(keyword));
@@ -113,7 +123,6 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
                     }
                 }
 
-                // Crear botón según disponibilidad
                 let buttonHtml = '';
                 if (ticketUrl !== '#') {
                     buttonHtml = `<a href="${ticketUrl}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
