@@ -1,27 +1,3 @@
-// Preloader - Se cierra en máximo 3 segundos
-(function() {
-    const preloader = document.getElementById('preloader');
-    let hidden = false;
-    
-    function hidePreloader() {
-        if (!hidden && preloader) {
-            hidden = true;
-            preloader.classList.add('hidden');
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 800);
-        }
-    }
-    
-    // Cuando la página carga
-    window.addEventListener('load', () => {
-        setTimeout(hidePreloader, 500);
-    });
-    
-    // Forzar cierre a los 3 segundos máximo
-    setTimeout(hidePreloader, 3000);
-})();
-
 // Navigation
 (function() {
     const navbar = document.getElementById('navbar');

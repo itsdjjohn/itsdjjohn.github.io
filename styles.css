@@ -37,62 +37,6 @@ body {
     z-index: 9998;
 }
 
-/* PRELOADER CON TIMEOUT FORZADO */
-#preloader {
-    position: fixed;
-    inset: 0;
-    background: var(--black);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity 0.8s var(--ease-out-expo), visibility 0.8s;
-}
-
-#preloader.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-.preloader-content { 
-    text-align: center; 
-    position: relative; 
-}
-
-.preloader-content img {
-    width: 140px;
-    margin-bottom: 3rem;
-    filter: drop-shadow(0 0 30px var(--red-glow));
-    animation: pulse-premium 2s ease-in-out infinite;
-}
-
-.preloader-bar {
-    width: 200px;
-    height: 1px;
-    background: rgba(255,255,255,0.1);
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-.preloader-progress {
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, var(--red), var(--red-dark));
-    animation: loadProgress 3s var(--ease-out-expo) forwards;
-    box-shadow: 0 0 10px var(--red-glow);
-}
-
-@keyframes pulse-premium {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(0.98); }
-}
-
-@keyframes loadProgress {
-    0% { width: 0; }
-    100% { width: 100%; }
-}
-
 .navbar {
     position: fixed;
     top: 0;
@@ -228,7 +172,7 @@ body {
     color: var(--gray-light);
     margin-bottom: 2rem;
     opacity: 0;
-    animation: fadeInUp 1s var(--ease-out-expo) 0.5s forwards;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.3s forwards;
 }
 
 .hero h1 { margin-bottom: 2rem; position: relative; }
@@ -241,7 +185,7 @@ body {
     letter-spacing: 0.02em;
     opacity: 0;
     transform: translateY(50px);
-    animation: fadeInUp 1.2s var(--ease-out-expo) 0.7s forwards;
+    animation: fadeInUp 1.2s var(--ease-out-expo) 0.5s forwards;
 }
 
 .hero-title-accent {
@@ -270,7 +214,7 @@ body {
     font-weight: 300;
     font-style: italic;
     opacity: 0;
-    animation: fadeInUp 1s var(--ease-out-expo) 1s forwards;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.8s forwards;
 }
 
 .hero-cta {
@@ -279,7 +223,7 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     opacity: 0;
-    animation: fadeInUp 1s var(--ease-out-expo) 1.2s forwards;
+    animation: fadeInUp 1s var(--ease-out-expo) 1s forwards;
 }
 
 @keyframes fadeInUp {
