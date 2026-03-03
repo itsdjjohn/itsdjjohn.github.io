@@ -6,10 +6,10 @@
     <title>DJ JOHN | Official</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
 
-    <!-- Fonts -->
+    <!-- Fonts Premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,7 +19,8 @@
 </head>
 <body>
 
-    <!-- Preloader -->
+    <div class="noise-overlay"></div>
+
     <div id="preloader">
         <div class="preloader-content">
             <img src="images/logo.png" alt="DJ John Logo">
@@ -29,7 +30,6 @@
         </div>
     </div>
 
-    <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#hero" class="nav-logo">
@@ -53,9 +53,9 @@
         </div>
     </nav>
 
-    <!-- Hero -->
     <header class="hero" id="hero">
-        <div class="hero-bg" style="background-image: linear-gradient(to bottom, rgba(10,10,10,0.3), rgba(10,10,10,0.9)), url('images/dj-photo.jpg');"></div>
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <p class="hero-subtitle">Panama City, Panama</p>
             <h1>
@@ -64,13 +64,18 @@
             </h1>
             <p id="hero-text" class="hero-description">Música, energía y vibra única.</p>
             <div class="hero-cta">
-                <a href="#events-section" class="btn btn-primary">Ver Eventos</a>
-                <a href="#contact-section" class="btn btn-secondary">Contactar</a>
+                <a href="#events-section" class="btn btn-primary">
+                    <i class="fas fa-calendar-alt"></i>
+                    Ver Eventos
+                </a>
+                <a href="#contact-section" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i>
+                    Contactar
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Marquee -->
     <div class="marquee-container">
         <div class="marquee">
             <span>@ITSDJJOHN</span>
@@ -88,30 +93,30 @@
         </div>
     </div>
 
-    <!-- Events -->
     <section id="events-section" class="section section-events">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <span class="section-eyebrow">Próximas Fechas</span>
                 <h2 id="events-title" class="section-title">EVENTOS</h2>
             </div>
             
-            <div id="events" class="events-grid"></div>
+            <div id="events" class="events-grid reveal"></div>
             <p id="no-events" class="no-events" style="display: none;">No hay eventos próximos</p>
         </div>
     </section>
 
-    <!-- About -->
     <section id="about-section" class="section section-about">
         <div class="container">
             <div class="about-grid">
-                <div class="about-image">
+                <div class="about-image reveal">
                     <img src="images/dj-photo.jpg" alt="DJ John">
                 </div>
                 
-                <div class="about-content">
-                    <span class="section-eyebrow">Biografía</span>
-                    <h2 id="about-title" class="section-title">Quién Soy</h2>
+                <div class="about-content reveal">
+                    <div class="section-header">
+                        <span class="section-eyebrow">Biografía</span>
+                        <h2 id="about-title" class="section-title">Quién Soy</h2>
+                    </div>
                     
                     <p id="bio-text">
                         DJ John es un DJ, nacido en la Ciudad de Panamá.  
@@ -137,10 +142,9 @@
         </div>
     </section>
 
-    <!-- Stats -->
     <section class="section section-stats">
         <div class="container">
-            <div class="stats-grid">
+            <div class="stats-grid reveal">
                 <div class="stat-item">
                     <span class="stat-number">7+</span>
                     <span class="stat-label">Años de experiencia</span>
@@ -157,15 +161,14 @@
         </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact-section" class="section section-contact">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <span class="section-eyebrow">Booking</span>
                 <h2 id="contact-title" class="section-title">Contacto</h2>
             </div>
             
-            <form id="contactForm" class="contact-form">
+            <form id="contactForm" class="contact-form reveal">
                 <div class="form-row">
                     <div class="form-group">
                         <input type="text" name="name" placeholder="Tu nombre" required>
@@ -177,20 +180,26 @@
                 <div class="form-group">
                     <textarea name="message" placeholder="Mensaje" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    Enviar Mensaje
+                </button>
             </form>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
+            <div class="footer-content reveal">
                 <img src="images/logo.png" alt="DJ John" class="footer-logo">
                 
                 <div class="social-links">
-                    <a href="https://instagram.com/itsdjjohn" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@itsdjjohn" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://instagram.com/itsdjjohn" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@itsdjjohn" target="_blank" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
                 </div>
             </div>
             
@@ -200,158 +209,7 @@
         </div>
     </footer>
 
-    <script>
-        // PRELOADER - más confiable
-        window.addEventListener('load', () => {
-            const pre = document.getElementById('preloader');
-            if (pre) {
-                pre.style.opacity = '0';
-                pre.style.visibility = 'hidden';
-                setTimeout(() => { pre.style.display = 'none'; }, 600);
-            }
-        });
-        setTimeout(() => {
-            const pre = document.getElementById('preloader');
-            if (pre && pre.style.display !== 'none') {
-                pre.style.opacity = '0';
-                pre.style.visibility = 'hidden';
-                setTimeout(() => { pre.style.display = 'none'; }, 600);
-            }
-        }, 5000);
-
-        // NAVEGACIÓN
-        (function() {
-            const navbar = document.getElementById('navbar');
-            const toggle = document.getElementById('menuToggle');
-            const menu = document.getElementById('navMenu');
-            const links = document.querySelectorAll('.nav-link');
-
-            window.addEventListener('scroll', () => {
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
-            });
-
-            if (toggle && menu) {
-                toggle.addEventListener('click', () => {
-                    menu.classList.toggle('active');
-                    toggle.textContent = menu.classList.contains('active') ? '✕' : '☰';
-                });
-
-                links.forEach(link => {
-                    link.addEventListener('click', () => {
-                        menu.classList.remove('active');
-                        toggle.textContent = '☰';
-                        links.forEach(l => l.classList.remove('active'));
-                        link.classList.add('active');
-                    });
-                });
-            }
-        })();
-
-        // BANDSINTOWN - formato correcto confirmado (id_86889 funciona)
-        (function() {
-            const container = document.getElementById('events');
-            const noEventsMsg = document.getElementById('no-events');
-            if (!container) return;
-
-            const appId = '6ddc274027f79a574321428def39a357';
-            const artist = 'id_86889';  // Este formato sí devuelve []
-
-            fetch(`https://rest.bandsintown.com/artists/${artist}/events?app_id=${appId}`)
-                .then(res => {
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    return res.json();
-                })
-                .then(events => {
-                    if (!Array.isArray(events) || events.length === 0) {
-                        noEventsMsg.style.display = 'block';
-                        container.style.display = 'none';
-                        return;
-                    }
-
-                    const now = new Date();
-                    let html = '';
-                    let hasFuture = false;
-
-                    events.forEach(ev => {
-                        const date = new Date(ev.datetime);
-                        if (date < now) return;
-                        hasFuture = true;
-
-                        const day = date.getDate();
-                        const month = date.toLocaleDateString('es-PA', {month:'short'}).toUpperCase();
-                        const v = ev.venue || {};
-                        const tUrl = ev.url || '#';
-
-                        html += `<div class="event-card">
-                            <div class="event-date">
-                                <span class="event-day">${day}</span>
-                                <span class="event-month">${month}</span>
-                            </div>
-                            <div class="event-info">
-                                <h3>${v.name || 'TBA'}</h3>
-                                <p>${v.city || 'TBA'}${v.country ? ', ' + v.country : ''}</p>
-                            </div>
-                            <a href="${tUrl}" class="btn btn-primary" target="_blank">Tickets</a>
-                        </div>`;
-                    });
-
-                    if (hasFuture) {
-                        container.innerHTML = html;
-                    } else {
-                        noEventsMsg.style.display = 'block';
-                        container.style.display = 'none';
-                    }
-                })
-                .catch(err => {
-                    console.error('Bandsintown:', err);
-                    noEventsMsg.style.display = 'block';
-                    container.style.display = 'none';
-                });
-        })();
-
-        // CAMBIO DE IDIOMA
-        document.getElementById('lang')?.addEventListener('change', function() {
-            const t = {
-                es: { hero: 'Música, energía y vibra única.', events: 'EVENTOS', about: 'Quién Soy', contact: 'Contacto', no: 'No hay eventos próximos' },
-                en: { hero: 'Music, energy and unique vibes.', events: 'EVENTS', about: 'About Me', contact: 'Contact', no: 'No upcoming events' }
-            }[this.value];
-
-            document.getElementById('hero-text').textContent = t.hero;
-            document.getElementById('events-title').textContent = t.events;
-            document.getElementById('about-title').textContent = t.about;
-            document.getElementById('contact-title').textContent = t.contact;
-            document.getElementById('no-events').textContent = t.no;
-        });
-
-        // FORMULARIO DE CONTACTO
-        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            const txt = btn.textContent;
-            btn.textContent = 'Enviando...';
-            btn.disabled = true;
-
-            const data = Object.fromEntries(new FormData(this));
-
-            fetch('https://formspree.io/f/mnqebgje', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(res => {
-                if (!res.ok) throw new Error();
-                btn.textContent = '¡Enviado!';
-                btn.style.background = '#22c55e';
-                this.reset();
-                setTimeout(() => { btn.textContent = txt; btn.style.background = ''; btn.disabled = false; }, 3000);
-            })
-            .catch(() => {
-                btn.textContent = 'Error';
-                btn.style.background = '#dc2626';
-                setTimeout(() => { btn.textContent = txt; btn.style.background = ''; btn.disabled = false; }, 3000);
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
